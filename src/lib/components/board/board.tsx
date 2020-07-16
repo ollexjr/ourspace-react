@@ -70,7 +70,7 @@ export const BoardView: React.FC = observer(() => {
     const store = useBoardStore();
     return (
         <div>
-            <Navbar>
+            <Navbar bg="white">
                 <Button onClick={() => store.request()}>Refresh</Button>
             </Navbar>
             <p>Id: {store.boardId}</p>

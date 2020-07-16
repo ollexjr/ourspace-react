@@ -37,14 +37,6 @@
   }
 }
 
-.sticky {
-  position: sticky;
-  top: 52px;
-  height: auto;
-  overflow-y: auto;
-  z-index: 4;
-}
-
 .header-spacer {
   padding-top: 49px;
   padding-top: 54px;
@@ -53,7 +45,7 @@
 div.sticky {
   position: -webkit-sticky;
   position: sticky;
-  top: 49px;
+  top: 52px;
   height: auto;
   overflow-y: auto;
   z-index: 4;

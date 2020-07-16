@@ -23,6 +23,8 @@ import { UserLoginForm } from '../components/auth/login';
 import { UserSignupForm } from '../components/auth/signup';
 import { ScreenFrontpage } from './home/front';
 import { NavUserCard } from '../components/user/card';
+import { SubscriptionList } from '../components/user/sub';
+
 
 const Blank: React.FC = () => {
   return (
@@ -36,7 +38,9 @@ const Scaffold: React.FC = ({ children }) => {
   return (
     <Container fluid className="header-spacer no-gutters">
       <Row className="justify-content-around">
-        <Col className="d-none d-md-block border-right" style={{ maxWidth: "200px", minWidth: "64px" }}></Col>
+        <Col className="d-none d-md-block border-right" style={{ maxWidth: "200px", minWidth: "64px" }}>
+          <SubscriptionList />
+        </Col>
         <Col className="h-100 main-content background">{children}</Col>
         <Col className="d-none d-md-block border-left" style={{ maxWidth: "200px" }}></Col>
       </Row>
@@ -51,15 +55,21 @@ export const RouterRoot: React.FC = observer(({ }) => {
       <Navbar expand="md" bg="light" fixed="top" className="border-bottom">
         <Container fluid={true}>
           <Nav.Item className="flex-grow-1">
-            <NavbarBrand>
-              Lum
-            </NavbarBrand>
+            <Link to="/">
+              <NavbarBrand>
+                SoapBox
+              </NavbarBrand>
+            </Link>
           </Nav.Item>
           <Nav.Item className="flex-grow-1">
             <Form.Control type="email" placeholder="Search" />
           </Nav.Item>
-          <Nav.Item className="flex-grow-1 text-left">
+          <Nav.Item className="flex-grow-1 text-right">
             {store.loggedIn ? <NavUserCard /> : null}
+            {store.loggedIn ?
+              <Link to="/signup">
+                <Button variant="outline-primary">Log out</Button>
+              </Link> : null}
             {!store.loggedIn ?
               <ButtonGroup aria-label="Basic example">
                 <Link to="/signup">
@@ -69,7 +79,6 @@ export const RouterRoot: React.FC = observer(({ }) => {
                   <Button variant="primary">Sign In</Button>
                 </Link>
               </ButtonGroup> : null}
-            {}
           </Nav.Item>
         </Container>
       </Navbar>

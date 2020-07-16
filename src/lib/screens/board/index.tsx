@@ -45,7 +45,8 @@ const BoardScaffold: React.FC = () => {
                         <Navbar expand="md" className="d-flex align-items-center px-0">
                             <NavbarBrand>Board "{store.boardId}"</NavbarBrand>
                             <div className="ml-auto">
-                                <Button variant="outline-primary">Join</Button>
+                                {!store.info?.isMember &&
+                                <Button variant="outline-primary">Join</Button>}
                             </div>
                         </Navbar>
                     </Col>

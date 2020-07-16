@@ -4,6 +4,5 @@ import { useAppStore } from "../../stores/app";
 
 export const NavUserCard: React.FC = () => {
     const app = useAppStore();
-
-    return <div><span>username</span></div>
+    return <span className="pr-4"><strong>@{app.active?.username}</strong></span>
 }

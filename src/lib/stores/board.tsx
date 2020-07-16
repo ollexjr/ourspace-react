@@ -24,13 +24,20 @@ export interface Thread {
     archived: boolean
 }
 
+interface BoardInfo {
+    rules: string
+    isMember: boolean
+    isModerator: boolean
+}
+
 export class BoardStore {
     app: AppStore
-
     token?: string
     @observable boardId: string
     @observable isFetching: boolean = false
     @observable requests: number = 0
+    @observable info?: BoardInfo
+
     //@observable data: Array<Thread> = observable.array([])
     data: IObservableArray<Thread> = observable.array([])
 
@@ -48,11 +55,17 @@ export class BoardStore {
         }
         this.isFetching = true;
         this.requests++
+        const withContext = this.info == null;
         return this.app.api.endpointGet((this.boardId == '_' ? 'all' : "board/threads"), {
             'boardId': this.boardId,
-        }, 200).then((res: Response) => {
+            'withContext': withContext,
+        }, 200).then((res: any) => {
+            if (withContext) {
+                // parse nested object with board ifno
+                this.info = res.board
+                res = res.threads;
+            }
             this.token = res.token;
-            //this.data = res.data;
             this.data = observable.array<Thread>(res.data);
             console.log("insert", this.data);
             return
@@ -79,7 +92,8 @@ export class BoardStore {
 export const boardStoreContext = React.createContext<BoardStore | null>(null);
 export const BoardStoreProvider: React.FC<{ boardId: string }> = (props) => {
     const app = useAppStore();
-    const store = useLocalStore<BoardStore>(() => new BoardStore(app, props.boardId));
+    const store = new BoardStore(app, props.boardId);
+    //const store = useLocalStore<BoardStore>(() => new BoardStore(app, props.boardId));
     return (
         <boardStoreContext.Provider value={store}>
             {props.children}

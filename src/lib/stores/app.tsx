@@ -11,7 +11,7 @@ export async function http(
 ): Promise<any> {
     const response = await fetch(request, init);
     if (response.status != expects) {
-        return Promise.resolve(`expected ${expects} got ${response.status}`)
+        return Promise.reject(`expected ${expects} got ${response.status}`)
         //throw new Error("error");
     }
     const body = await response.json();
@@ -30,36 +30,34 @@ export interface Response {
 
 const API = "http://app.prestigiousaddresses.com/api/v1/";
 export class NetworkService {
-    //api(request: RequestInfo,  init?: RequestInit | undefined, expects: number): Promise<any> {
-    //    return http(request, expects);
-    //}
     private getToken?: () => Promise<jwt>;
     constructor() { }
-    setAuthCallback(f: () => jwt) {
-        //this.getToken = f;
+    setAuthCallback(f: () => Promise<jwt>) {
+        this.getToken = f;
     }
     async getHeaders(): Promise<any> {
         if (this.getToken) {
             let jwt = await this.getToken();
             return {
-                'Authorization': 'Bearer ' + ""
+                'Authorization': 'Bearer ' + jwt.encoded,
             }
         }
         return Promise.resolve({});
     }
-    async endpointGet(path: string, args: any, expects: number): Promise<any> {
+    endpointGet(path: string, args: any, expects: number): Promise<any> {
         const encodedArgs = args ? serialize(args) : undefined;
         path = encodedArgs ? (path + "?" + encodedArgs) : path;
-        return http(API + path, {
+        return this.getHeaders().then(h => http(API + path, {
             method: "GET",
-            headers: await this.getHeaders(),
-        }, expects);
+            headers: h,
+        }, expects))
     }
     async endpointPost(path: string, json: any, expects: number): Promise<any> {
-        return http(API + path, {
+        return this.getHeaders().then(h => http(API + path, {
+            headers: h,
             method: "POST",
             body: JSON.stringify(json)
-        }, expects);
+        }, expects));
     }
 }
 
@@ -100,7 +98,7 @@ class jwt {
 }
 
 class access_jwt extends jwt {
-    protected token: AccessToken;
+    readonly token: AccessToken;
     constructor(token: string) {
         super(token);
         this.token = jwtDecode(token);
@@ -130,7 +128,9 @@ export class AppStore {
     protected _access?: access_jwt;
     protected _refresh?: jwt;
 
-    constructor(accessToken: string | undefined, refreshToken: string | undefined) {
+    constructor(
+        accessToken: string | undefined,
+        refreshToken: string | undefined) {
         console.log("[app store] constructed")
         if (accessToken == undefined || refreshToken == undefined) {
             return
@@ -138,9 +138,10 @@ export class AppStore {
         this._access = new access_jwt(accessToken);
         this._refresh = new jwt(refreshToken);
         console.log(jwtDecode(accessToken), this._access, jwtDecode(refreshToken), this._refresh);
+        this._api.setAuthCallback(this.getTokenCallback);
 
         // hydrate account instance from jwt info
-        this.active = new UserStore(this, "username");
+        this.active = new UserStore(this, this._access.token.username, []);
     }
     accounts: Array<UserRef> = []
     auto = autorun((r) => this.persist())
@@ -167,7 +168,6 @@ export class AppStore {
     @action
     logout() {
         //delete refresh token
-        //this.acc.dispose();
         //this._api.setTokenCallback(undefined);
         this._refresh = undefined;
         this._access = undefined;
@@ -197,6 +197,24 @@ export class AppStore {
         });//.catch(() => false)
     }
 
+    protected getTokenCallback = (): Promise<jwt> => {
+        console.log("get token");
+        if (!this._access) {
+            throw "error";
+        }
+        if (this._access?.expired()) {
+            return this.api.endpointGet("auth/jwt/renewtoken", {
+                'RefreshToken': this._refresh?.encoded,
+            }, 200).then((json: TokenPair) => {
+                this._access = new access_jwt(json.accessToken);
+                return this._access!;
+            })
+            // get new token
+            //this._api.endpointGet("auth/jwt/refresh")
+        }
+        return Promise.resolve(this._access);
+    }
+
     @action
     login(name: string, key: string): Promise<UserStore> {
         return this.api.endpointPost(
@@ -205,22 +223,13 @@ export class AppStore {
             200,
         ).then((json: TokenPair) => {
             console.log("[app store] logged in")
-            var acc = new UserStore(this, name);
 
+            var acc = new UserStore(this, name, []);
             this._access = new access_jwt(json.accessToken);
             this._refresh = new jwt(json.refreshToken);
-            this._api.setAuthCallback(() => {
-                if (!this._access) {
-                    throw "error";
-                }
-                if (this._access?.expired()) {
-                    // get new token
-                    //this._api.endpointGet("auth/jwt/refresh")
-                }
-                return this._access;
-                //_token.expired()
-            })
+            this._api.setAuthCallback(this.getTokenCallback);
             this.active = acc;
+
             return acc;
         })
         //.finally((v) => {
