@@ -1,0 +1,2 @@
+node .\node_modules\protobufjs\bin\pbjs -t static-module -w commonjs --force-number -o "./src/model/compiled.js" "../server/api/base.proto"
+node .\node_modules\protobufjs\bin\pbts -o "./src/model/compiled.d.ts" "./src/model/compiled.js"

@@ -1,0 +1,18 @@
+import React from 'react';
+import { Row, Col, Container } from 'react-bootstrap';
+
+export const Jumbosheet: React.FC<{ url?: Array<string> }> = ({ children }) => {
+    return (
+        <Container fluid>
+            <Row>
+                <Col className="col-1 col-0 col-md-4" style={{
+                    height: "100vh",
+                    backgroundImage: "url('https://source.unsplash.com/collection/416021/800x1000')"
+                }} />
+                <Col className="col-11 col-md-8 p-0">
+                    {children}
+                </Col>
+            </Row>
+        </Container>
+    )
+}
