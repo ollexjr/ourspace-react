@@ -1517,6 +1517,9 @@ export interface ICommentNode {
     /** CommentNode comment */
     comment?: (IComment|null);
 
+    /** CommentNode clipped */
+    clipped?: (boolean|null);
+
     /** CommentNode children */
     children?: ({ [k: string]: ICommentNode }|null);
 }
@@ -1532,6 +1535,9 @@ export class CommentNode implements ICommentNode {
 
     /** CommentNode comment. */
     public comment?: (IComment|null);
+
+    /** CommentNode clipped. */
+    public clipped: boolean;
 
     /** CommentNode children. */
     public children: { [k: string]: ICommentNode };

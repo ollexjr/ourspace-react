@@ -3603,6 +3603,7 @@ $root.CommentNode = (function() {
      * @exports ICommentNode
      * @interface ICommentNode
      * @property {IComment|null} [comment] CommentNode comment
+     * @property {boolean|null} [clipped] CommentNode clipped
      * @property {Object.<string,ICommentNode>|null} [children] CommentNode children
      */
 
@@ -3629,6 +3630,14 @@ $root.CommentNode = (function() {
      * @instance
      */
     CommentNode.prototype.comment = null;
+
+    /**
+     * CommentNode clipped.
+     * @member {boolean} clipped
+     * @memberof CommentNode
+     * @instance
+     */
+    CommentNode.prototype.clipped = false;
 
     /**
      * CommentNode children.
@@ -3669,6 +3678,8 @@ $root.CommentNode = (function() {
                 writer.uint32(/* id 2, wireType 2 =*/18).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]);
                 $root.CommentNode.encode(message.children[keys[i]], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim().ldelim();
             }
+        if (message.clipped != null && Object.hasOwnProperty.call(message, "clipped"))
+            writer.uint32(/* id 3, wireType 0 =*/24).bool(message.clipped);
         return writer;
     };
 
@@ -3705,6 +3716,9 @@ $root.CommentNode = (function() {
             switch (tag >>> 3) {
             case 1:
                 message.comment = $root.Comment.decode(reader, reader.uint32());
+                break;
+            case 3:
+                message.clipped = reader.bool();
                 break;
             case 2:
                 if (message.children === $util.emptyObject)
@@ -3768,6 +3782,9 @@ $root.CommentNode = (function() {
             if (error)
                 return "comment." + error;
         }
+        if (message.clipped != null && message.hasOwnProperty("clipped"))
+            if (typeof message.clipped !== "boolean")
+                return "clipped: boolean expected";
         if (message.children != null && message.hasOwnProperty("children")) {
             if (!$util.isObject(message.children))
                 return "children: object expected";
@@ -3798,6 +3815,8 @@ $root.CommentNode = (function() {
                 throw TypeError(".CommentNode.comment: object expected");
             message.comment = $root.Comment.fromObject(object.comment);
         }
+        if (object.clipped != null)
+            message.clipped = Boolean(object.clipped);
         if (object.children) {
             if (typeof object.children !== "object")
                 throw TypeError(".CommentNode.children: object expected");
@@ -3826,8 +3845,10 @@ $root.CommentNode = (function() {
         var object = {};
         if (options.objects || options.defaults)
             object.children = {};
-        if (options.defaults)
+        if (options.defaults) {
             object.comment = null;
+            object.clipped = false;
+        }
         if (message.comment != null && message.hasOwnProperty("comment"))
             object.comment = $root.Comment.toObject(message.comment, options);
         var keys2;
@@ -3836,6 +3857,8 @@ $root.CommentNode = (function() {
             for (var j = 0; j < keys2.length; ++j)
                 object.children[keys2[j]] = $root.CommentNode.toObject(message.children[keys2[j]], options);
         }
+        if (message.clipped != null && message.hasOwnProperty("clipped"))
+            object.clipped = message.clipped;
         return object;
     };
 
