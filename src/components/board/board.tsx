@@ -27,13 +27,24 @@ const ThreadCard: React.FC<{ data: Thread, showContext: boolean }> = ({ data, sh
         }
         return (
             <Container fluid>
-                <div className="d-flex flex-nowrap flex-row-reverse flex-md-row justify-content-end">
-                    <div className="post-vote d-none d-md-block pr-2">
-                        <span></span>
-                        <span></span>
-                    </div>
+                <div className="d-flex flex-row justify-content-start align-items-center p-1">
+                    <InlineVoter
+                        simple
+                        size="sm"
+                        className="d-flex flex-column"
+                        table={data?.acceptedVotes ?? []}
+                        onClick={(v) =>
+                            store.voteThread(data?.uId ?? "undefined", v)
+                                .then(
+                                    t => data!.me!.vote = t.typeCode)} value={data?.me?.vote ?? "unset"} />
+
                     {(data.link?.length ?? false) < 0 &&
-                        <img src="https://source.unsplash.com/random" className="card-img-top" />}
+                        <img src="https://source.unsplash.com/random/100x100" className="card-img-top" />}
+                    <div className="rounded border m-1" style={{
+                        height: 60,
+                        width: 80,
+                        backgroundImage: `url(${data.link}/100x100)`
+                    }} />
                     <div className="card-block text-left x-scroll-parent my-md-auto w-100">
                         <div className="post-meta text-left d-none d-md-block mb-md-2">
                             <span className="mr-2">
@@ -48,13 +59,8 @@ const ThreadCard: React.FC<{ data: Thread, showContext: boolean }> = ({ data, sh
                         </Link>
                     </div>
                 </div>
-                <div>
-                    <InlineVoter
-                        table={data?.acceptedVotes ?? []}
-                        onClick={(v) =>
-                            store.voteThread(data?.uId ?? "undefined", v)
-                                .then(
-                                    t => data!.me!.vote = t.typeCode)} value={data?.me?.vote ?? "unset"} />
+                <div className="d-flex flex-row justify-content-start">
+
                 </div>
             </Container>
         )
@@ -75,8 +81,14 @@ const ThreadCardWrapper: React.FC = ({ children }) => {
 }
 
 export const ThreadsView: React.FC<{ data: Array<Thread> }> = observer(({ data }) => {
+    const store = useBoardStore();
     return (
         <ThreadCardWrapper>
+            {store.error && <div className="d-flex flex-column justify-content-center p-4 rounded border m-5">
+                <h3>Something went wrong loading +{store.boardId}</h3>
+                <h4>{store.error.message}" ({store.error.response.statusText})</h4>
+                <Button onClick={() => store.request()} >Try again</Button>
+            </div>}
             {data.map((t) => t.uId && <ThreadCard showContext={false} key={t.uId} data={t} />)}
         </ThreadCardWrapper>
     )

@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
 import { useLocalStore } from 'mobx-react';
 import { AppStore, useAppStore } from "./app";
-import { Response } from "service/api"
+import { ObservableRequestState, APIError, Response } from "service/api"
 import { useBoardStore, useBoardStoreUnsafe, BoardStore, Board, Thread } from "./board";
 import { IThread, IThreadWithBoardContext, IThreadsSelectResponse, ICommentSelectGraphResponse, IComment, IVote, ICommentCreateRequest, IEntityVoteRequest, ICommentSelectResponse } from 'model/compiled'
 import { observable } from 'mobx';
-
-interface Comment {
-    parentId: string
-}
 
 interface ThreadResponse {
     thread: Thread,
@@ -16,13 +12,10 @@ interface ThreadResponse {
     comments: Array<any>
 }
 
-export class ThreadStore {
+export class ThreadStore extends ObservableRequestState {
     app: AppStore
     board?: BoardStore
     threadId: string
-
-    @observable
-    isFetching: boolean = false
 
     @observable
     requests: number = 0
@@ -39,13 +32,13 @@ export class ThreadStore {
 
 
     constructor(app: AppStore, threadId: string, board?: BoardStore, init?: IThreadWithBoardContext) {
+        super();
         this.board = board;
         this.app = app;
         this.threadId = threadId;
 
         //this.thread = init;
         //this.comments = null;
-
         console.log("[thread-store] => construct");
         this.load();
     }
@@ -59,9 +52,8 @@ export class ThreadStore {
             threadId: this.threadId,
             comment: comment,
         }
-        return this.app.api.endpointPost("thread/comment", wrapper, 200)
-            .then(t => this._insertCommentList(comment))
-            .finally(() => this.isFetching = false);
+        return this.wrap(() => this.app.api.endpointPost("thread/comment", wrapper, 200)
+            .then(t => this._insertCommentList(comment)).finally(() => this.load()))
     }
 
     _insertCommentList(comment: IComment) {
@@ -98,13 +90,8 @@ export class ThreadStore {
     }
 
     load(): Promise<void> {
-        if (this.isFetching) {
-            return Promise.reject();
-        }
         const withContext: boolean = (this.thread == undefined);
-        this.isFetching = true;
-        this.requests++
-        return this.app.api.endpointGet("thread", {
+        return this.wrap(() => this.app.api.endpointGet("thread", {
             'threadId': this.threadId,
             'withContext': withContext,
         }, 200).then((t: IThreadWithBoardContext) => {
@@ -112,7 +99,7 @@ export class ThreadStore {
             this.comments = t.comments ?? undefined;
             this.commentsGraph = t.commentsGraph ?? undefined;
             return
-        }).finally(() => this.isFetching = false);
+        }))
     }
 
     requestMore(commentId: string): Promise<void> {

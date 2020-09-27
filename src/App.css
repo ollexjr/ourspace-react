@@ -41,7 +41,7 @@
   padding-top: 57px;
 }
 
-div.sticky {
+.sticky {
   position: -webkit-sticky;
   position: sticky;
   top: 57px;
@@ -95,6 +95,67 @@ div.background, #root {
   }
 }
 
+.main-content {
+  overflow-y: scroll;
+  max-height: calc(100vh - 65px);
+}
+
 body, #root, #screen-left, #screen-right {
-  min-height: 100vh;
+  max-height: calc(100vh - 65px);
+}
+
+body {
+  font-family: 'Roboto' !important;
+}
+
+.navbar-brand {
+  font-weight: 900;
+}
+
+.navbar-brand span {
+  font-weight: 200;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+.vote-vertical:hover {}
+.vote-vertical:hover .vote-inner {
+  /*z-index: 100;
+  position: absolute;
+  background-color: white;
+  box-shadow: 1px 1px 1px solid black;
+  */
+}
+
+.iframe-container .modal-dialog {
+  max-height: "80vh";
+}
+
+iframe.external-link {
+  background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100% 100%"><text fill="%23FF0000" x="50%" y="50%" font-size="24" text-anchor="middle">Loading...</text></svg>') 0px 0px no-repeat;
+}
+
+.inner-navbar-nav {
+  
+}
+
+.user-info span {
+  margin-right: .25em;
+}
+
+.board-header div {
+  padding: .5em 1em;
+  border-right: 1px solid rgba(0,0,0,.125);
+}
+
+.button-row button {
+  margin-right: 1em;
+}
+
+.poster-info {
+  font-size: .8em;
+}
+.poster-info .username {
+  font-size: .99em;
+  font-weight: 900;
 }

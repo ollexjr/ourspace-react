@@ -20,6 +20,10 @@ interface AcccountState {
 export class UserStore {
     readonly app: AppStore
     username: string
+
+    @observable
+    invalidToken: boolean = false;
+    
     @observable subscriptions: Array<BoardSubscription> = [];
 
     constructor(app: AppStore, username: string) {
@@ -28,6 +32,7 @@ export class UserStore {
         this.subscriptions = [];
         this.sync();
     }
+
     sync(): Promise<void> {
         return this.app.api.endpointGet("me/state", null, 200).then((json: AcccountState) => {
             this.subscriptions = json.subscriptions;

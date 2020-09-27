@@ -23,6 +23,10 @@ export class AppStore {
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;
 
+    openSocket() {
+        this._api.getWebSocket();
+    }
+
     constructor(
         accessToken: string | undefined,
         refreshToken: string | undefined) {
@@ -31,7 +35,9 @@ export class AppStore {
             return
         }
         this.setupLogin(accessToken, refreshToken);
+        this.openSocket();
     }
+    
     accounts: Array<UserRef> = []
     auto = autorun((r) => this.persist())
     get api(): NetworkService {
@@ -61,10 +67,7 @@ export class AppStore {
     @action
     logout(): Promise<void> {
         //delete refresh token
-        this._refresh = undefined;
-        this._access = undefined;
-        this.active = undefined;
-        this.persist();
+        this.tearDownLogin();
         return Promise.resolve();
     }
 
@@ -102,20 +105,29 @@ export class AppStore {
         //});
     }
 
+    private tearDownLogin() {
+        this._refresh = undefined;
+        this._access = undefined;
+        this.active = undefined;
+        this.api.unsetGetToken();
+        //this.api.setAuthCallback(() => Promise.reject());
+        this.persist();
+    }
+
     private setupLogin(accessToken: string, refreshToken: string) {
         this._access = new AccessJwt(accessToken);
         this._refresh = new Jwt(refreshToken);
-        this.api.setAuthCallback(this.getTokenCallback);
+        this.api.setGetToken(this.getTokenCallback);
         this.persist();
-        this.active = new UserStore(this, this._access.token.username);
+        this.active = new UserStore(this, this._access.token.uid);
     }
 
     protected getTokenCallback = (): Promise<Jwt> => {
-        console.log("[app] getting token");
+        //console.log("[app] getting token");
         if (!this._access) {
             throw "error";
         }
-        if (!this._access?.expired()) {
+        if (this._access?.expired()) {
             console.log("[app] getting NEW access token");
             return this.api.basicPost("auth/jwt/renewtoken", {
                 'RefreshToken': this._refresh?.encoded,
@@ -126,8 +138,16 @@ export class AppStore {
                 this._access = new AccessJwt(json.accessToken);
                 this.persist()
                 return this._access!;
-            })
+            }).catch(t => {
+                if (t.response == 401) {
+                    // new refresh token required
+                    // set user logged out
+                    this.active!.invalidToken = true;
+                }
+                throw t;
+            });
         }
+        console.log("[app] using existing access token");
         return Promise.resolve(this._access);
     }
 }

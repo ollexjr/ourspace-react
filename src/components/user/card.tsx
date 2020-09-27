@@ -3,7 +3,9 @@ import React from 'react';
 import { useAppStore } from 'stores/app';
 import { CircleAvatar } from './avatar';
 import { Dropdown } from "react-bootstrap";
-import { ModalSheetWrapper } from "components/modal"
+import { ModalSheetWrapper } from "components/modal";
+import { Link, useHistory } from 'react-router-dom';
+
 export const NavUserCard: React.FC = () => {
     const app = useAppStore();
     return <span className="pr-4"><strong>@{app.active?.username}</strong></span>
@@ -11,6 +13,8 @@ export const NavUserCard: React.FC = () => {
 
 export const InlineNavCard: React.FC = ({ }) => {
     const store = useAppStore();
+    const history = useHistory();
+
     return (
         <>
             {store.loggedIn && <ModalSheetWrapper
@@ -22,13 +26,14 @@ export const InlineNavCard: React.FC = ({ }) => {
                         <Dropdown>
                             <Dropdown.Toggle variant="white" id="dropdown-basic"></Dropdown.Toggle>
                             <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => history.push("/account")}>Account</Dropdown.Item>
+                                <Dropdown.Item onClick={() => history.push("/account/inbox")}>Inbox</Dropdown.Item>
+                                <Dropdown.Item onClick={() => history.push("/create")}>Create Board</Dropdown.Item>
+                                <Dropdown.Divider />
                                 <Dropdown.Item variant="primary" onClick={() => show()}>Logout</Dropdown.Item>
-                                <Dropdown.Item onClick={() => store.logout()}>
-                                    Account
-                                </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <CircleAvatar size={36} />
+                        <CircleAvatar size={36} username={store.active?.username ?? ""} />
                         <span className="ml-2">
                             <strong>@</strong>{store.active!.username ?? "unknown_username?"}
                         </span>

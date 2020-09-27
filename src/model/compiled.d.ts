@@ -1955,11 +1955,20 @@ export interface IBoard {
     /** Board members */
     members?: (number|null);
 
+    /** Board posts */
+    posts?: (number|null);
+
     /** Board moderators */
     moderators?: (number|null);
 
+    /** Board votes */
+    votes?: (number|null);
+
     /** Board rules */
     rules?: (string|null);
+
+    /** Board title */
+    title?: (string|null);
 
     /** Board description */
     description?: (string|null);
@@ -1992,11 +2001,20 @@ export class Board implements IBoard {
     /** Board members. */
     public members: number;
 
+    /** Board posts. */
+    public posts: number;
+
     /** Board moderators. */
     public moderators: number;
 
+    /** Board votes. */
+    public votes: number;
+
     /** Board rules. */
     public rules: string;
+
+    /** Board title. */
+    public title: string;
 
     /** Board description. */
     public description: string;
@@ -2132,6 +2150,12 @@ export interface IThread {
     /** Thread down */
     down?: (number|null);
 
+    /** Thread numComments */
+    numComments?: (number|null);
+
+    /** Thread lastCommentAt */
+    lastCommentAt?: (number|null);
+
     /** Thread votes */
     votes?: (IVote[]|null);
 
@@ -2198,6 +2222,12 @@ export class Thread implements IThread {
 
     /** Thread down. */
     public down: number;
+
+    /** Thread numComments. */
+    public numComments: number;
+
+    /** Thread lastCommentAt. */
+    public lastCommentAt: number;
 
     /** Thread votes. */
     public votes: IVote[];
@@ -4320,6 +4350,216 @@ export class DraftJsRawContent implements IDraftJsRawContent {
 
     /**
      * Converts this DraftJsRawContent to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of an Event. */
+export interface IEvent {
+
+    /** Event eventId */
+    eventId?: (string|null);
+
+    /** Event userId */
+    userId?: (string|null);
+
+    /** Event data */
+    data?: (string|null);
+
+    /** Event createdAt */
+    createdAt?: (number|null);
+}
+
+/** Represents an Event. */
+export class Event implements IEvent {
+
+    /**
+     * Constructs a new Event.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IEvent);
+
+    /** Event eventId. */
+    public eventId: string;
+
+    /** Event userId. */
+    public userId: string;
+
+    /** Event data. */
+    public data: string;
+
+    /** Event createdAt. */
+    public createdAt: number;
+
+    /**
+     * Creates a new Event instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns Event instance
+     */
+    public static create(properties?: IEvent): Event;
+
+    /**
+     * Encodes the specified Event message. Does not implicitly {@link Event.verify|verify} messages.
+     * @param message Event message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified Event message, length delimited. Does not implicitly {@link Event.verify|verify} messages.
+     * @param message Event message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes an Event message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns Event
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Event;
+
+    /**
+     * Decodes an Event message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns Event
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Event;
+
+    /**
+     * Verifies an Event message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates an Event message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns Event
+     */
+    public static fromObject(object: { [k: string]: any }): Event;
+
+    /**
+     * Creates a plain object from an Event message. Also converts values to other types if specified.
+     * @param message Event
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: Event, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this Event to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of an EventContextUpdate. */
+export interface IEventContextUpdate {
+
+    /** EventContextUpdate createdAt */
+    createdAt?: (number|null);
+
+    /** EventContextUpdate threadViewportRange */
+    threadViewportRange?: (string[]|null);
+
+    /** EventContextUpdate commentViewportRange */
+    commentViewportRange?: (string[]|null);
+}
+
+/** Represents an EventContextUpdate. */
+export class EventContextUpdate implements IEventContextUpdate {
+
+    /**
+     * Constructs a new EventContextUpdate.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IEventContextUpdate);
+
+    /** EventContextUpdate createdAt. */
+    public createdAt: number;
+
+    /** EventContextUpdate threadViewportRange. */
+    public threadViewportRange: string[];
+
+    /** EventContextUpdate commentViewportRange. */
+    public commentViewportRange: string[];
+
+    /**
+     * Creates a new EventContextUpdate instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns EventContextUpdate instance
+     */
+    public static create(properties?: IEventContextUpdate): EventContextUpdate;
+
+    /**
+     * Encodes the specified EventContextUpdate message. Does not implicitly {@link EventContextUpdate.verify|verify} messages.
+     * @param message EventContextUpdate message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IEventContextUpdate, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified EventContextUpdate message, length delimited. Does not implicitly {@link EventContextUpdate.verify|verify} messages.
+     * @param message EventContextUpdate message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IEventContextUpdate, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes an EventContextUpdate message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns EventContextUpdate
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): EventContextUpdate;
+
+    /**
+     * Decodes an EventContextUpdate message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns EventContextUpdate
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): EventContextUpdate;
+
+    /**
+     * Verifies an EventContextUpdate message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates an EventContextUpdate message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns EventContextUpdate
+     */
+    public static fromObject(object: { [k: string]: any }): EventContextUpdate;
+
+    /**
+     * Creates a plain object from an EventContextUpdate message. Also converts values to other types if specified.
+     * @param message EventContextUpdate
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: EventContextUpdate, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this EventContextUpdate to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };

@@ -2,16 +2,26 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { useThreadStore, ThreadStoreProvider } from '../../stores/thread';
 import { Editor as XEditor, EditorState, convertFromHTML, convertToRaw } from 'draft-js';
-import { Button, Overlay, Spinner } from 'react-bootstrap';
+import { Button, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
 import Editor from 'rich-markdown-editor';
 import { IComment, ICommentNode } from 'model/compiled';
-import { InlineVoter } from './vote';
+import { InlineVoter, VerticalVoter } from './vote';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExpand, faExternalLinkAlt, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { NetworkGateway } from 'components/network/gateway';
+
 //import { debounce } from 'lodash';
 
-const TextEditor: React.FC<{ source?: string, onAccept: (data: any) => Promise<any>, onCancel?: () => any }> = ({ source, onAccept }) => {
+const TextEditor: React.FC<{
+    source?: string,
+    cancelText: string,
+    acceptText: string,
+    onAccept: (data: any) => Promise<any>,
+    onCancel?: () => any
+}> = ({ source, onAccept, onCancel }) => {
     //const [state, setState] = React.useState<EditorState>(() => EditorState.createEmpty())
     const [state, setState] = React.useState<{
         value: string,
@@ -49,11 +59,12 @@ const TextEditor: React.FC<{ source?: string, onAccept: (data: any) => Promise<a
                     template={true}
                 />
             </div>
-            <div className="d-flex flex-row justify-content-between flex-row-reverse">
+            <div className="d-flex flex-row justify-content-end button-row">
                 <Button onClick={() => {
                     setWaiting(true);
                     onAccept(state.value).finally(() => setWaiting(false))
                 }} >Accept</Button>
+                <Button onClick={() => onCancel && onCancel()} >Cancel</Button>
             </div>
         </div>
     )
@@ -104,32 +115,37 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
     const [reply, setReply] = React.useState(false);
     const [edit, setEditing] = React.useState(false);
 
+    const canReply = store.app.loggedIn;
+    const canEdit = canReply && (data.user!.username == store.app.active?.username);
     let depth = (data?.depth ?? 0);
     return (
-        <li className="list-group-item comment-container p-0 px-2 d-flex flex-row">
+        <li className="thread-link-card list-group-item comment-container p-0 px-2 d-flex flex-row">
             <CommentPadding depth={depth} />
             <div className="flex-grow-1">
-                <div className="d-flex justify-content-between">
-                    <span>@{data?.user?.username ?? ""}</span>
+                <div className="poster-info d-flex justify-content-between">
+                    <span className="username">@{data?.user?.username ?? ""}</span>
                     <span>{moment.unix(data?.createdAt ?? 0).fromNow()}</span>
                 </div>
                 {debug && <pre>
                     {JSON.stringify(data)}
                 </pre>}
-                {edit ? <TextEditor source={data.content ?? "error, editing with no content"} onAccept={(t) => store.addComment(t, data?.uId ?? "")} /> :
+                {edit ? <TextEditor
+                    acceptText="Submit" cancelText="cancel"
+                    source={data.content ?? "error, editing with no content"} onAccept={(t) => store.addComment(t, data?.uId ?? "")} /> :
                     <ReactMarkdown source={data.content ?? "# no content, ask a developer"} />
                 }
-                <div className="d-flex justify-content-between mb-1">
+                <div className="d-flex justify-content-between align-items-center mb-1">
                     <InlineVoter
                         table={store.thread?.acceptedCommentVotes ?? []}
                         votes={data?.votes ?? undefined}
                         onClick={(v) => store.voteComment(data?.uId ?? "undefined", v)} value={data?.me?.vote ?? ""} />
-                    <div className="rounded border">
-                        {!reply && <Button variant="outline-dark" onClick={() => setEditing(!edit)}>{!edit ? "Edit" : "Cancel"}</Button>}
-                        {!edit && <Button variant="outline-dark" onClick={() => setReply(!reply)}>{!reply ? "Reply" : "Cancel"}</Button>}
+                    <div className="rounded button-row">
+                        {canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>{!edit ? "Edit" : "Cancel"}</Button>}
+                        {canReply && !edit && <Button size="sm" variant="outline-dark" onClick={() => setReply(!reply)}>{!reply ? "Reply" : "Cancel"}</Button>}
                     </div>
                 </div>
                 {reply && <TextEditor
+                    acceptText="Submit" cancelText="cancel"
                     onAccept={(t) => edit ?
                         store.editComment(t, data?.uId ?? "").then(t => setEditing(false)) :
                         store.addComment(t, data?.uId ?? "").then(t => setReply(false))} />}
@@ -140,12 +156,15 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
 
 export const ThreadCommentView: React.FC = observer(() => {
     const store = useThreadStore();
-    if (!store.comments || !store.comments.data) {
-        return null;
+    if (!store.commentsGraph || !store.commentsGraph.data) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 200 }}>
+                <h5>No comments yet...</h5>
+            </div>
+        )
     }
 
     const map: Array<IComment> = [];
-
     let recurse = (v: {
         [k: string]: ICommentNode
     }) => {
@@ -163,26 +182,68 @@ export const ThreadCommentView: React.FC = observer(() => {
     if (store.commentsGraph?.data) {
         recurse(store.commentsGraph?.data)
     }
-    //store.commentsGraph?.data.forEach(comment => <ThreadCommentCard data={comment} />
-    const flat = false;
     return (
         <ul className="list-group list-group-flush">
-            {flat && store.comments?.data.map(comment => <ThreadCommentCard data={comment} />)}
             {map.map(comment => <ThreadCommentCard key={comment.uId ?? ""} data={comment} />)}
         </ul>
     )
 })
 
-export const ThreadView: React.FC<{ threadId: string }> = ({ threadId }) => {
-    const store = useThreadStore();
+export const ExternalFrame: React.FC<{ src: string }> = ({ src }) => {
+    const [loaded, setLoaded] = React.useState(false);
     return (
-        <div>
-            <div className="p-2">
-                <h4>{store.thread?.title ?? "%notset%"}</h4>
-                <h5>{store.thread?.link ?? "%notset%"}</h5>
-                <TextEditor onAccept={(t) => store.addComment(t)} />
-            </div>
-            <ThreadCommentView />
-        </div>
+        <iframe className="external-link"
+            onLoadStart={(v) => console.log("[iframe]", v)}
+            onScroll={(v) => console.log("[iframe]", v)}
+            marginWidth={0}
+            marginHeight={0}
+            frameBorder={0}
+            onLoad={() => setLoaded(true)}
+            style={{
+                minHeight: "82vh",
+            }} src={src} />
     )
 }
+
+export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }) => {
+    const store = useThreadStore();
+    const [showModal, setModal] = React.useState(false);
+
+    return (
+        <NetworkGateway retry={() => store.load()} state={() => store}>
+            <div>
+                <Modal size="xl" className="iframe-container" show={showModal} onHide={() => setModal(false)}>
+                    <Modal.Header closeButton>
+                        <div>
+                            <Modal.Title>"{store.thread?.title ?? ""}"</Modal.Title>
+                            <small>{store.thread?.link ?? ""}</small>
+                        </div>
+                    </Modal.Header>
+                    <ExternalFrame
+                        src={store.thread?.link ?? ""} />
+                </Modal>
+                <div className="p-2">
+                    <div className="user-info mb-2">
+                        <span>Posted by</span>
+                        <span><strong>@<span>{store.thread?.user?.username}</span></strong></span>
+                        <span>{moment.unix(store.thread?.createdAt ?? 0).fromNow()}</span>
+                    </div>
+                    <div className="mb-2">
+                        <h4>{store.thread?.title ?? "%notset%"}</h4>
+                        <a>{store.thread?.link && <small>({(new URL(store.thread!.link)).hostname})</small>}</a>
+                    </div>
+                    <div className="d-flex flex-row button-row">
+                        <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faRandom} /></Button>
+                        <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faExpand} /></Button>
+                        <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faShare} /></Button>
+                    </div>
+                </div>
+                <div className="p-2">
+                    <small>Comment as @system</small>
+                    <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />
+                </div>
+                <ThreadCommentView />
+            </div>
+        </NetworkGateway>
+    )
+})

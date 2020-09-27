@@ -10,12 +10,14 @@ import { Container, Navbar, NavbarBrand, Jumbotron } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col'
 
 import { observer } from 'mobx-react';
+import { NetworkedButton } from 'components/button'
 import { BoardStoreProvider, useBoardStore } from "../../stores/board";
 import { ThreadStoreProvider } from '../../stores/thread';
 import { BoardView, Portal, SidebarInfoCard, BoardModPreview } from "../../components/board/board";
 import { ThreadView } from "../../components/board/thread";
-import Row from 'react-bootstrap/esm/Row';
-import Button from 'react-bootstrap/esm/Button';
+import { Button, Row } from 'react-bootstrap';
+import { CircleAvatar } from 'components/user/avatar';
+import moment from 'moment';
 
 const ScreenBoard: React.FC = () => {
     return (
@@ -37,14 +39,30 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
     return (
         <Container fluid className="p-0 bg-white rounded">
             <Jumbotron fluid className="d-block d-md-none p-4 m-0">
-                <h1>Hello, world!</h1>
+                <h1>{store.info?.title ?? "%notset%"}</h1>
+                <h6>+/{boardId}</h6>
             </Jumbotron>
-            <Row className="border-bottom no-gutters mb-1">
-                <Col>
-                    <h4>+{store.info?.description ?? ""}</h4>
-                    <h6>+{boardId}</h6>
-                </Col>
-            </Row>
+            <Navbar bg="white" variant="dark" className="justify-content-between border-bottom no-gutters mb-1 px-4 p-0" style={{
+                zIndex: 4,
+                position: 'sticky',
+                top: 0,
+            }}>
+                <div className="d-flex flex-row align-items-center board-header">
+                    <CircleAvatar size={32} />
+                    <div className="d-flex flex-column">
+                        <h4>{store.info?.description ?? ""}</h4>
+                        <h6>+{boardId}</h6>
+                    </div>
+                    <div>{store.info?.members} Members</div>
+                    <div>{store.info?.posts} Posts</div>
+                    <div>{store.info?.posts} Votes given</div>
+                </div>
+                {!store.info?.isMember && <NetworkedButton
+                    message="Join"
+                    successMessage="Unsubscribe"
+                    onClick={() => store.subscribe()} />}
+                {store.info?.isMember && <Button onClick={() => store.unsubscribe()}>Unsubscribe</Button>}
+            </Navbar>
             <Switch>
                 <Route path={`/+${boardId}/:threadId/`} component={RouterThread} />
                 <Route exact path={`/+${boardId}`} component={BoardView} />
@@ -53,7 +71,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                 <SidebarInfoCard>
                     {store.boardId}
                     <p>
-                        <small>Created {store.info?.createdAt}</small>
+                        <small>Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</small>
                     </p>
                     <BoardModPreview users={store.info?.preview ?? []} />
                 </SidebarInfoCard>

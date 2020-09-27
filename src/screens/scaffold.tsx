@@ -35,14 +35,16 @@ const Scaffold: React.FC = ({ children }) => {
       <SiteNavbar />
       <Container fluid className="_header-spacer no-gutters h-100">
         <Row className="justify-content-around flex-xl-nowrap">
-          <Col id="screen-left" className="d-none d-md-block border-right bg-white h-100 col-12 col-md-3 col-xl-2" style={{ minWidth: "64px" }}>
+          <Col id="screen-left" className="d-none d-md-block border-right bg-white col-12 col-md-3 col-xl-2" style={{ minWidth: "64px" }}>
             <SubscriptionListWithSearch />
           </Col>
-          <Col className="h-100 main-content p-0 p-md-3 _background">
+          <Col className="h-100 main-content p-0 _p-md-3 _background">
             {children}
           </Col>
-          <Col id="screen-right" className="d-none d-lg-block border-left p-0 bg-white col-12 col-md-2 col-xl-2">
-
+          <Col id="screen-right" className="d-none d-lg-block border-left _p-0 bg-white col-12 col-md-2 col-xl-2">
+            <div className="footer">
+              Copyright Big Corp 2020 all rights reserved.
+            </div>
           </Col>
         </Row>
       </Container>
@@ -54,7 +56,6 @@ export const RouterRoot: React.FC = observer(({ }) => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/account" component={ScreenAccount} />
         <Route exact path="/login" component={ScreenLogin} />
         <Route exact path="/signup" component={ScreenSignup} />
         <Scaffold>
@@ -62,6 +63,7 @@ export const RouterRoot: React.FC = observer(({ }) => {
           <Route path="/post/:threadId/:title" component={RouterBoard} />
           <Route exact path="/all" component={ScreenFrontpage} />
           <Route exact path="/" component={ScreenFrontpage} />
+          <Route exact path="/account" component={ScreenAccount} />
         </Scaffold>
       </Switch>
     </Router>

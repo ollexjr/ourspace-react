@@ -2,17 +2,15 @@ import React from 'react';
 import { observable, action, IObservableArray, autorun } from 'mobx';
 import { observer, useLocalStore, useAsObservableSource } from "mobx-react";
 import { AppStore, useAppStore } from "stores/app";
-import { Response } from "service/api";
+import { ObservableRequestState, Response, APIError } from "service/api";
 import { IThread, IThreadSelectFilters, IBoard, IThreadsSelectResponse, IThreadsSelectResponseWithBoardContext, Thread, IVote } from 'model/compiled';
 export type { IThread as Thread, IUser as User, IBoard as Board } from 'model/compiled';
 
-export class BoardStore {
+export class BoardStore extends ObservableRequestState {
     app: AppStore
     token?: string
     boardId: string
-
-    @observable isFetching: boolean = false
-    @observable requests: number = 0
+    
     @observable info?: IBoard
     @observable debug: boolean = false
     @observable filters: IThreadSelectFilters = {
@@ -22,14 +20,10 @@ export class BoardStore {
         createdEnd: 0,
         token: ""
     }
-
-    //_source = useAsObservableSource({})
-    //_auto = autorun(() => {})
-
-    //@observable data: Array<Thread> = observable.array([])
     @observable data: IObservableArray<IThread> = observable.array([])
-
     constructor(app: AppStore, boardId: string) {
+        super();
+
         console.log("[boardstore] init => ", boardId);
         this.app = app;
         this.boardId = boardId;
@@ -37,18 +31,25 @@ export class BoardStore {
     }
 
     @action
-    request(): Promise<void> {
-        if (this.isFetching) {
-            console.log("[board] rejecting, request active")
-            return Promise.reject();
-        }
-        this.isFetching = true;
-        this.requests++
-        this.token = undefined;
+    unsubscribe(): Promise<void> {
+        return this.app.api.endpointPostEx("board/unsubscribe", null, {
+            boardId: this.boardId,
+        }, 200);
+    }
 
-        console.log("[board] requesting...")
+    @action
+    subscribe(): Promise<void> {
+        return this.app.api.endpointPostEx("board/subscribe", null, {
+            boardId: this.boardId,
+        }, 200);
+    }
+
+    @action
+    request(): Promise<void> {
+        this.token = undefined;
+        this.error = undefined;
         const withContext = this.info == null && this.boardId != '_';
-        return this.app.api.endpointGet((this.boardId == '_' ? 'all' : "board/threads"), {
+        return this.wrap(() => this.app.api.endpointGet((this.boardId == '_' ? 'all' : "board/threads"), {
             ...{
                 'boardId': this.boardId,
                 'withContext': withContext,
@@ -56,32 +57,25 @@ export class BoardStore {
         }, 200).then((res: any) => {
             console.log("[board] got data");
             if (withContext) {
-                //let o: IThreadSelectResponse = res;
-                // parse nested object with board ifno
                 this.info = res.board;
                 res = res.threads;
             }
             this.token = res?.token;
             this.data = observable.array<IThread>(res.data);
             return
-        }).finally(() => this.isFetching = false)
+        }))
     }
 
     @action
     requestMore() {
-        if (this.isFetching || !this.token) {
-            return Promise.reject();
-        }
-        this.requests++
-        this.isFetching = true;
-        return this.app.api.endpointGet(this.boardId == '_' ? 'all' : "board/threads", {
+        return this.wrap(() => this.app.api.endpointGet(this.boardId == '_' ? 'all' : "board/threads", {
             'boardId': this.boardId,
             'sort': this.filters,
         }, 200).then((res: Response) => {
             this.token = res.token;
             this.data.concat(res.data);
             return
-        }).finally(() => this.isFetching = false)
+        }));
     }
 
     @action
