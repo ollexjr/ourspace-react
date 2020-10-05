@@ -1,7 +1,14 @@
 import React from 'react';
 import { Image } from 'react-bootstrap';
 
-export const CircleAvatar: React.FC<{ src?: string, size?: number, username?: string }> = ({ src, size, username }) => {
+
+export const CircleAvatar: React.FC<{
+    onClick?: () => any,
+    className?: string,
+    src?: string,
+    size?: number,
+    label?: string
+}> = ({ className, onClick, src, size, label }) => {
     if (!src) {
         src = "https://source.unsplash.com/random"
     }
@@ -9,11 +16,17 @@ export const CircleAvatar: React.FC<{ src?: string, size?: number, username?: st
         size = 128
     }
     return (
-        <Image src={src} style={{
-            width: size,
-            height: size,
-            objectFit: "cover",
-            borderRadius: size,
-        }} />
+        <span className="circle-avatar">
+            <Image
+                className={className}
+                onClick={onClick}
+                src={src} style={{
+                    width: size,
+                    height: size,
+                    objectFit: "cover",
+                    borderRadius: size,
+                }} />
+            {label && <span>{label.substr(0, 2)}</span>}
+        </span>
     )
 } 

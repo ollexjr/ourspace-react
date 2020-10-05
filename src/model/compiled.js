@@ -2413,533 +2413,6 @@ $root.CommentSelectResponse = (function() {
     return CommentSelectResponse;
 })();
 
-$root.BanInfo = (function() {
-
-    /**
-     * Properties of a BanInfo.
-     * @exports IBanInfo
-     * @interface IBanInfo
-     * @property {string|null} [bannedBy] BanInfo bannedBy
-     * @property {string|null} [banReason] BanInfo banReason
-     * @property {string|null} [approvedBy] BanInfo approvedBy
-     * @property {string|null} [createdAt] BanInfo createdAt
-     * @property {string|null} [reportId] BanInfo reportId
-     */
-
-    /**
-     * Constructs a new BanInfo.
-     * @exports BanInfo
-     * @classdesc Represents a BanInfo.
-     * @implements IBanInfo
-     * @constructor
-     * @param {IBanInfo=} [properties] Properties to set
-     */
-    function BanInfo(properties) {
-        if (properties)
-            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                if (properties[keys[i]] != null)
-                    this[keys[i]] = properties[keys[i]];
-    }
-
-    /**
-     * BanInfo bannedBy.
-     * @member {string} bannedBy
-     * @memberof BanInfo
-     * @instance
-     */
-    BanInfo.prototype.bannedBy = "";
-
-    /**
-     * BanInfo banReason.
-     * @member {string} banReason
-     * @memberof BanInfo
-     * @instance
-     */
-    BanInfo.prototype.banReason = "";
-
-    /**
-     * BanInfo approvedBy.
-     * @member {string} approvedBy
-     * @memberof BanInfo
-     * @instance
-     */
-    BanInfo.prototype.approvedBy = "";
-
-    /**
-     * BanInfo createdAt.
-     * @member {string} createdAt
-     * @memberof BanInfo
-     * @instance
-     */
-    BanInfo.prototype.createdAt = "";
-
-    /**
-     * BanInfo reportId.
-     * @member {string} reportId
-     * @memberof BanInfo
-     * @instance
-     */
-    BanInfo.prototype.reportId = "";
-
-    /**
-     * Creates a new BanInfo instance using the specified properties.
-     * @function create
-     * @memberof BanInfo
-     * @static
-     * @param {IBanInfo=} [properties] Properties to set
-     * @returns {BanInfo} BanInfo instance
-     */
-    BanInfo.create = function create(properties) {
-        return new BanInfo(properties);
-    };
-
-    /**
-     * Encodes the specified BanInfo message. Does not implicitly {@link BanInfo.verify|verify} messages.
-     * @function encode
-     * @memberof BanInfo
-     * @static
-     * @param {IBanInfo} message BanInfo message or plain object to encode
-     * @param {$protobuf.Writer} [writer] Writer to encode to
-     * @returns {$protobuf.Writer} Writer
-     */
-    BanInfo.encode = function encode(message, writer) {
-        if (!writer)
-            writer = $Writer.create();
-        if (message.bannedBy != null && Object.hasOwnProperty.call(message, "bannedBy"))
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.bannedBy);
-        if (message.approvedBy != null && Object.hasOwnProperty.call(message, "approvedBy"))
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.approvedBy);
-        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.createdAt);
-        if (message.banReason != null && Object.hasOwnProperty.call(message, "banReason"))
-            writer.uint32(/* id 4, wireType 2 =*/34).string(message.banReason);
-        if (message.reportId != null && Object.hasOwnProperty.call(message, "reportId"))
-            writer.uint32(/* id 5, wireType 2 =*/42).string(message.reportId);
-        return writer;
-    };
-
-    /**
-     * Encodes the specified BanInfo message, length delimited. Does not implicitly {@link BanInfo.verify|verify} messages.
-     * @function encodeDelimited
-     * @memberof BanInfo
-     * @static
-     * @param {IBanInfo} message BanInfo message or plain object to encode
-     * @param {$protobuf.Writer} [writer] Writer to encode to
-     * @returns {$protobuf.Writer} Writer
-     */
-    BanInfo.encodeDelimited = function encodeDelimited(message, writer) {
-        return this.encode(message, writer).ldelim();
-    };
-
-    /**
-     * Decodes a BanInfo message from the specified reader or buffer.
-     * @function decode
-     * @memberof BanInfo
-     * @static
-     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @param {number} [length] Message length if known beforehand
-     * @returns {BanInfo} BanInfo
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    BanInfo.decode = function decode(reader, length) {
-        if (!(reader instanceof $Reader))
-            reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.BanInfo();
-        while (reader.pos < end) {
-            var tag = reader.uint32();
-            switch (tag >>> 3) {
-            case 1:
-                message.bannedBy = reader.string();
-                break;
-            case 4:
-                message.banReason = reader.string();
-                break;
-            case 2:
-                message.approvedBy = reader.string();
-                break;
-            case 3:
-                message.createdAt = reader.string();
-                break;
-            case 5:
-                message.reportId = reader.string();
-                break;
-            default:
-                reader.skipType(tag & 7);
-                break;
-            }
-        }
-        return message;
-    };
-
-    /**
-     * Decodes a BanInfo message from the specified reader or buffer, length delimited.
-     * @function decodeDelimited
-     * @memberof BanInfo
-     * @static
-     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @returns {BanInfo} BanInfo
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    BanInfo.decodeDelimited = function decodeDelimited(reader) {
-        if (!(reader instanceof $Reader))
-            reader = new $Reader(reader);
-        return this.decode(reader, reader.uint32());
-    };
-
-    /**
-     * Verifies a BanInfo message.
-     * @function verify
-     * @memberof BanInfo
-     * @static
-     * @param {Object.<string,*>} message Plain object to verify
-     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-     */
-    BanInfo.verify = function verify(message) {
-        if (typeof message !== "object" || message === null)
-            return "object expected";
-        if (message.bannedBy != null && message.hasOwnProperty("bannedBy"))
-            if (!$util.isString(message.bannedBy))
-                return "bannedBy: string expected";
-        if (message.banReason != null && message.hasOwnProperty("banReason"))
-            if (!$util.isString(message.banReason))
-                return "banReason: string expected";
-        if (message.approvedBy != null && message.hasOwnProperty("approvedBy"))
-            if (!$util.isString(message.approvedBy))
-                return "approvedBy: string expected";
-        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
-            if (!$util.isString(message.createdAt))
-                return "createdAt: string expected";
-        if (message.reportId != null && message.hasOwnProperty("reportId"))
-            if (!$util.isString(message.reportId))
-                return "reportId: string expected";
-        return null;
-    };
-
-    /**
-     * Creates a BanInfo message from a plain object. Also converts values to their respective internal types.
-     * @function fromObject
-     * @memberof BanInfo
-     * @static
-     * @param {Object.<string,*>} object Plain object
-     * @returns {BanInfo} BanInfo
-     */
-    BanInfo.fromObject = function fromObject(object) {
-        if (object instanceof $root.BanInfo)
-            return object;
-        var message = new $root.BanInfo();
-        if (object.bannedBy != null)
-            message.bannedBy = String(object.bannedBy);
-        if (object.banReason != null)
-            message.banReason = String(object.banReason);
-        if (object.approvedBy != null)
-            message.approvedBy = String(object.approvedBy);
-        if (object.createdAt != null)
-            message.createdAt = String(object.createdAt);
-        if (object.reportId != null)
-            message.reportId = String(object.reportId);
-        return message;
-    };
-
-    /**
-     * Creates a plain object from a BanInfo message. Also converts values to other types if specified.
-     * @function toObject
-     * @memberof BanInfo
-     * @static
-     * @param {BanInfo} message BanInfo
-     * @param {$protobuf.IConversionOptions} [options] Conversion options
-     * @returns {Object.<string,*>} Plain object
-     */
-    BanInfo.toObject = function toObject(message, options) {
-        if (!options)
-            options = {};
-        var object = {};
-        if (options.defaults) {
-            object.bannedBy = "";
-            object.approvedBy = "";
-            object.createdAt = "";
-            object.banReason = "";
-            object.reportId = "";
-        }
-        if (message.bannedBy != null && message.hasOwnProperty("bannedBy"))
-            object.bannedBy = message.bannedBy;
-        if (message.approvedBy != null && message.hasOwnProperty("approvedBy"))
-            object.approvedBy = message.approvedBy;
-        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
-            object.createdAt = message.createdAt;
-        if (message.banReason != null && message.hasOwnProperty("banReason"))
-            object.banReason = message.banReason;
-        if (message.reportId != null && message.hasOwnProperty("reportId"))
-            object.reportId = message.reportId;
-        return object;
-    };
-
-    /**
-     * Converts this BanInfo to JSON.
-     * @function toJSON
-     * @memberof BanInfo
-     * @instance
-     * @returns {Object.<string,*>} JSON object
-     */
-    BanInfo.prototype.toJSON = function toJSON() {
-        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-    };
-
-    return BanInfo;
-})();
-
-$root.ReportInfo = (function() {
-
-    /**
-     * Properties of a ReportInfo.
-     * @exports IReportInfo
-     * @interface IReportInfo
-     * @property {string|null} [report] ReportInfo report
-     * @property {IUserRef|null} [user] ReportInfo user
-     * @property {number|null} [createdAt] ReportInfo createdAt
-     */
-
-    /**
-     * Constructs a new ReportInfo.
-     * @exports ReportInfo
-     * @classdesc Represents a ReportInfo.
-     * @implements IReportInfo
-     * @constructor
-     * @param {IReportInfo=} [properties] Properties to set
-     */
-    function ReportInfo(properties) {
-        if (properties)
-            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                if (properties[keys[i]] != null)
-                    this[keys[i]] = properties[keys[i]];
-    }
-
-    /**
-     * ReportInfo report.
-     * @member {string} report
-     * @memberof ReportInfo
-     * @instance
-     */
-    ReportInfo.prototype.report = "";
-
-    /**
-     * ReportInfo user.
-     * @member {IUserRef|null|undefined} user
-     * @memberof ReportInfo
-     * @instance
-     */
-    ReportInfo.prototype.user = null;
-
-    /**
-     * ReportInfo createdAt.
-     * @member {number} createdAt
-     * @memberof ReportInfo
-     * @instance
-     */
-    ReportInfo.prototype.createdAt = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-    /**
-     * Creates a new ReportInfo instance using the specified properties.
-     * @function create
-     * @memberof ReportInfo
-     * @static
-     * @param {IReportInfo=} [properties] Properties to set
-     * @returns {ReportInfo} ReportInfo instance
-     */
-    ReportInfo.create = function create(properties) {
-        return new ReportInfo(properties);
-    };
-
-    /**
-     * Encodes the specified ReportInfo message. Does not implicitly {@link ReportInfo.verify|verify} messages.
-     * @function encode
-     * @memberof ReportInfo
-     * @static
-     * @param {IReportInfo} message ReportInfo message or plain object to encode
-     * @param {$protobuf.Writer} [writer] Writer to encode to
-     * @returns {$protobuf.Writer} Writer
-     */
-    ReportInfo.encode = function encode(message, writer) {
-        if (!writer)
-            writer = $Writer.create();
-        if (message.report != null && Object.hasOwnProperty.call(message, "report"))
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.report);
-        if (message.user != null && Object.hasOwnProperty.call(message, "user"))
-            $root.UserRef.encode(message.user, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
-            writer.uint32(/* id 3, wireType 0 =*/24).int64(message.createdAt);
-        return writer;
-    };
-
-    /**
-     * Encodes the specified ReportInfo message, length delimited. Does not implicitly {@link ReportInfo.verify|verify} messages.
-     * @function encodeDelimited
-     * @memberof ReportInfo
-     * @static
-     * @param {IReportInfo} message ReportInfo message or plain object to encode
-     * @param {$protobuf.Writer} [writer] Writer to encode to
-     * @returns {$protobuf.Writer} Writer
-     */
-    ReportInfo.encodeDelimited = function encodeDelimited(message, writer) {
-        return this.encode(message, writer).ldelim();
-    };
-
-    /**
-     * Decodes a ReportInfo message from the specified reader or buffer.
-     * @function decode
-     * @memberof ReportInfo
-     * @static
-     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @param {number} [length] Message length if known beforehand
-     * @returns {ReportInfo} ReportInfo
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    ReportInfo.decode = function decode(reader, length) {
-        if (!(reader instanceof $Reader))
-            reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ReportInfo();
-        while (reader.pos < end) {
-            var tag = reader.uint32();
-            switch (tag >>> 3) {
-            case 1:
-                message.report = reader.string();
-                break;
-            case 2:
-                message.user = $root.UserRef.decode(reader, reader.uint32());
-                break;
-            case 3:
-                message.createdAt = reader.int64();
-                break;
-            default:
-                reader.skipType(tag & 7);
-                break;
-            }
-        }
-        return message;
-    };
-
-    /**
-     * Decodes a ReportInfo message from the specified reader or buffer, length delimited.
-     * @function decodeDelimited
-     * @memberof ReportInfo
-     * @static
-     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @returns {ReportInfo} ReportInfo
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    ReportInfo.decodeDelimited = function decodeDelimited(reader) {
-        if (!(reader instanceof $Reader))
-            reader = new $Reader(reader);
-        return this.decode(reader, reader.uint32());
-    };
-
-    /**
-     * Verifies a ReportInfo message.
-     * @function verify
-     * @memberof ReportInfo
-     * @static
-     * @param {Object.<string,*>} message Plain object to verify
-     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-     */
-    ReportInfo.verify = function verify(message) {
-        if (typeof message !== "object" || message === null)
-            return "object expected";
-        if (message.report != null && message.hasOwnProperty("report"))
-            if (!$util.isString(message.report))
-                return "report: string expected";
-        if (message.user != null && message.hasOwnProperty("user")) {
-            var error = $root.UserRef.verify(message.user);
-            if (error)
-                return "user." + error;
-        }
-        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
-            if (!$util.isInteger(message.createdAt) && !(message.createdAt && $util.isInteger(message.createdAt.low) && $util.isInteger(message.createdAt.high)))
-                return "createdAt: integer|Long expected";
-        return null;
-    };
-
-    /**
-     * Creates a ReportInfo message from a plain object. Also converts values to their respective internal types.
-     * @function fromObject
-     * @memberof ReportInfo
-     * @static
-     * @param {Object.<string,*>} object Plain object
-     * @returns {ReportInfo} ReportInfo
-     */
-    ReportInfo.fromObject = function fromObject(object) {
-        if (object instanceof $root.ReportInfo)
-            return object;
-        var message = new $root.ReportInfo();
-        if (object.report != null)
-            message.report = String(object.report);
-        if (object.user != null) {
-            if (typeof object.user !== "object")
-                throw TypeError(".ReportInfo.user: object expected");
-            message.user = $root.UserRef.fromObject(object.user);
-        }
-        if (object.createdAt != null)
-            if ($util.Long)
-                (message.createdAt = $util.Long.fromValue(object.createdAt)).unsigned = false;
-            else if (typeof object.createdAt === "string")
-                message.createdAt = parseInt(object.createdAt, 10);
-            else if (typeof object.createdAt === "number")
-                message.createdAt = object.createdAt;
-            else if (typeof object.createdAt === "object")
-                message.createdAt = new $util.LongBits(object.createdAt.low >>> 0, object.createdAt.high >>> 0).toNumber();
-        return message;
-    };
-
-    /**
-     * Creates a plain object from a ReportInfo message. Also converts values to other types if specified.
-     * @function toObject
-     * @memberof ReportInfo
-     * @static
-     * @param {ReportInfo} message ReportInfo
-     * @param {$protobuf.IConversionOptions} [options] Conversion options
-     * @returns {Object.<string,*>} Plain object
-     */
-    ReportInfo.toObject = function toObject(message, options) {
-        if (!options)
-            options = {};
-        var object = {};
-        if (options.defaults) {
-            object.report = "";
-            object.user = null;
-            if ($util.Long) {
-                var long = new $util.Long(0, 0, false);
-                object.createdAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-            } else
-                object.createdAt = options.longs === String ? "0" : 0;
-        }
-        if (message.report != null && message.hasOwnProperty("report"))
-            object.report = message.report;
-        if (message.user != null && message.hasOwnProperty("user"))
-            object.user = $root.UserRef.toObject(message.user, options);
-        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
-            if (typeof message.createdAt === "number")
-                object.createdAt = options.longs === String ? String(message.createdAt) : message.createdAt;
-            else
-                object.createdAt = options.longs === String ? $util.Long.prototype.toString.call(message.createdAt) : options.longs === Number ? new $util.LongBits(message.createdAt.low >>> 0, message.createdAt.high >>> 0).toNumber() : message.createdAt;
-        return object;
-    };
-
-    /**
-     * Converts this ReportInfo to JSON.
-     * @function toJSON
-     * @memberof ReportInfo
-     * @instance
-     * @returns {Object.<string,*>} JSON object
-     */
-    ReportInfo.prototype.toJSON = function toJSON() {
-        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-    };
-
-    return ReportInfo;
-})();
-
 $root.Vote = (function() {
 
     /**
@@ -3228,6 +2701,7 @@ $root.CommentActionedContext = (function() {
      * Properties of a CommentActionedContext.
      * @exports ICommentActionedContext
      * @interface ICommentActionedContext
+     * @property {boolean|null} [isModerator] CommentActionedContext isModerator
      * @property {string|null} [vote] CommentActionedContext vote
      */
 
@@ -3245,6 +2719,14 @@ $root.CommentActionedContext = (function() {
                 if (properties[keys[i]] != null)
                     this[keys[i]] = properties[keys[i]];
     }
+
+    /**
+     * CommentActionedContext isModerator.
+     * @member {boolean} isModerator
+     * @memberof CommentActionedContext
+     * @instance
+     */
+    CommentActionedContext.prototype.isModerator = false;
 
     /**
      * CommentActionedContext vote.
@@ -3280,6 +2762,8 @@ $root.CommentActionedContext = (function() {
             writer = $Writer.create();
         if (message.vote != null && Object.hasOwnProperty.call(message, "vote"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.vote);
+        if (message.isModerator != null && Object.hasOwnProperty.call(message, "isModerator"))
+            writer.uint32(/* id 2, wireType 0 =*/16).bool(message.isModerator);
         return writer;
     };
 
@@ -3314,6 +2798,9 @@ $root.CommentActionedContext = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
+            case 2:
+                message.isModerator = reader.bool();
+                break;
             case 1:
                 message.vote = reader.string();
                 break;
@@ -3352,6 +2839,9 @@ $root.CommentActionedContext = (function() {
     CommentActionedContext.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
+        if (message.isModerator != null && message.hasOwnProperty("isModerator"))
+            if (typeof message.isModerator !== "boolean")
+                return "isModerator: boolean expected";
         if (message.vote != null && message.hasOwnProperty("vote"))
             if (!$util.isString(message.vote))
                 return "vote: string expected";
@@ -3370,6 +2860,8 @@ $root.CommentActionedContext = (function() {
         if (object instanceof $root.CommentActionedContext)
             return object;
         var message = new $root.CommentActionedContext();
+        if (object.isModerator != null)
+            message.isModerator = Boolean(object.isModerator);
         if (object.vote != null)
             message.vote = String(object.vote);
         return message;
@@ -3388,10 +2880,14 @@ $root.CommentActionedContext = (function() {
         if (!options)
             options = {};
         var object = {};
-        if (options.defaults)
+        if (options.defaults) {
             object.vote = "";
+            object.isModerator = false;
+        }
         if (message.vote != null && message.hasOwnProperty("vote"))
             object.vote = message.vote;
+        if (message.isModerator != null && message.hasOwnProperty("isModerator"))
+            object.isModerator = message.isModerator;
         return object;
     };
 
@@ -3415,6 +2911,7 @@ $root.ThreadActionedContext = (function() {
      * Properties of a ThreadActionedContext.
      * @exports IThreadActionedContext
      * @interface IThreadActionedContext
+     * @property {boolean|null} [isModerator] ThreadActionedContext isModerator
      * @property {string|null} [vote] ThreadActionedContext vote
      */
 
@@ -3432,6 +2929,14 @@ $root.ThreadActionedContext = (function() {
                 if (properties[keys[i]] != null)
                     this[keys[i]] = properties[keys[i]];
     }
+
+    /**
+     * ThreadActionedContext isModerator.
+     * @member {boolean} isModerator
+     * @memberof ThreadActionedContext
+     * @instance
+     */
+    ThreadActionedContext.prototype.isModerator = false;
 
     /**
      * ThreadActionedContext vote.
@@ -3467,6 +2972,8 @@ $root.ThreadActionedContext = (function() {
             writer = $Writer.create();
         if (message.vote != null && Object.hasOwnProperty.call(message, "vote"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.vote);
+        if (message.isModerator != null && Object.hasOwnProperty.call(message, "isModerator"))
+            writer.uint32(/* id 2, wireType 0 =*/16).bool(message.isModerator);
         return writer;
     };
 
@@ -3501,6 +3008,9 @@ $root.ThreadActionedContext = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
+            case 2:
+                message.isModerator = reader.bool();
+                break;
             case 1:
                 message.vote = reader.string();
                 break;
@@ -3539,6 +3049,9 @@ $root.ThreadActionedContext = (function() {
     ThreadActionedContext.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
+        if (message.isModerator != null && message.hasOwnProperty("isModerator"))
+            if (typeof message.isModerator !== "boolean")
+                return "isModerator: boolean expected";
         if (message.vote != null && message.hasOwnProperty("vote"))
             if (!$util.isString(message.vote))
                 return "vote: string expected";
@@ -3557,6 +3070,8 @@ $root.ThreadActionedContext = (function() {
         if (object instanceof $root.ThreadActionedContext)
             return object;
         var message = new $root.ThreadActionedContext();
+        if (object.isModerator != null)
+            message.isModerator = Boolean(object.isModerator);
         if (object.vote != null)
             message.vote = String(object.vote);
         return message;
@@ -3575,10 +3090,14 @@ $root.ThreadActionedContext = (function() {
         if (!options)
             options = {};
         var object = {};
-        if (options.defaults)
+        if (options.defaults) {
             object.vote = "";
+            object.isModerator = false;
+        }
         if (message.vote != null && message.hasOwnProperty("vote"))
             object.vote = message.vote;
+        if (message.isModerator != null && message.hasOwnProperty("isModerator"))
+            object.isModerator = message.isModerator;
         return object;
     };
 
@@ -4374,6 +3893,8 @@ $root.Comment = (function() {
      * @property {Array.<IBanInfo>|null} [mod] Comment mod
      * @property {Object.<string,number>|null} [votes] Comment votes
      * @property {ICommentActionedContext|null} [me] Comment me
+     * @property {number|null} [unhandledReports] Comment unhandledReports
+     * @property {number|null} [reports] Comment reports
      * @property {number|null} [depth] Comment depth
      */
 
@@ -4468,6 +3989,22 @@ $root.Comment = (function() {
     Comment.prototype.me = null;
 
     /**
+     * Comment unhandledReports.
+     * @member {number} unhandledReports
+     * @memberof Comment
+     * @instance
+     */
+    Comment.prototype.unhandledReports = 0;
+
+    /**
+     * Comment reports.
+     * @member {number} reports
+     * @memberof Comment
+     * @instance
+     */
+    Comment.prototype.reports = 0;
+
+    /**
      * Comment depth.
      * @member {number} depth
      * @memberof Comment
@@ -4501,27 +4038,31 @@ $root.Comment = (function() {
             writer = $Writer.create();
         if (message.uId != null && Object.hasOwnProperty.call(message, "uId"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.uId);
+        if (message.parentId != null && Object.hasOwnProperty.call(message, "parentId"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.parentId);
         if (message.user != null && Object.hasOwnProperty.call(message, "user"))
-            $root.UserRef.encode(message.user, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            $root.UserRef.encode(message.user, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
         if (message.content != null && Object.hasOwnProperty.call(message, "content"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.content);
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.content);
         if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
-            writer.uint32(/* id 4, wireType 0 =*/32).int64(message.createdAt);
+            writer.uint32(/* id 5, wireType 0 =*/40).int64(message.createdAt);
         if (message.commentEdits != null && message.commentEdits.length)
             for (var i = 0; i < message.commentEdits.length; ++i)
-                $root.Comment.encode(message.commentEdits[i], writer.uint32(/* id 19, wireType 2 =*/154).fork()).ldelim();
+                $root.Comment.encode(message.commentEdits[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
         if (message.mod != null && message.mod.length)
             for (var i = 0; i < message.mod.length; ++i)
-                $root.BanInfo.encode(message.mod[i], writer.uint32(/* id 20, wireType 2 =*/162).fork()).ldelim();
+                $root.BanInfo.encode(message.mod[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
         if (message.votes != null && Object.hasOwnProperty.call(message, "votes"))
             for (var keys = Object.keys(message.votes), i = 0; i < keys.length; ++i)
-                writer.uint32(/* id 21, wireType 2 =*/170).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.votes[keys[i]]).ldelim();
+                writer.uint32(/* id 8, wireType 2 =*/66).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.votes[keys[i]]).ldelim();
         if (message.me != null && Object.hasOwnProperty.call(message, "me"))
-            $root.CommentActionedContext.encode(message.me, writer.uint32(/* id 22, wireType 2 =*/178).fork()).ldelim();
+            $root.CommentActionedContext.encode(message.me, writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
+        if (message.unhandledReports != null && Object.hasOwnProperty.call(message, "unhandledReports"))
+            writer.uint32(/* id 10, wireType 0 =*/80).int32(message.unhandledReports);
+        if (message.reports != null && Object.hasOwnProperty.call(message, "reports"))
+            writer.uint32(/* id 11, wireType 0 =*/88).int32(message.reports);
         if (message.depth != null && Object.hasOwnProperty.call(message, "depth"))
-            writer.uint32(/* id 23, wireType 0 =*/184).int32(message.depth);
-        if (message.parentId != null && Object.hasOwnProperty.call(message, "parentId"))
-            writer.uint32(/* id 99, wireType 2 =*/794).string(message.parentId);
+            writer.uint32(/* id 12, wireType 0 =*/96).int32(message.depth);
         return writer;
     };
 
@@ -4559,29 +4100,29 @@ $root.Comment = (function() {
             case 1:
                 message.uId = reader.string();
                 break;
-            case 99:
+            case 2:
                 message.parentId = reader.string();
                 break;
-            case 2:
+            case 3:
                 message.user = $root.UserRef.decode(reader, reader.uint32());
                 break;
-            case 3:
+            case 4:
                 message.content = reader.string();
                 break;
-            case 4:
+            case 5:
                 message.createdAt = reader.int64();
                 break;
-            case 19:
+            case 6:
                 if (!(message.commentEdits && message.commentEdits.length))
                     message.commentEdits = [];
                 message.commentEdits.push($root.Comment.decode(reader, reader.uint32()));
                 break;
-            case 20:
+            case 7:
                 if (!(message.mod && message.mod.length))
                     message.mod = [];
                 message.mod.push($root.BanInfo.decode(reader, reader.uint32()));
                 break;
-            case 21:
+            case 8:
                 if (message.votes === $util.emptyObject)
                     message.votes = {};
                 var end2 = reader.uint32() + reader.pos;
@@ -4603,10 +4144,16 @@ $root.Comment = (function() {
                 }
                 message.votes[key] = value;
                 break;
-            case 22:
+            case 9:
                 message.me = $root.CommentActionedContext.decode(reader, reader.uint32());
                 break;
-            case 23:
+            case 10:
+                message.unhandledReports = reader.int32();
+                break;
+            case 11:
+                message.reports = reader.int32();
+                break;
+            case 12:
                 message.depth = reader.int32();
                 break;
             default:
@@ -4692,6 +4239,12 @@ $root.Comment = (function() {
             if (error)
                 return "me." + error;
         }
+        if (message.unhandledReports != null && message.hasOwnProperty("unhandledReports"))
+            if (!$util.isInteger(message.unhandledReports))
+                return "unhandledReports: integer expected";
+        if (message.reports != null && message.hasOwnProperty("reports"))
+            if (!$util.isInteger(message.reports))
+                return "reports: integer expected";
         if (message.depth != null && message.hasOwnProperty("depth"))
             if (!$util.isInteger(message.depth))
                 return "depth: integer expected";
@@ -4762,6 +4315,10 @@ $root.Comment = (function() {
                 throw TypeError(".Comment.me: object expected");
             message.me = $root.CommentActionedContext.fromObject(object.me);
         }
+        if (object.unhandledReports != null)
+            message.unhandledReports = object.unhandledReports | 0;
+        if (object.reports != null)
+            message.reports = object.reports | 0;
         if (object.depth != null)
             message.depth = object.depth | 0;
         return message;
@@ -4788,6 +4345,7 @@ $root.Comment = (function() {
             object.votes = {};
         if (options.defaults) {
             object.uId = "";
+            object.parentId = "";
             object.user = null;
             object.content = "";
             if ($util.Long) {
@@ -4796,11 +4354,14 @@ $root.Comment = (function() {
             } else
                 object.createdAt = options.longs === String ? "0" : 0;
             object.me = null;
+            object.unhandledReports = 0;
+            object.reports = 0;
             object.depth = 0;
-            object.parentId = "";
         }
         if (message.uId != null && message.hasOwnProperty("uId"))
             object.uId = message.uId;
+        if (message.parentId != null && message.hasOwnProperty("parentId"))
+            object.parentId = message.parentId;
         if (message.user != null && message.hasOwnProperty("user"))
             object.user = $root.UserRef.toObject(message.user, options);
         if (message.content != null && message.hasOwnProperty("content"))
@@ -4828,10 +4389,12 @@ $root.Comment = (function() {
         }
         if (message.me != null && message.hasOwnProperty("me"))
             object.me = $root.CommentActionedContext.toObject(message.me, options);
+        if (message.unhandledReports != null && message.hasOwnProperty("unhandledReports"))
+            object.unhandledReports = message.unhandledReports;
+        if (message.reports != null && message.hasOwnProperty("reports"))
+            object.reports = message.reports;
         if (message.depth != null && message.hasOwnProperty("depth"))
             object.depth = message.depth;
-        if (message.parentId != null && message.hasOwnProperty("parentId"))
-            object.parentId = message.parentId;
         return object;
     };
 
@@ -4847,6 +4410,237 @@ $root.Comment = (function() {
     };
 
     return Comment;
+})();
+
+$root.SelectReportsResponse = (function() {
+
+    /**
+     * Properties of a SelectReportsResponse.
+     * @exports ISelectReportsResponse
+     * @interface ISelectReportsResponse
+     * @property {Array.<IReportInfo>|null} [reports] SelectReportsResponse reports
+     * @property {string|null} [token] SelectReportsResponse token
+     */
+
+    /**
+     * Constructs a new SelectReportsResponse.
+     * @exports SelectReportsResponse
+     * @classdesc Represents a SelectReportsResponse.
+     * @implements ISelectReportsResponse
+     * @constructor
+     * @param {ISelectReportsResponse=} [properties] Properties to set
+     */
+    function SelectReportsResponse(properties) {
+        this.reports = [];
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * SelectReportsResponse reports.
+     * @member {Array.<IReportInfo>} reports
+     * @memberof SelectReportsResponse
+     * @instance
+     */
+    SelectReportsResponse.prototype.reports = $util.emptyArray;
+
+    /**
+     * SelectReportsResponse token.
+     * @member {string} token
+     * @memberof SelectReportsResponse
+     * @instance
+     */
+    SelectReportsResponse.prototype.token = "";
+
+    /**
+     * Creates a new SelectReportsResponse instance using the specified properties.
+     * @function create
+     * @memberof SelectReportsResponse
+     * @static
+     * @param {ISelectReportsResponse=} [properties] Properties to set
+     * @returns {SelectReportsResponse} SelectReportsResponse instance
+     */
+    SelectReportsResponse.create = function create(properties) {
+        return new SelectReportsResponse(properties);
+    };
+
+    /**
+     * Encodes the specified SelectReportsResponse message. Does not implicitly {@link SelectReportsResponse.verify|verify} messages.
+     * @function encode
+     * @memberof SelectReportsResponse
+     * @static
+     * @param {ISelectReportsResponse} message SelectReportsResponse message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    SelectReportsResponse.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.reports != null && message.reports.length)
+            for (var i = 0; i < message.reports.length; ++i)
+                $root.ReportInfo.encode(message.reports[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        if (message.token != null && Object.hasOwnProperty.call(message, "token"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.token);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified SelectReportsResponse message, length delimited. Does not implicitly {@link SelectReportsResponse.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof SelectReportsResponse
+     * @static
+     * @param {ISelectReportsResponse} message SelectReportsResponse message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    SelectReportsResponse.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a SelectReportsResponse message from the specified reader or buffer.
+     * @function decode
+     * @memberof SelectReportsResponse
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {SelectReportsResponse} SelectReportsResponse
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    SelectReportsResponse.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.SelectReportsResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                if (!(message.reports && message.reports.length))
+                    message.reports = [];
+                message.reports.push($root.ReportInfo.decode(reader, reader.uint32()));
+                break;
+            case 2:
+                message.token = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a SelectReportsResponse message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof SelectReportsResponse
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {SelectReportsResponse} SelectReportsResponse
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    SelectReportsResponse.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a SelectReportsResponse message.
+     * @function verify
+     * @memberof SelectReportsResponse
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    SelectReportsResponse.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.reports != null && message.hasOwnProperty("reports")) {
+            if (!Array.isArray(message.reports))
+                return "reports: array expected";
+            for (var i = 0; i < message.reports.length; ++i) {
+                var error = $root.ReportInfo.verify(message.reports[i]);
+                if (error)
+                    return "reports." + error;
+            }
+        }
+        if (message.token != null && message.hasOwnProperty("token"))
+            if (!$util.isString(message.token))
+                return "token: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a SelectReportsResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof SelectReportsResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {SelectReportsResponse} SelectReportsResponse
+     */
+    SelectReportsResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.SelectReportsResponse)
+            return object;
+        var message = new $root.SelectReportsResponse();
+        if (object.reports) {
+            if (!Array.isArray(object.reports))
+                throw TypeError(".SelectReportsResponse.reports: array expected");
+            message.reports = [];
+            for (var i = 0; i < object.reports.length; ++i) {
+                if (typeof object.reports[i] !== "object")
+                    throw TypeError(".SelectReportsResponse.reports: object expected");
+                message.reports[i] = $root.ReportInfo.fromObject(object.reports[i]);
+            }
+        }
+        if (object.token != null)
+            message.token = String(object.token);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a SelectReportsResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof SelectReportsResponse
+     * @static
+     * @param {SelectReportsResponse} message SelectReportsResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    SelectReportsResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults)
+            object.reports = [];
+        if (options.defaults)
+            object.token = "";
+        if (message.reports && message.reports.length) {
+            object.reports = [];
+            for (var j = 0; j < message.reports.length; ++j)
+                object.reports[j] = $root.ReportInfo.toObject(message.reports[j], options);
+        }
+        if (message.token != null && message.hasOwnProperty("token"))
+            object.token = message.token;
+        return object;
+    };
+
+    /**
+     * Converts this SelectReportsResponse to JSON.
+     * @function toJSON
+     * @memberof SelectReportsResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    SelectReportsResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return SelectReportsResponse;
 })();
 
 $root.Board = (function() {
@@ -5377,11 +5171,12 @@ $root.Thread = (function() {
      * Properties of a Thread.
      * @exports IThread
      * @interface IThread
-     * @property {string|null} [url] Thread url
      * @property {string|null} [uId] Thread uId
+     * @property {string|null} [url] Thread url
      * @property {number|null} [type] Thread type
      * @property {string|null} [title] Thread title
      * @property {string|null} [link] Thread link
+     * @property {string|null} [linkType] Thread linkType
      * @property {string|null} [content] Thread content
      * @property {IUserRef|null} [user] Thread user
      * @property {number|null} [createdAt] Thread createdAt
@@ -5389,14 +5184,16 @@ $root.Thread = (function() {
      * @property {boolean|null} [isKicked] Thread isKicked
      * @property {boolean|null} [isLocked] Thread isLocked
      * @property {boolean|null} [isArchived] Thread isArchived
-     * @property {number|null} [up] Thread up
-     * @property {number|null} [down] Thread down
+     * @property {number|null} [aspectRatio] Thread aspectRatio
+     * @property {string|null} [location] Thread location
      * @property {number|null} [numComments] Thread numComments
      * @property {number|null} [lastCommentAt] Thread lastCommentAt
-     * @property {Array.<IVote>|null} [votes] Thread votes
+     * @property {Object.<string,number>|null} [votes] Thread votes
      * @property {Array.<string>|null} [acceptedVotes] Thread acceptedVotes
      * @property {Array.<string>|null} [acceptedCommentVotes] Thread acceptedCommentVotes
      * @property {Array.<IBanInfo>|null} [mod] Thread mod
+     * @property {number|null} [unhandledReports] Thread unhandledReports
+     * @property {number|null} [reports] Thread reports
      * @property {IThreadActionedContext|null} [me] Thread me
      */
 
@@ -5409,7 +5206,7 @@ $root.Thread = (function() {
      * @param {IThread=} [properties] Properties to set
      */
     function Thread(properties) {
-        this.votes = [];
+        this.votes = {};
         this.acceptedVotes = [];
         this.acceptedCommentVotes = [];
         this.mod = [];
@@ -5420,20 +5217,20 @@ $root.Thread = (function() {
     }
 
     /**
-     * Thread url.
-     * @member {string} url
-     * @memberof Thread
-     * @instance
-     */
-    Thread.prototype.url = "";
-
-    /**
      * Thread uId.
      * @member {string} uId
      * @memberof Thread
      * @instance
      */
     Thread.prototype.uId = "";
+
+    /**
+     * Thread url.
+     * @member {string} url
+     * @memberof Thread
+     * @instance
+     */
+    Thread.prototype.url = "";
 
     /**
      * Thread type.
@@ -5458,6 +5255,14 @@ $root.Thread = (function() {
      * @instance
      */
     Thread.prototype.link = "";
+
+    /**
+     * Thread linkType.
+     * @member {string} linkType
+     * @memberof Thread
+     * @instance
+     */
+    Thread.prototype.linkType = "";
 
     /**
      * Thread content.
@@ -5516,20 +5321,20 @@ $root.Thread = (function() {
     Thread.prototype.isArchived = false;
 
     /**
-     * Thread up.
-     * @member {number} up
+     * Thread aspectRatio.
+     * @member {number} aspectRatio
      * @memberof Thread
      * @instance
      */
-    Thread.prototype.up = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+    Thread.prototype.aspectRatio = 0;
 
     /**
-     * Thread down.
-     * @member {number} down
+     * Thread location.
+     * @member {string} location
      * @memberof Thread
      * @instance
      */
-    Thread.prototype.down = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+    Thread.prototype.location = "";
 
     /**
      * Thread numComments.
@@ -5549,11 +5354,11 @@ $root.Thread = (function() {
 
     /**
      * Thread votes.
-     * @member {Array.<IVote>} votes
+     * @member {Object.<string,number>} votes
      * @memberof Thread
      * @instance
      */
-    Thread.prototype.votes = $util.emptyArray;
+    Thread.prototype.votes = $util.emptyObject;
 
     /**
      * Thread acceptedVotes.
@@ -5578,6 +5383,22 @@ $root.Thread = (function() {
      * @instance
      */
     Thread.prototype.mod = $util.emptyArray;
+
+    /**
+     * Thread unhandledReports.
+     * @member {number} unhandledReports
+     * @memberof Thread
+     * @instance
+     */
+    Thread.prototype.unhandledReports = 0;
+
+    /**
+     * Thread reports.
+     * @member {number} reports
+     * @memberof Thread
+     * @instance
+     */
+    Thread.prototype.reports = 0;
 
     /**
      * Thread me.
@@ -5613,50 +5434,56 @@ $root.Thread = (function() {
             writer = $Writer.create();
         if (message.uId != null && Object.hasOwnProperty.call(message, "uId"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.uId);
-        if (message.type != null && Object.hasOwnProperty.call(message, "type"))
-            writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.type);
-        if (message.title != null && Object.hasOwnProperty.call(message, "title"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.title);
-        if (message.link != null && Object.hasOwnProperty.call(message, "link"))
-            writer.uint32(/* id 4, wireType 2 =*/34).string(message.link);
-        if (message.content != null && Object.hasOwnProperty.call(message, "content"))
-            writer.uint32(/* id 5, wireType 2 =*/42).string(message.content);
-        if (message.user != null && Object.hasOwnProperty.call(message, "user"))
-            $root.UserRef.encode(message.user, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
-        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
-            writer.uint32(/* id 7, wireType 0 =*/56).int64(message.createdAt);
-        if (message.boardId != null && Object.hasOwnProperty.call(message, "boardId"))
-            writer.uint32(/* id 8, wireType 2 =*/66).string(message.boardId);
-        if (message.isLocked != null && Object.hasOwnProperty.call(message, "isLocked"))
-            writer.uint32(/* id 9, wireType 0 =*/72).bool(message.isLocked);
-        if (message.isArchived != null && Object.hasOwnProperty.call(message, "isArchived"))
-            writer.uint32(/* id 10, wireType 0 =*/80).bool(message.isArchived);
-        if (message.up != null && Object.hasOwnProperty.call(message, "up"))
-            writer.uint32(/* id 11, wireType 0 =*/88).int64(message.up);
-        if (message.down != null && Object.hasOwnProperty.call(message, "down"))
-            writer.uint32(/* id 12, wireType 0 =*/96).int64(message.down);
         if (message.url != null && Object.hasOwnProperty.call(message, "url"))
-            writer.uint32(/* id 13, wireType 2 =*/106).string(message.url);
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.url);
+        if (message.type != null && Object.hasOwnProperty.call(message, "type"))
+            writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.type);
+        if (message.title != null && Object.hasOwnProperty.call(message, "title"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.title);
+        if (message.link != null && Object.hasOwnProperty.call(message, "link"))
+            writer.uint32(/* id 5, wireType 2 =*/42).string(message.link);
+        if (message.linkType != null && Object.hasOwnProperty.call(message, "linkType"))
+            writer.uint32(/* id 6, wireType 2 =*/50).string(message.linkType);
+        if (message.content != null && Object.hasOwnProperty.call(message, "content"))
+            writer.uint32(/* id 7, wireType 2 =*/58).string(message.content);
+        if (message.user != null && Object.hasOwnProperty.call(message, "user"))
+            $root.UserRef.encode(message.user, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
+        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
+            writer.uint32(/* id 9, wireType 0 =*/72).int64(message.createdAt);
+        if (message.boardId != null && Object.hasOwnProperty.call(message, "boardId"))
+            writer.uint32(/* id 10, wireType 2 =*/82).string(message.boardId);
         if (message.isKicked != null && Object.hasOwnProperty.call(message, "isKicked"))
-            writer.uint32(/* id 14, wireType 0 =*/112).bool(message.isKicked);
+            writer.uint32(/* id 11, wireType 0 =*/88).bool(message.isKicked);
+        if (message.isLocked != null && Object.hasOwnProperty.call(message, "isLocked"))
+            writer.uint32(/* id 12, wireType 0 =*/96).bool(message.isLocked);
+        if (message.isArchived != null && Object.hasOwnProperty.call(message, "isArchived"))
+            writer.uint32(/* id 13, wireType 0 =*/104).bool(message.isArchived);
+        if (message.aspectRatio != null && Object.hasOwnProperty.call(message, "aspectRatio"))
+            writer.uint32(/* id 14, wireType 0 =*/112).int32(message.aspectRatio);
+        if (message.location != null && Object.hasOwnProperty.call(message, "location"))
+            writer.uint32(/* id 15, wireType 2 =*/122).string(message.location);
         if (message.numComments != null && Object.hasOwnProperty.call(message, "numComments"))
-            writer.uint32(/* id 18, wireType 0 =*/144).int64(message.numComments);
+            writer.uint32(/* id 16, wireType 0 =*/128).int64(message.numComments);
         if (message.lastCommentAt != null && Object.hasOwnProperty.call(message, "lastCommentAt"))
-            writer.uint32(/* id 19, wireType 0 =*/152).int64(message.lastCommentAt);
-        if (message.mod != null && message.mod.length)
-            for (var i = 0; i < message.mod.length; ++i)
-                $root.BanInfo.encode(message.mod[i], writer.uint32(/* id 20, wireType 2 =*/162).fork()).ldelim();
-        if (message.votes != null && message.votes.length)
-            for (var i = 0; i < message.votes.length; ++i)
-                $root.Vote.encode(message.votes[i], writer.uint32(/* id 21, wireType 2 =*/170).fork()).ldelim();
-        if (message.me != null && Object.hasOwnProperty.call(message, "me"))
-            $root.ThreadActionedContext.encode(message.me, writer.uint32(/* id 22, wireType 2 =*/178).fork()).ldelim();
+            writer.uint32(/* id 17, wireType 0 =*/136).int64(message.lastCommentAt);
+        if (message.votes != null && Object.hasOwnProperty.call(message, "votes"))
+            for (var keys = Object.keys(message.votes), i = 0; i < keys.length; ++i)
+                writer.uint32(/* id 18, wireType 2 =*/146).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int32(message.votes[keys[i]]).ldelim();
         if (message.acceptedVotes != null && message.acceptedVotes.length)
             for (var i = 0; i < message.acceptedVotes.length; ++i)
-                writer.uint32(/* id 40, wireType 2 =*/322).string(message.acceptedVotes[i]);
+                writer.uint32(/* id 19, wireType 2 =*/154).string(message.acceptedVotes[i]);
         if (message.acceptedCommentVotes != null && message.acceptedCommentVotes.length)
             for (var i = 0; i < message.acceptedCommentVotes.length; ++i)
-                writer.uint32(/* id 41, wireType 2 =*/330).string(message.acceptedCommentVotes[i]);
+                writer.uint32(/* id 20, wireType 2 =*/162).string(message.acceptedCommentVotes[i]);
+        if (message.mod != null && message.mod.length)
+            for (var i = 0; i < message.mod.length; ++i)
+                $root.BanInfo.encode(message.mod[i], writer.uint32(/* id 21, wireType 2 =*/170).fork()).ldelim();
+        if (message.me != null && Object.hasOwnProperty.call(message, "me"))
+            $root.ThreadActionedContext.encode(message.me, writer.uint32(/* id 23, wireType 2 =*/186).fork()).ldelim();
+        if (message.unhandledReports != null && Object.hasOwnProperty.call(message, "unhandledReports"))
+            writer.uint32(/* id 24, wireType 0 =*/192).int32(message.unhandledReports);
+        if (message.reports != null && Object.hasOwnProperty.call(message, "reports"))
+            writer.uint32(/* id 25, wireType 0 =*/200).int32(message.reports);
         return writer;
     };
 
@@ -5687,79 +5514,105 @@ $root.Thread = (function() {
     Thread.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Thread();
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Thread(), key, value;
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 13:
-                message.url = reader.string();
-                break;
             case 1:
                 message.uId = reader.string();
                 break;
             case 2:
-                message.type = reader.uint32();
+                message.url = reader.string();
                 break;
             case 3:
-                message.title = reader.string();
+                message.type = reader.uint32();
                 break;
             case 4:
-                message.link = reader.string();
+                message.title = reader.string();
                 break;
             case 5:
-                message.content = reader.string();
+                message.link = reader.string();
                 break;
             case 6:
-                message.user = $root.UserRef.decode(reader, reader.uint32());
+                message.linkType = reader.string();
                 break;
             case 7:
-                message.createdAt = reader.int64();
+                message.content = reader.string();
                 break;
             case 8:
-                message.boardId = reader.string();
-                break;
-            case 14:
-                message.isKicked = reader.bool();
+                message.user = $root.UserRef.decode(reader, reader.uint32());
                 break;
             case 9:
-                message.isLocked = reader.bool();
+                message.createdAt = reader.int64();
                 break;
             case 10:
-                message.isArchived = reader.bool();
+                message.boardId = reader.string();
                 break;
             case 11:
-                message.up = reader.int64();
+                message.isKicked = reader.bool();
                 break;
             case 12:
-                message.down = reader.int64();
+                message.isLocked = reader.bool();
                 break;
-            case 18:
+            case 13:
+                message.isArchived = reader.bool();
+                break;
+            case 14:
+                message.aspectRatio = reader.int32();
+                break;
+            case 15:
+                message.location = reader.string();
+                break;
+            case 16:
                 message.numComments = reader.int64();
                 break;
-            case 19:
+            case 17:
                 message.lastCommentAt = reader.int64();
                 break;
-            case 21:
-                if (!(message.votes && message.votes.length))
-                    message.votes = [];
-                message.votes.push($root.Vote.decode(reader, reader.uint32()));
+            case 18:
+                if (message.votes === $util.emptyObject)
+                    message.votes = {};
+                var end2 = reader.uint32() + reader.pos;
+                key = "";
+                value = 0;
+                while (reader.pos < end2) {
+                    var tag2 = reader.uint32();
+                    switch (tag2 >>> 3) {
+                    case 1:
+                        key = reader.string();
+                        break;
+                    case 2:
+                        value = reader.int32();
+                        break;
+                    default:
+                        reader.skipType(tag2 & 7);
+                        break;
+                    }
+                }
+                message.votes[key] = value;
                 break;
-            case 40:
+            case 19:
                 if (!(message.acceptedVotes && message.acceptedVotes.length))
                     message.acceptedVotes = [];
                 message.acceptedVotes.push(reader.string());
                 break;
-            case 41:
+            case 20:
                 if (!(message.acceptedCommentVotes && message.acceptedCommentVotes.length))
                     message.acceptedCommentVotes = [];
                 message.acceptedCommentVotes.push(reader.string());
                 break;
-            case 20:
+            case 21:
                 if (!(message.mod && message.mod.length))
                     message.mod = [];
                 message.mod.push($root.BanInfo.decode(reader, reader.uint32()));
                 break;
-            case 22:
+            case 24:
+                message.unhandledReports = reader.int32();
+                break;
+            case 25:
+                message.reports = reader.int32();
+                break;
+            case 23:
                 message.me = $root.ThreadActionedContext.decode(reader, reader.uint32());
                 break;
             default:
@@ -5797,12 +5650,12 @@ $root.Thread = (function() {
     Thread.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
-        if (message.url != null && message.hasOwnProperty("url"))
-            if (!$util.isString(message.url))
-                return "url: string expected";
         if (message.uId != null && message.hasOwnProperty("uId"))
             if (!$util.isString(message.uId))
                 return "uId: string expected";
+        if (message.url != null && message.hasOwnProperty("url"))
+            if (!$util.isString(message.url))
+                return "url: string expected";
         if (message.type != null && message.hasOwnProperty("type"))
             if (!$util.isInteger(message.type))
                 return "type: integer expected";
@@ -5812,6 +5665,9 @@ $root.Thread = (function() {
         if (message.link != null && message.hasOwnProperty("link"))
             if (!$util.isString(message.link))
                 return "link: string expected";
+        if (message.linkType != null && message.hasOwnProperty("linkType"))
+            if (!$util.isString(message.linkType))
+                return "linkType: string expected";
         if (message.content != null && message.hasOwnProperty("content"))
             if (!$util.isString(message.content))
                 return "content: string expected";
@@ -5835,12 +5691,12 @@ $root.Thread = (function() {
         if (message.isArchived != null && message.hasOwnProperty("isArchived"))
             if (typeof message.isArchived !== "boolean")
                 return "isArchived: boolean expected";
-        if (message.up != null && message.hasOwnProperty("up"))
-            if (!$util.isInteger(message.up) && !(message.up && $util.isInteger(message.up.low) && $util.isInteger(message.up.high)))
-                return "up: integer|Long expected";
-        if (message.down != null && message.hasOwnProperty("down"))
-            if (!$util.isInteger(message.down) && !(message.down && $util.isInteger(message.down.low) && $util.isInteger(message.down.high)))
-                return "down: integer|Long expected";
+        if (message.aspectRatio != null && message.hasOwnProperty("aspectRatio"))
+            if (!$util.isInteger(message.aspectRatio))
+                return "aspectRatio: integer expected";
+        if (message.location != null && message.hasOwnProperty("location"))
+            if (!$util.isString(message.location))
+                return "location: string expected";
         if (message.numComments != null && message.hasOwnProperty("numComments"))
             if (!$util.isInteger(message.numComments) && !(message.numComments && $util.isInteger(message.numComments.low) && $util.isInteger(message.numComments.high)))
                 return "numComments: integer|Long expected";
@@ -5848,13 +5704,12 @@ $root.Thread = (function() {
             if (!$util.isInteger(message.lastCommentAt) && !(message.lastCommentAt && $util.isInteger(message.lastCommentAt.low) && $util.isInteger(message.lastCommentAt.high)))
                 return "lastCommentAt: integer|Long expected";
         if (message.votes != null && message.hasOwnProperty("votes")) {
-            if (!Array.isArray(message.votes))
-                return "votes: array expected";
-            for (var i = 0; i < message.votes.length; ++i) {
-                var error = $root.Vote.verify(message.votes[i]);
-                if (error)
-                    return "votes." + error;
-            }
+            if (!$util.isObject(message.votes))
+                return "votes: object expected";
+            var key = Object.keys(message.votes);
+            for (var i = 0; i < key.length; ++i)
+                if (!$util.isInteger(message.votes[key[i]]))
+                    return "votes: integer{k:string} expected";
         }
         if (message.acceptedVotes != null && message.hasOwnProperty("acceptedVotes")) {
             if (!Array.isArray(message.acceptedVotes))
@@ -5879,6 +5734,12 @@ $root.Thread = (function() {
                     return "mod." + error;
             }
         }
+        if (message.unhandledReports != null && message.hasOwnProperty("unhandledReports"))
+            if (!$util.isInteger(message.unhandledReports))
+                return "unhandledReports: integer expected";
+        if (message.reports != null && message.hasOwnProperty("reports"))
+            if (!$util.isInteger(message.reports))
+                return "reports: integer expected";
         if (message.me != null && message.hasOwnProperty("me")) {
             var error = $root.ThreadActionedContext.verify(message.me);
             if (error)
@@ -5899,16 +5760,18 @@ $root.Thread = (function() {
         if (object instanceof $root.Thread)
             return object;
         var message = new $root.Thread();
-        if (object.url != null)
-            message.url = String(object.url);
         if (object.uId != null)
             message.uId = String(object.uId);
+        if (object.url != null)
+            message.url = String(object.url);
         if (object.type != null)
             message.type = object.type >>> 0;
         if (object.title != null)
             message.title = String(object.title);
         if (object.link != null)
             message.link = String(object.link);
+        if (object.linkType != null)
+            message.linkType = String(object.linkType);
         if (object.content != null)
             message.content = String(object.content);
         if (object.user != null) {
@@ -5933,24 +5796,10 @@ $root.Thread = (function() {
             message.isLocked = Boolean(object.isLocked);
         if (object.isArchived != null)
             message.isArchived = Boolean(object.isArchived);
-        if (object.up != null)
-            if ($util.Long)
-                (message.up = $util.Long.fromValue(object.up)).unsigned = false;
-            else if (typeof object.up === "string")
-                message.up = parseInt(object.up, 10);
-            else if (typeof object.up === "number")
-                message.up = object.up;
-            else if (typeof object.up === "object")
-                message.up = new $util.LongBits(object.up.low >>> 0, object.up.high >>> 0).toNumber();
-        if (object.down != null)
-            if ($util.Long)
-                (message.down = $util.Long.fromValue(object.down)).unsigned = false;
-            else if (typeof object.down === "string")
-                message.down = parseInt(object.down, 10);
-            else if (typeof object.down === "number")
-                message.down = object.down;
-            else if (typeof object.down === "object")
-                message.down = new $util.LongBits(object.down.low >>> 0, object.down.high >>> 0).toNumber();
+        if (object.aspectRatio != null)
+            message.aspectRatio = object.aspectRatio | 0;
+        if (object.location != null)
+            message.location = String(object.location);
         if (object.numComments != null)
             if ($util.Long)
                 (message.numComments = $util.Long.fromValue(object.numComments)).unsigned = false;
@@ -5970,14 +5819,11 @@ $root.Thread = (function() {
             else if (typeof object.lastCommentAt === "object")
                 message.lastCommentAt = new $util.LongBits(object.lastCommentAt.low >>> 0, object.lastCommentAt.high >>> 0).toNumber();
         if (object.votes) {
-            if (!Array.isArray(object.votes))
-                throw TypeError(".Thread.votes: array expected");
-            message.votes = [];
-            for (var i = 0; i < object.votes.length; ++i) {
-                if (typeof object.votes[i] !== "object")
-                    throw TypeError(".Thread.votes: object expected");
-                message.votes[i] = $root.Vote.fromObject(object.votes[i]);
-            }
+            if (typeof object.votes !== "object")
+                throw TypeError(".Thread.votes: object expected");
+            message.votes = {};
+            for (var keys = Object.keys(object.votes), i = 0; i < keys.length; ++i)
+                message.votes[keys[i]] = object.votes[keys[i]] | 0;
         }
         if (object.acceptedVotes) {
             if (!Array.isArray(object.acceptedVotes))
@@ -6003,6 +5849,10 @@ $root.Thread = (function() {
                 message.mod[i] = $root.BanInfo.fromObject(object.mod[i]);
             }
         }
+        if (object.unhandledReports != null)
+            message.unhandledReports = object.unhandledReports | 0;
+        if (object.reports != null)
+            message.reports = object.reports | 0;
         if (object.me != null) {
             if (typeof object.me !== "object")
                 throw TypeError(".Thread.me: object expected");
@@ -6025,16 +5875,19 @@ $root.Thread = (function() {
             options = {};
         var object = {};
         if (options.arrays || options.defaults) {
-            object.mod = [];
-            object.votes = [];
             object.acceptedVotes = [];
             object.acceptedCommentVotes = [];
+            object.mod = [];
         }
+        if (options.objects || options.defaults)
+            object.votes = {};
         if (options.defaults) {
             object.uId = "";
+            object.url = "";
             object.type = 0;
             object.title = "";
             object.link = "";
+            object.linkType = "";
             object.content = "";
             object.user = null;
             if ($util.Long) {
@@ -6043,20 +5896,11 @@ $root.Thread = (function() {
             } else
                 object.createdAt = options.longs === String ? "0" : 0;
             object.boardId = "";
+            object.isKicked = false;
             object.isLocked = false;
             object.isArchived = false;
-            if ($util.Long) {
-                var long = new $util.Long(0, 0, false);
-                object.up = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-            } else
-                object.up = options.longs === String ? "0" : 0;
-            if ($util.Long) {
-                var long = new $util.Long(0, 0, false);
-                object.down = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-            } else
-                object.down = options.longs === String ? "0" : 0;
-            object.url = "";
-            object.isKicked = false;
+            object.aspectRatio = 0;
+            object.location = "";
             if ($util.Long) {
                 var long = new $util.Long(0, 0, false);
                 object.numComments = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -6068,15 +5912,21 @@ $root.Thread = (function() {
             } else
                 object.lastCommentAt = options.longs === String ? "0" : 0;
             object.me = null;
+            object.unhandledReports = 0;
+            object.reports = 0;
         }
         if (message.uId != null && message.hasOwnProperty("uId"))
             object.uId = message.uId;
+        if (message.url != null && message.hasOwnProperty("url"))
+            object.url = message.url;
         if (message.type != null && message.hasOwnProperty("type"))
             object.type = message.type;
         if (message.title != null && message.hasOwnProperty("title"))
             object.title = message.title;
         if (message.link != null && message.hasOwnProperty("link"))
             object.link = message.link;
+        if (message.linkType != null && message.hasOwnProperty("linkType"))
+            object.linkType = message.linkType;
         if (message.content != null && message.hasOwnProperty("content"))
             object.content = message.content;
         if (message.user != null && message.hasOwnProperty("user"))
@@ -6088,24 +5938,16 @@ $root.Thread = (function() {
                 object.createdAt = options.longs === String ? $util.Long.prototype.toString.call(message.createdAt) : options.longs === Number ? new $util.LongBits(message.createdAt.low >>> 0, message.createdAt.high >>> 0).toNumber() : message.createdAt;
         if (message.boardId != null && message.hasOwnProperty("boardId"))
             object.boardId = message.boardId;
+        if (message.isKicked != null && message.hasOwnProperty("isKicked"))
+            object.isKicked = message.isKicked;
         if (message.isLocked != null && message.hasOwnProperty("isLocked"))
             object.isLocked = message.isLocked;
         if (message.isArchived != null && message.hasOwnProperty("isArchived"))
             object.isArchived = message.isArchived;
-        if (message.up != null && message.hasOwnProperty("up"))
-            if (typeof message.up === "number")
-                object.up = options.longs === String ? String(message.up) : message.up;
-            else
-                object.up = options.longs === String ? $util.Long.prototype.toString.call(message.up) : options.longs === Number ? new $util.LongBits(message.up.low >>> 0, message.up.high >>> 0).toNumber() : message.up;
-        if (message.down != null && message.hasOwnProperty("down"))
-            if (typeof message.down === "number")
-                object.down = options.longs === String ? String(message.down) : message.down;
-            else
-                object.down = options.longs === String ? $util.Long.prototype.toString.call(message.down) : options.longs === Number ? new $util.LongBits(message.down.low >>> 0, message.down.high >>> 0).toNumber() : message.down;
-        if (message.url != null && message.hasOwnProperty("url"))
-            object.url = message.url;
-        if (message.isKicked != null && message.hasOwnProperty("isKicked"))
-            object.isKicked = message.isKicked;
+        if (message.aspectRatio != null && message.hasOwnProperty("aspectRatio"))
+            object.aspectRatio = message.aspectRatio;
+        if (message.location != null && message.hasOwnProperty("location"))
+            object.location = message.location;
         if (message.numComments != null && message.hasOwnProperty("numComments"))
             if (typeof message.numComments === "number")
                 object.numComments = options.longs === String ? String(message.numComments) : message.numComments;
@@ -6116,18 +5958,12 @@ $root.Thread = (function() {
                 object.lastCommentAt = options.longs === String ? String(message.lastCommentAt) : message.lastCommentAt;
             else
                 object.lastCommentAt = options.longs === String ? $util.Long.prototype.toString.call(message.lastCommentAt) : options.longs === Number ? new $util.LongBits(message.lastCommentAt.low >>> 0, message.lastCommentAt.high >>> 0).toNumber() : message.lastCommentAt;
-        if (message.mod && message.mod.length) {
-            object.mod = [];
-            for (var j = 0; j < message.mod.length; ++j)
-                object.mod[j] = $root.BanInfo.toObject(message.mod[j], options);
+        var keys2;
+        if (message.votes && (keys2 = Object.keys(message.votes)).length) {
+            object.votes = {};
+            for (var j = 0; j < keys2.length; ++j)
+                object.votes[keys2[j]] = message.votes[keys2[j]];
         }
-        if (message.votes && message.votes.length) {
-            object.votes = [];
-            for (var j = 0; j < message.votes.length; ++j)
-                object.votes[j] = $root.Vote.toObject(message.votes[j], options);
-        }
-        if (message.me != null && message.hasOwnProperty("me"))
-            object.me = $root.ThreadActionedContext.toObject(message.me, options);
         if (message.acceptedVotes && message.acceptedVotes.length) {
             object.acceptedVotes = [];
             for (var j = 0; j < message.acceptedVotes.length; ++j)
@@ -6138,6 +5974,17 @@ $root.Thread = (function() {
             for (var j = 0; j < message.acceptedCommentVotes.length; ++j)
                 object.acceptedCommentVotes[j] = message.acceptedCommentVotes[j];
         }
+        if (message.mod && message.mod.length) {
+            object.mod = [];
+            for (var j = 0; j < message.mod.length; ++j)
+                object.mod[j] = $root.BanInfo.toObject(message.mod[j], options);
+        }
+        if (message.me != null && message.hasOwnProperty("me"))
+            object.me = $root.ThreadActionedContext.toObject(message.me, options);
+        if (message.unhandledReports != null && message.hasOwnProperty("unhandledReports"))
+            object.unhandledReports = message.unhandledReports;
+        if (message.reports != null && message.hasOwnProperty("reports"))
+            object.reports = message.reports;
         return object;
     };
 
@@ -7054,17 +6901,333 @@ $root.CommentCreateResponse = (function() {
     return CommentCreateResponse;
 })();
 
+$root.CommentSelectFilters = (function() {
+
+    /**
+     * Properties of a CommentSelectFilters.
+     * @exports ICommentSelectFilters
+     * @interface ICommentSelectFilters
+     * @property {CommentSelectFilters.Method|null} [rankMethod] CommentSelectFilters rankMethod
+     * @property {CommentSelectFilters.SortDirection|null} [sortDirection] CommentSelectFilters sortDirection
+     * @property {string|null} [parentId] CommentSelectFilters parentId
+     * @property {string|null} [token] CommentSelectFilters token
+     */
+
+    /**
+     * Constructs a new CommentSelectFilters.
+     * @exports CommentSelectFilters
+     * @classdesc Represents a CommentSelectFilters.
+     * @implements ICommentSelectFilters
+     * @constructor
+     * @param {ICommentSelectFilters=} [properties] Properties to set
+     */
+    function CommentSelectFilters(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * CommentSelectFilters rankMethod.
+     * @member {CommentSelectFilters.Method} rankMethod
+     * @memberof CommentSelectFilters
+     * @instance
+     */
+    CommentSelectFilters.prototype.rankMethod = 0;
+
+    /**
+     * CommentSelectFilters sortDirection.
+     * @member {CommentSelectFilters.SortDirection} sortDirection
+     * @memberof CommentSelectFilters
+     * @instance
+     */
+    CommentSelectFilters.prototype.sortDirection = 0;
+
+    /**
+     * CommentSelectFilters parentId.
+     * @member {string} parentId
+     * @memberof CommentSelectFilters
+     * @instance
+     */
+    CommentSelectFilters.prototype.parentId = "";
+
+    /**
+     * CommentSelectFilters token.
+     * @member {string} token
+     * @memberof CommentSelectFilters
+     * @instance
+     */
+    CommentSelectFilters.prototype.token = "";
+
+    /**
+     * Creates a new CommentSelectFilters instance using the specified properties.
+     * @function create
+     * @memberof CommentSelectFilters
+     * @static
+     * @param {ICommentSelectFilters=} [properties] Properties to set
+     * @returns {CommentSelectFilters} CommentSelectFilters instance
+     */
+    CommentSelectFilters.create = function create(properties) {
+        return new CommentSelectFilters(properties);
+    };
+
+    /**
+     * Encodes the specified CommentSelectFilters message. Does not implicitly {@link CommentSelectFilters.verify|verify} messages.
+     * @function encode
+     * @memberof CommentSelectFilters
+     * @static
+     * @param {ICommentSelectFilters} message CommentSelectFilters message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    CommentSelectFilters.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.rankMethod != null && Object.hasOwnProperty.call(message, "rankMethod"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.rankMethod);
+        if (message.sortDirection != null && Object.hasOwnProperty.call(message, "sortDirection"))
+            writer.uint32(/* id 2, wireType 0 =*/16).int32(message.sortDirection);
+        if (message.parentId != null && Object.hasOwnProperty.call(message, "parentId"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.parentId);
+        if (message.token != null && Object.hasOwnProperty.call(message, "token"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.token);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified CommentSelectFilters message, length delimited. Does not implicitly {@link CommentSelectFilters.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof CommentSelectFilters
+     * @static
+     * @param {ICommentSelectFilters} message CommentSelectFilters message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    CommentSelectFilters.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a CommentSelectFilters message from the specified reader or buffer.
+     * @function decode
+     * @memberof CommentSelectFilters
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {CommentSelectFilters} CommentSelectFilters
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    CommentSelectFilters.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.CommentSelectFilters();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.rankMethod = reader.int32();
+                break;
+            case 2:
+                message.sortDirection = reader.int32();
+                break;
+            case 3:
+                message.parentId = reader.string();
+                break;
+            case 4:
+                message.token = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a CommentSelectFilters message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof CommentSelectFilters
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {CommentSelectFilters} CommentSelectFilters
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    CommentSelectFilters.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a CommentSelectFilters message.
+     * @function verify
+     * @memberof CommentSelectFilters
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    CommentSelectFilters.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.rankMethod != null && message.hasOwnProperty("rankMethod"))
+            switch (message.rankMethod) {
+            default:
+                return "rankMethod: enum value expected";
+            case 0:
+            case 1:
+            case 2:
+                break;
+            }
+        if (message.sortDirection != null && message.hasOwnProperty("sortDirection"))
+            switch (message.sortDirection) {
+            default:
+                return "sortDirection: enum value expected";
+            case 0:
+            case 1:
+                break;
+            }
+        if (message.parentId != null && message.hasOwnProperty("parentId"))
+            if (!$util.isString(message.parentId))
+                return "parentId: string expected";
+        if (message.token != null && message.hasOwnProperty("token"))
+            if (!$util.isString(message.token))
+                return "token: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a CommentSelectFilters message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof CommentSelectFilters
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {CommentSelectFilters} CommentSelectFilters
+     */
+    CommentSelectFilters.fromObject = function fromObject(object) {
+        if (object instanceof $root.CommentSelectFilters)
+            return object;
+        var message = new $root.CommentSelectFilters();
+        switch (object.rankMethod) {
+        case "BEST":
+        case 0:
+            message.rankMethod = 0;
+            break;
+        case "CONTROVERSIAL":
+        case 1:
+            message.rankMethod = 1;
+            break;
+        case "DATE":
+        case 2:
+            message.rankMethod = 2;
+            break;
+        }
+        switch (object.sortDirection) {
+        case "DESC":
+        case 0:
+            message.sortDirection = 0;
+            break;
+        case "ASC":
+        case 1:
+            message.sortDirection = 1;
+            break;
+        }
+        if (object.parentId != null)
+            message.parentId = String(object.parentId);
+        if (object.token != null)
+            message.token = String(object.token);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a CommentSelectFilters message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof CommentSelectFilters
+     * @static
+     * @param {CommentSelectFilters} message CommentSelectFilters
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    CommentSelectFilters.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.rankMethod = options.enums === String ? "BEST" : 0;
+            object.sortDirection = options.enums === String ? "DESC" : 0;
+            object.parentId = "";
+            object.token = "";
+        }
+        if (message.rankMethod != null && message.hasOwnProperty("rankMethod"))
+            object.rankMethod = options.enums === String ? $root.CommentSelectFilters.Method[message.rankMethod] : message.rankMethod;
+        if (message.sortDirection != null && message.hasOwnProperty("sortDirection"))
+            object.sortDirection = options.enums === String ? $root.CommentSelectFilters.SortDirection[message.sortDirection] : message.sortDirection;
+        if (message.parentId != null && message.hasOwnProperty("parentId"))
+            object.parentId = message.parentId;
+        if (message.token != null && message.hasOwnProperty("token"))
+            object.token = message.token;
+        return object;
+    };
+
+    /**
+     * Converts this CommentSelectFilters to JSON.
+     * @function toJSON
+     * @memberof CommentSelectFilters
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    CommentSelectFilters.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Method enum.
+     * @name CommentSelectFilters.Method
+     * @enum {number}
+     * @property {number} BEST=0 BEST value
+     * @property {number} CONTROVERSIAL=1 CONTROVERSIAL value
+     * @property {number} DATE=2 DATE value
+     */
+    CommentSelectFilters.Method = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "BEST"] = 0;
+        values[valuesById[1] = "CONTROVERSIAL"] = 1;
+        values[valuesById[2] = "DATE"] = 2;
+        return values;
+    })();
+
+    /**
+     * SortDirection enum.
+     * @name CommentSelectFilters.SortDirection
+     * @enum {number}
+     * @property {number} DESC=0 DESC value
+     * @property {number} ASC=1 ASC value
+     */
+    CommentSelectFilters.SortDirection = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "DESC"] = 0;
+        values[valuesById[1] = "ASC"] = 1;
+        return values;
+    })();
+
+    return CommentSelectFilters;
+})();
+
 $root.ThreadSelectFilters = (function() {
 
     /**
      * Properties of a ThreadSelectFilters.
      * @exports IThreadSelectFilters
      * @interface IThreadSelectFilters
-     * @property {string|null} [rankMethod] ThreadSelectFilters rankMethod
+     * @property {ThreadSelectFilters.Method|null} [rankMethod] ThreadSelectFilters rankMethod
+     * @property {ThreadSelectFilters.SortDirection|null} [sortDirection] ThreadSelectFilters sortDirection
+     * @property {number|null} [limit] ThreadSelectFilters limit
+     * @property {string|null} [query] ThreadSelectFilters query
      * @property {number|null} [createdStart] ThreadSelectFilters createdStart
      * @property {number|null} [createdEnd] ThreadSelectFilters createdEnd
-     * @property {string|null} [sortDirection] ThreadSelectFilters sortDirection
-     * @property {string|null} [token] ThreadSelectFilters token
      */
 
     /**
@@ -7084,11 +7247,35 @@ $root.ThreadSelectFilters = (function() {
 
     /**
      * ThreadSelectFilters rankMethod.
-     * @member {string} rankMethod
+     * @member {ThreadSelectFilters.Method} rankMethod
      * @memberof ThreadSelectFilters
      * @instance
      */
-    ThreadSelectFilters.prototype.rankMethod = "";
+    ThreadSelectFilters.prototype.rankMethod = 0;
+
+    /**
+     * ThreadSelectFilters sortDirection.
+     * @member {ThreadSelectFilters.SortDirection} sortDirection
+     * @memberof ThreadSelectFilters
+     * @instance
+     */
+    ThreadSelectFilters.prototype.sortDirection = 0;
+
+    /**
+     * ThreadSelectFilters limit.
+     * @member {number} limit
+     * @memberof ThreadSelectFilters
+     * @instance
+     */
+    ThreadSelectFilters.prototype.limit = 0;
+
+    /**
+     * ThreadSelectFilters query.
+     * @member {string} query
+     * @memberof ThreadSelectFilters
+     * @instance
+     */
+    ThreadSelectFilters.prototype.query = "";
 
     /**
      * ThreadSelectFilters createdStart.
@@ -7105,22 +7292,6 @@ $root.ThreadSelectFilters = (function() {
      * @instance
      */
     ThreadSelectFilters.prototype.createdEnd = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-    /**
-     * ThreadSelectFilters sortDirection.
-     * @member {string} sortDirection
-     * @memberof ThreadSelectFilters
-     * @instance
-     */
-    ThreadSelectFilters.prototype.sortDirection = "";
-
-    /**
-     * ThreadSelectFilters token.
-     * @member {string} token
-     * @memberof ThreadSelectFilters
-     * @instance
-     */
-    ThreadSelectFilters.prototype.token = "";
 
     /**
      * Creates a new ThreadSelectFilters instance using the specified properties.
@@ -7147,15 +7318,17 @@ $root.ThreadSelectFilters = (function() {
         if (!writer)
             writer = $Writer.create();
         if (message.rankMethod != null && Object.hasOwnProperty.call(message, "rankMethod"))
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.rankMethod);
-        if (message.createdStart != null && Object.hasOwnProperty.call(message, "createdStart"))
-            writer.uint32(/* id 2, wireType 0 =*/16).int64(message.createdStart);
-        if (message.createdEnd != null && Object.hasOwnProperty.call(message, "createdEnd"))
-            writer.uint32(/* id 3, wireType 0 =*/24).int64(message.createdEnd);
-        if (message.token != null && Object.hasOwnProperty.call(message, "token"))
-            writer.uint32(/* id 4, wireType 2 =*/34).string(message.token);
+            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.rankMethod);
         if (message.sortDirection != null && Object.hasOwnProperty.call(message, "sortDirection"))
-            writer.uint32(/* id 5, wireType 2 =*/42).string(message.sortDirection);
+            writer.uint32(/* id 2, wireType 0 =*/16).int32(message.sortDirection);
+        if (message.limit != null && Object.hasOwnProperty.call(message, "limit"))
+            writer.uint32(/* id 3, wireType 0 =*/24).int32(message.limit);
+        if (message.query != null && Object.hasOwnProperty.call(message, "query"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.query);
+        if (message.createdStart != null && Object.hasOwnProperty.call(message, "createdStart"))
+            writer.uint32(/* id 5, wireType 0 =*/40).int64(message.createdStart);
+        if (message.createdEnd != null && Object.hasOwnProperty.call(message, "createdEnd"))
+            writer.uint32(/* id 6, wireType 0 =*/48).int64(message.createdEnd);
         return writer;
     };
 
@@ -7191,19 +7364,22 @@ $root.ThreadSelectFilters = (function() {
             var tag = reader.uint32();
             switch (tag >>> 3) {
             case 1:
-                message.rankMethod = reader.string();
+                message.rankMethod = reader.int32();
                 break;
             case 2:
-                message.createdStart = reader.int64();
+                message.sortDirection = reader.int32();
                 break;
             case 3:
-                message.createdEnd = reader.int64();
-                break;
-            case 5:
-                message.sortDirection = reader.string();
+                message.limit = reader.int32();
                 break;
             case 4:
-                message.token = reader.string();
+                message.query = reader.string();
+                break;
+            case 5:
+                message.createdStart = reader.int64();
+                break;
+            case 6:
+                message.createdEnd = reader.int64();
                 break;
             default:
                 reader.skipType(tag & 7);
@@ -7241,20 +7417,34 @@ $root.ThreadSelectFilters = (function() {
         if (typeof message !== "object" || message === null)
             return "object expected";
         if (message.rankMethod != null && message.hasOwnProperty("rankMethod"))
-            if (!$util.isString(message.rankMethod))
-                return "rankMethod: string expected";
+            switch (message.rankMethod) {
+            default:
+                return "rankMethod: enum value expected";
+            case 0:
+            case 1:
+            case 2:
+                break;
+            }
+        if (message.sortDirection != null && message.hasOwnProperty("sortDirection"))
+            switch (message.sortDirection) {
+            default:
+                return "sortDirection: enum value expected";
+            case 0:
+            case 1:
+                break;
+            }
+        if (message.limit != null && message.hasOwnProperty("limit"))
+            if (!$util.isInteger(message.limit))
+                return "limit: integer expected";
+        if (message.query != null && message.hasOwnProperty("query"))
+            if (!$util.isString(message.query))
+                return "query: string expected";
         if (message.createdStart != null && message.hasOwnProperty("createdStart"))
             if (!$util.isInteger(message.createdStart) && !(message.createdStart && $util.isInteger(message.createdStart.low) && $util.isInteger(message.createdStart.high)))
                 return "createdStart: integer|Long expected";
         if (message.createdEnd != null && message.hasOwnProperty("createdEnd"))
             if (!$util.isInteger(message.createdEnd) && !(message.createdEnd && $util.isInteger(message.createdEnd.low) && $util.isInteger(message.createdEnd.high)))
                 return "createdEnd: integer|Long expected";
-        if (message.sortDirection != null && message.hasOwnProperty("sortDirection"))
-            if (!$util.isString(message.sortDirection))
-                return "sortDirection: string expected";
-        if (message.token != null && message.hasOwnProperty("token"))
-            if (!$util.isString(message.token))
-                return "token: string expected";
         return null;
     };
 
@@ -7270,8 +7460,34 @@ $root.ThreadSelectFilters = (function() {
         if (object instanceof $root.ThreadSelectFilters)
             return object;
         var message = new $root.ThreadSelectFilters();
-        if (object.rankMethod != null)
-            message.rankMethod = String(object.rankMethod);
+        switch (object.rankMethod) {
+        case "HOT":
+        case 0:
+            message.rankMethod = 0;
+            break;
+        case "TOP":
+        case 1:
+            message.rankMethod = 1;
+            break;
+        case "CONTROVERSIAL":
+        case 2:
+            message.rankMethod = 2;
+            break;
+        }
+        switch (object.sortDirection) {
+        case "DESC":
+        case 0:
+            message.sortDirection = 0;
+            break;
+        case "ASC":
+        case 1:
+            message.sortDirection = 1;
+            break;
+        }
+        if (object.limit != null)
+            message.limit = object.limit | 0;
+        if (object.query != null)
+            message.query = String(object.query);
         if (object.createdStart != null)
             if ($util.Long)
                 (message.createdStart = $util.Long.fromValue(object.createdStart)).unsigned = false;
@@ -7290,10 +7506,6 @@ $root.ThreadSelectFilters = (function() {
                 message.createdEnd = object.createdEnd;
             else if (typeof object.createdEnd === "object")
                 message.createdEnd = new $util.LongBits(object.createdEnd.low >>> 0, object.createdEnd.high >>> 0).toNumber();
-        if (object.sortDirection != null)
-            message.sortDirection = String(object.sortDirection);
-        if (object.token != null)
-            message.token = String(object.token);
         return message;
     };
 
@@ -7311,7 +7523,10 @@ $root.ThreadSelectFilters = (function() {
             options = {};
         var object = {};
         if (options.defaults) {
-            object.rankMethod = "";
+            object.rankMethod = options.enums === String ? "HOT" : 0;
+            object.sortDirection = options.enums === String ? "DESC" : 0;
+            object.limit = 0;
+            object.query = "";
             if ($util.Long) {
                 var long = new $util.Long(0, 0, false);
                 object.createdStart = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -7322,11 +7537,15 @@ $root.ThreadSelectFilters = (function() {
                 object.createdEnd = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
             } else
                 object.createdEnd = options.longs === String ? "0" : 0;
-            object.token = "";
-            object.sortDirection = "";
         }
         if (message.rankMethod != null && message.hasOwnProperty("rankMethod"))
-            object.rankMethod = message.rankMethod;
+            object.rankMethod = options.enums === String ? $root.ThreadSelectFilters.Method[message.rankMethod] : message.rankMethod;
+        if (message.sortDirection != null && message.hasOwnProperty("sortDirection"))
+            object.sortDirection = options.enums === String ? $root.ThreadSelectFilters.SortDirection[message.sortDirection] : message.sortDirection;
+        if (message.limit != null && message.hasOwnProperty("limit"))
+            object.limit = message.limit;
+        if (message.query != null && message.hasOwnProperty("query"))
+            object.query = message.query;
         if (message.createdStart != null && message.hasOwnProperty("createdStart"))
             if (typeof message.createdStart === "number")
                 object.createdStart = options.longs === String ? String(message.createdStart) : message.createdStart;
@@ -7337,10 +7556,6 @@ $root.ThreadSelectFilters = (function() {
                 object.createdEnd = options.longs === String ? String(message.createdEnd) : message.createdEnd;
             else
                 object.createdEnd = options.longs === String ? $util.Long.prototype.toString.call(message.createdEnd) : options.longs === Number ? new $util.LongBits(message.createdEnd.low >>> 0, message.createdEnd.high >>> 0).toNumber() : message.createdEnd;
-        if (message.token != null && message.hasOwnProperty("token"))
-            object.token = message.token;
-        if (message.sortDirection != null && message.hasOwnProperty("sortDirection"))
-            object.sortDirection = message.sortDirection;
         return object;
     };
 
@@ -7355,7 +7570,328 @@ $root.ThreadSelectFilters = (function() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
+    /**
+     * ThreadContentFilter enum.
+     * @name ThreadSelectFilters.ThreadContentFilter
+     * @enum {number}
+     * @property {number} TITLE=0 TITLE value
+     * @property {number} CONTENT=1 CONTENT value
+     * @property {number} FLAIR=2 FLAIR value
+     */
+    ThreadSelectFilters.ThreadContentFilter = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "TITLE"] = 0;
+        values[valuesById[1] = "CONTENT"] = 1;
+        values[valuesById[2] = "FLAIR"] = 2;
+        return values;
+    })();
+
+    /**
+     * SortDirection enum.
+     * @name ThreadSelectFilters.SortDirection
+     * @enum {number}
+     * @property {number} DESC=0 DESC value
+     * @property {number} ASC=1 ASC value
+     */
+    ThreadSelectFilters.SortDirection = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "DESC"] = 0;
+        values[valuesById[1] = "ASC"] = 1;
+        return values;
+    })();
+
+    /**
+     * ContentWarning enum.
+     * @name ThreadSelectFilters.ContentWarning
+     * @enum {number}
+     * @property {number} NORMAL=0 NORMAL value
+     * @property {number} NSFW=1 NSFW value
+     * @property {number} NSFL=2 NSFL value
+     */
+    ThreadSelectFilters.ContentWarning = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "NORMAL"] = 0;
+        values[valuesById[1] = "NSFW"] = 1;
+        values[valuesById[2] = "NSFL"] = 2;
+        return values;
+    })();
+
+    /**
+     * Method enum.
+     * @name ThreadSelectFilters.Method
+     * @enum {number}
+     * @property {number} HOT=0 HOT value
+     * @property {number} TOP=1 TOP value
+     * @property {number} CONTROVERSIAL=2 CONTROVERSIAL value
+     */
+    ThreadSelectFilters.Method = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "HOT"] = 0;
+        values[valuesById[1] = "TOP"] = 1;
+        values[valuesById[2] = "CONTROVERSIAL"] = 2;
+        return values;
+    })();
+
     return ThreadSelectFilters;
+})();
+
+$root.ThreadSelectRequest = (function() {
+
+    /**
+     * Properties of a ThreadSelectRequest.
+     * @exports IThreadSelectRequest
+     * @interface IThreadSelectRequest
+     * @property {IThreadSelectFilters|null} [filters] ThreadSelectRequest filters
+     * @property {string|null} [boardId] ThreadSelectRequest boardId
+     * @property {string|null} [token] ThreadSelectRequest token
+     * @property {boolean|null} [withContext] ThreadSelectRequest withContext
+     */
+
+    /**
+     * Constructs a new ThreadSelectRequest.
+     * @exports ThreadSelectRequest
+     * @classdesc Represents a ThreadSelectRequest.
+     * @implements IThreadSelectRequest
+     * @constructor
+     * @param {IThreadSelectRequest=} [properties] Properties to set
+     */
+    function ThreadSelectRequest(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * ThreadSelectRequest filters.
+     * @member {IThreadSelectFilters|null|undefined} filters
+     * @memberof ThreadSelectRequest
+     * @instance
+     */
+    ThreadSelectRequest.prototype.filters = null;
+
+    /**
+     * ThreadSelectRequest boardId.
+     * @member {string} boardId
+     * @memberof ThreadSelectRequest
+     * @instance
+     */
+    ThreadSelectRequest.prototype.boardId = "";
+
+    /**
+     * ThreadSelectRequest token.
+     * @member {string} token
+     * @memberof ThreadSelectRequest
+     * @instance
+     */
+    ThreadSelectRequest.prototype.token = "";
+
+    /**
+     * ThreadSelectRequest withContext.
+     * @member {boolean} withContext
+     * @memberof ThreadSelectRequest
+     * @instance
+     */
+    ThreadSelectRequest.prototype.withContext = false;
+
+    /**
+     * Creates a new ThreadSelectRequest instance using the specified properties.
+     * @function create
+     * @memberof ThreadSelectRequest
+     * @static
+     * @param {IThreadSelectRequest=} [properties] Properties to set
+     * @returns {ThreadSelectRequest} ThreadSelectRequest instance
+     */
+    ThreadSelectRequest.create = function create(properties) {
+        return new ThreadSelectRequest(properties);
+    };
+
+    /**
+     * Encodes the specified ThreadSelectRequest message. Does not implicitly {@link ThreadSelectRequest.verify|verify} messages.
+     * @function encode
+     * @memberof ThreadSelectRequest
+     * @static
+     * @param {IThreadSelectRequest} message ThreadSelectRequest message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ThreadSelectRequest.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.filters != null && Object.hasOwnProperty.call(message, "filters"))
+            $root.ThreadSelectFilters.encode(message.filters, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        if (message.boardId != null && Object.hasOwnProperty.call(message, "boardId"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.boardId);
+        if (message.token != null && Object.hasOwnProperty.call(message, "token"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.token);
+        if (message.withContext != null && Object.hasOwnProperty.call(message, "withContext"))
+            writer.uint32(/* id 4, wireType 0 =*/32).bool(message.withContext);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified ThreadSelectRequest message, length delimited. Does not implicitly {@link ThreadSelectRequest.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof ThreadSelectRequest
+     * @static
+     * @param {IThreadSelectRequest} message ThreadSelectRequest message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ThreadSelectRequest.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a ThreadSelectRequest message from the specified reader or buffer.
+     * @function decode
+     * @memberof ThreadSelectRequest
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {ThreadSelectRequest} ThreadSelectRequest
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ThreadSelectRequest.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ThreadSelectRequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.filters = $root.ThreadSelectFilters.decode(reader, reader.uint32());
+                break;
+            case 2:
+                message.boardId = reader.string();
+                break;
+            case 3:
+                message.token = reader.string();
+                break;
+            case 4:
+                message.withContext = reader.bool();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a ThreadSelectRequest message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof ThreadSelectRequest
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {ThreadSelectRequest} ThreadSelectRequest
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ThreadSelectRequest.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a ThreadSelectRequest message.
+     * @function verify
+     * @memberof ThreadSelectRequest
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    ThreadSelectRequest.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.filters != null && message.hasOwnProperty("filters")) {
+            var error = $root.ThreadSelectFilters.verify(message.filters);
+            if (error)
+                return "filters." + error;
+        }
+        if (message.boardId != null && message.hasOwnProperty("boardId"))
+            if (!$util.isString(message.boardId))
+                return "boardId: string expected";
+        if (message.token != null && message.hasOwnProperty("token"))
+            if (!$util.isString(message.token))
+                return "token: string expected";
+        if (message.withContext != null && message.hasOwnProperty("withContext"))
+            if (typeof message.withContext !== "boolean")
+                return "withContext: boolean expected";
+        return null;
+    };
+
+    /**
+     * Creates a ThreadSelectRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ThreadSelectRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ThreadSelectRequest} ThreadSelectRequest
+     */
+    ThreadSelectRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.ThreadSelectRequest)
+            return object;
+        var message = new $root.ThreadSelectRequest();
+        if (object.filters != null) {
+            if (typeof object.filters !== "object")
+                throw TypeError(".ThreadSelectRequest.filters: object expected");
+            message.filters = $root.ThreadSelectFilters.fromObject(object.filters);
+        }
+        if (object.boardId != null)
+            message.boardId = String(object.boardId);
+        if (object.token != null)
+            message.token = String(object.token);
+        if (object.withContext != null)
+            message.withContext = Boolean(object.withContext);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ThreadSelectRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ThreadSelectRequest
+     * @static
+     * @param {ThreadSelectRequest} message ThreadSelectRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ThreadSelectRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.filters = null;
+            object.boardId = "";
+            object.token = "";
+            object.withContext = false;
+        }
+        if (message.filters != null && message.hasOwnProperty("filters"))
+            object.filters = $root.ThreadSelectFilters.toObject(message.filters, options);
+        if (message.boardId != null && message.hasOwnProperty("boardId"))
+            object.boardId = message.boardId;
+        if (message.token != null && message.hasOwnProperty("token"))
+            object.token = message.token;
+        if (message.withContext != null && message.hasOwnProperty("withContext"))
+            object.withContext = message.withContext;
+        return object;
+    };
+
+    /**
+     * Converts this ThreadSelectRequest to JSON.
+     * @function toJSON
+     * @memberof ThreadSelectRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ThreadSelectRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return ThreadSelectRequest;
 })();
 
 $root.ThreadsSelectResponse = (function() {
@@ -9148,27 +9684,24 @@ $root.BoardCreate = (function() {
     return BoardCreate;
 })();
 
-$root.AllSort = (function() {
+$root.UserModerationAction = (function() {
 
     /**
-     * Properties of an AllSort.
-     * @exports IAllSort
-     * @interface IAllSort
-     * @property {string|null} [sort] AllSort sort
-     * @property {string|null} [createdAt] AllSort createdAt
-     * @property {string|null} [createdEnd] AllSort createdEnd
-     * @property {string|null} [token] AllSort token
+     * Properties of a UserModerationAction.
+     * @exports IUserModerationAction
+     * @interface IUserModerationAction
+     * @property {number|null} [endsAt] UserModerationAction endsAt
      */
 
     /**
-     * Constructs a new AllSort.
-     * @exports AllSort
-     * @classdesc Represents an AllSort.
-     * @implements IAllSort
+     * Constructs a new UserModerationAction.
+     * @exports UserModerationAction
+     * @classdesc Represents a UserModerationAction.
+     * @implements IUserModerationAction
      * @constructor
-     * @param {IAllSort=} [properties] Properties to set
+     * @param {IUserModerationAction=} [properties] Properties to set
      */
-    function AllSort(properties) {
+    function UserModerationAction(properties) {
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
@@ -9176,114 +9709,75 @@ $root.AllSort = (function() {
     }
 
     /**
-     * AllSort sort.
-     * @member {string} sort
-     * @memberof AllSort
+     * UserModerationAction endsAt.
+     * @member {number} endsAt
+     * @memberof UserModerationAction
      * @instance
      */
-    AllSort.prototype.sort = "";
+    UserModerationAction.prototype.endsAt = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
-     * AllSort createdAt.
-     * @member {string} createdAt
-     * @memberof AllSort
-     * @instance
-     */
-    AllSort.prototype.createdAt = "";
-
-    /**
-     * AllSort createdEnd.
-     * @member {string} createdEnd
-     * @memberof AllSort
-     * @instance
-     */
-    AllSort.prototype.createdEnd = "";
-
-    /**
-     * AllSort token.
-     * @member {string} token
-     * @memberof AllSort
-     * @instance
-     */
-    AllSort.prototype.token = "";
-
-    /**
-     * Creates a new AllSort instance using the specified properties.
+     * Creates a new UserModerationAction instance using the specified properties.
      * @function create
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @static
-     * @param {IAllSort=} [properties] Properties to set
-     * @returns {AllSort} AllSort instance
+     * @param {IUserModerationAction=} [properties] Properties to set
+     * @returns {UserModerationAction} UserModerationAction instance
      */
-    AllSort.create = function create(properties) {
-        return new AllSort(properties);
+    UserModerationAction.create = function create(properties) {
+        return new UserModerationAction(properties);
     };
 
     /**
-     * Encodes the specified AllSort message. Does not implicitly {@link AllSort.verify|verify} messages.
+     * Encodes the specified UserModerationAction message. Does not implicitly {@link UserModerationAction.verify|verify} messages.
      * @function encode
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @static
-     * @param {IAllSort} message AllSort message or plain object to encode
+     * @param {IUserModerationAction} message UserModerationAction message or plain object to encode
      * @param {$protobuf.Writer} [writer] Writer to encode to
      * @returns {$protobuf.Writer} Writer
      */
-    AllSort.encode = function encode(message, writer) {
+    UserModerationAction.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.sort != null && Object.hasOwnProperty.call(message, "sort"))
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.sort);
-        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.createdAt);
-        if (message.createdEnd != null && Object.hasOwnProperty.call(message, "createdEnd"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.createdEnd);
-        if (message.token != null && Object.hasOwnProperty.call(message, "token"))
-            writer.uint32(/* id 4, wireType 2 =*/34).string(message.token);
+        if (message.endsAt != null && Object.hasOwnProperty.call(message, "endsAt"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int64(message.endsAt);
         return writer;
     };
 
     /**
-     * Encodes the specified AllSort message, length delimited. Does not implicitly {@link AllSort.verify|verify} messages.
+     * Encodes the specified UserModerationAction message, length delimited. Does not implicitly {@link UserModerationAction.verify|verify} messages.
      * @function encodeDelimited
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @static
-     * @param {IAllSort} message AllSort message or plain object to encode
+     * @param {IUserModerationAction} message UserModerationAction message or plain object to encode
      * @param {$protobuf.Writer} [writer] Writer to encode to
      * @returns {$protobuf.Writer} Writer
      */
-    AllSort.encodeDelimited = function encodeDelimited(message, writer) {
+    UserModerationAction.encodeDelimited = function encodeDelimited(message, writer) {
         return this.encode(message, writer).ldelim();
     };
 
     /**
-     * Decodes an AllSort message from the specified reader or buffer.
+     * Decodes a UserModerationAction message from the specified reader or buffer.
      * @function decode
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @static
      * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
      * @param {number} [length] Message length if known beforehand
-     * @returns {AllSort} AllSort
+     * @returns {UserModerationAction} UserModerationAction
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    AllSort.decode = function decode(reader, length) {
+    UserModerationAction.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.AllSort();
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.UserModerationAction();
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
             case 1:
-                message.sort = reader.string();
-                break;
-            case 2:
-                message.createdAt = reader.string();
-                break;
-            case 3:
-                message.createdEnd = reader.string();
-                break;
-            case 4:
-                message.token = reader.string();
+                message.endsAt = reader.int64();
                 break;
             default:
                 reader.skipType(tag & 7);
@@ -9294,112 +9788,1041 @@ $root.AllSort = (function() {
     };
 
     /**
-     * Decodes an AllSort message from the specified reader or buffer, length delimited.
+     * Decodes a UserModerationAction message from the specified reader or buffer, length delimited.
      * @function decodeDelimited
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @static
      * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @returns {AllSort} AllSort
+     * @returns {UserModerationAction} UserModerationAction
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    AllSort.decodeDelimited = function decodeDelimited(reader) {
+    UserModerationAction.decodeDelimited = function decodeDelimited(reader) {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
     };
 
     /**
-     * Verifies an AllSort message.
+     * Verifies a UserModerationAction message.
      * @function verify
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @static
      * @param {Object.<string,*>} message Plain object to verify
      * @returns {string|null} `null` if valid, otherwise the reason why it is not
      */
-    AllSort.verify = function verify(message) {
+    UserModerationAction.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
-        if (message.sort != null && message.hasOwnProperty("sort"))
-            if (!$util.isString(message.sort))
-                return "sort: string expected";
-        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
-            if (!$util.isString(message.createdAt))
-                return "createdAt: string expected";
-        if (message.createdEnd != null && message.hasOwnProperty("createdEnd"))
-            if (!$util.isString(message.createdEnd))
-                return "createdEnd: string expected";
-        if (message.token != null && message.hasOwnProperty("token"))
-            if (!$util.isString(message.token))
-                return "token: string expected";
+        if (message.endsAt != null && message.hasOwnProperty("endsAt"))
+            if (!$util.isInteger(message.endsAt) && !(message.endsAt && $util.isInteger(message.endsAt.low) && $util.isInteger(message.endsAt.high)))
+                return "endsAt: integer|Long expected";
         return null;
     };
 
     /**
-     * Creates an AllSort message from a plain object. Also converts values to their respective internal types.
+     * Creates a UserModerationAction message from a plain object. Also converts values to their respective internal types.
      * @function fromObject
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @static
      * @param {Object.<string,*>} object Plain object
-     * @returns {AllSort} AllSort
+     * @returns {UserModerationAction} UserModerationAction
      */
-    AllSort.fromObject = function fromObject(object) {
-        if (object instanceof $root.AllSort)
+    UserModerationAction.fromObject = function fromObject(object) {
+        if (object instanceof $root.UserModerationAction)
             return object;
-        var message = new $root.AllSort();
-        if (object.sort != null)
-            message.sort = String(object.sort);
-        if (object.createdAt != null)
-            message.createdAt = String(object.createdAt);
-        if (object.createdEnd != null)
-            message.createdEnd = String(object.createdEnd);
-        if (object.token != null)
-            message.token = String(object.token);
+        var message = new $root.UserModerationAction();
+        if (object.endsAt != null)
+            if ($util.Long)
+                (message.endsAt = $util.Long.fromValue(object.endsAt)).unsigned = false;
+            else if (typeof object.endsAt === "string")
+                message.endsAt = parseInt(object.endsAt, 10);
+            else if (typeof object.endsAt === "number")
+                message.endsAt = object.endsAt;
+            else if (typeof object.endsAt === "object")
+                message.endsAt = new $util.LongBits(object.endsAt.low >>> 0, object.endsAt.high >>> 0).toNumber();
         return message;
     };
 
     /**
-     * Creates a plain object from an AllSort message. Also converts values to other types if specified.
+     * Creates a plain object from a UserModerationAction message. Also converts values to other types if specified.
      * @function toObject
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @static
-     * @param {AllSort} message AllSort
+     * @param {UserModerationAction} message UserModerationAction
      * @param {$protobuf.IConversionOptions} [options] Conversion options
      * @returns {Object.<string,*>} Plain object
      */
-    AllSort.toObject = function toObject(message, options) {
+    UserModerationAction.toObject = function toObject(message, options) {
         if (!options)
             options = {};
         var object = {};
-        if (options.defaults) {
-            object.sort = "";
-            object.createdAt = "";
-            object.createdEnd = "";
-            object.token = "";
-        }
-        if (message.sort != null && message.hasOwnProperty("sort"))
-            object.sort = message.sort;
-        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
-            object.createdAt = message.createdAt;
-        if (message.createdEnd != null && message.hasOwnProperty("createdEnd"))
-            object.createdEnd = message.createdEnd;
-        if (message.token != null && message.hasOwnProperty("token"))
-            object.token = message.token;
+        if (options.defaults)
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.endsAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.endsAt = options.longs === String ? "0" : 0;
+        if (message.endsAt != null && message.hasOwnProperty("endsAt"))
+            if (typeof message.endsAt === "number")
+                object.endsAt = options.longs === String ? String(message.endsAt) : message.endsAt;
+            else
+                object.endsAt = options.longs === String ? $util.Long.prototype.toString.call(message.endsAt) : options.longs === Number ? new $util.LongBits(message.endsAt.low >>> 0, message.endsAt.high >>> 0).toNumber() : message.endsAt;
         return object;
     };
 
     /**
-     * Converts this AllSort to JSON.
+     * Converts this UserModerationAction to JSON.
      * @function toJSON
-     * @memberof AllSort
+     * @memberof UserModerationAction
      * @instance
      * @returns {Object.<string,*>} JSON object
      */
-    AllSort.prototype.toJSON = function toJSON() {
+    UserModerationAction.prototype.toJSON = function toJSON() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
-    return AllSort;
+    return UserModerationAction;
+})();
+
+$root.ModerationAction = (function() {
+
+    /**
+     * Properties of a ModerationAction.
+     * @exports IModerationAction
+     * @interface IModerationAction
+     * @property {string|null} [action] ModerationAction action
+     * @property {number|null} [category] ModerationAction category
+     * @property {string|null} [reason] ModerationAction reason
+     * @property {IUserModerationAction|null} [user] ModerationAction user
+     * @property {number|null} [endsAt] ModerationAction endsAt
+     */
+
+    /**
+     * Constructs a new ModerationAction.
+     * @exports ModerationAction
+     * @classdesc Represents a ModerationAction.
+     * @implements IModerationAction
+     * @constructor
+     * @param {IModerationAction=} [properties] Properties to set
+     */
+    function ModerationAction(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * ModerationAction action.
+     * @member {string} action
+     * @memberof ModerationAction
+     * @instance
+     */
+    ModerationAction.prototype.action = "";
+
+    /**
+     * ModerationAction category.
+     * @member {number} category
+     * @memberof ModerationAction
+     * @instance
+     */
+    ModerationAction.prototype.category = 0;
+
+    /**
+     * ModerationAction reason.
+     * @member {string} reason
+     * @memberof ModerationAction
+     * @instance
+     */
+    ModerationAction.prototype.reason = "";
+
+    /**
+     * ModerationAction user.
+     * @member {IUserModerationAction|null|undefined} user
+     * @memberof ModerationAction
+     * @instance
+     */
+    ModerationAction.prototype.user = null;
+
+    /**
+     * ModerationAction endsAt.
+     * @member {number} endsAt
+     * @memberof ModerationAction
+     * @instance
+     */
+    ModerationAction.prototype.endsAt = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+    /**
+     * Creates a new ModerationAction instance using the specified properties.
+     * @function create
+     * @memberof ModerationAction
+     * @static
+     * @param {IModerationAction=} [properties] Properties to set
+     * @returns {ModerationAction} ModerationAction instance
+     */
+    ModerationAction.create = function create(properties) {
+        return new ModerationAction(properties);
+    };
+
+    /**
+     * Encodes the specified ModerationAction message. Does not implicitly {@link ModerationAction.verify|verify} messages.
+     * @function encode
+     * @memberof ModerationAction
+     * @static
+     * @param {IModerationAction} message ModerationAction message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ModerationAction.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.action != null && Object.hasOwnProperty.call(message, "action"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.action);
+        if (message.category != null && Object.hasOwnProperty.call(message, "category"))
+            writer.uint32(/* id 2, wireType 0 =*/16).int32(message.category);
+        if (message.reason != null && Object.hasOwnProperty.call(message, "reason"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.reason);
+        if (message.user != null && Object.hasOwnProperty.call(message, "user"))
+            $root.UserModerationAction.encode(message.user, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+        if (message.endsAt != null && Object.hasOwnProperty.call(message, "endsAt"))
+            writer.uint32(/* id 5, wireType 0 =*/40).int64(message.endsAt);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified ModerationAction message, length delimited. Does not implicitly {@link ModerationAction.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof ModerationAction
+     * @static
+     * @param {IModerationAction} message ModerationAction message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ModerationAction.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a ModerationAction message from the specified reader or buffer.
+     * @function decode
+     * @memberof ModerationAction
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {ModerationAction} ModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ModerationAction.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ModerationAction();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.action = reader.string();
+                break;
+            case 2:
+                message.category = reader.int32();
+                break;
+            case 3:
+                message.reason = reader.string();
+                break;
+            case 4:
+                message.user = $root.UserModerationAction.decode(reader, reader.uint32());
+                break;
+            case 5:
+                message.endsAt = reader.int64();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a ModerationAction message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof ModerationAction
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {ModerationAction} ModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ModerationAction.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a ModerationAction message.
+     * @function verify
+     * @memberof ModerationAction
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    ModerationAction.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.action != null && message.hasOwnProperty("action"))
+            if (!$util.isString(message.action))
+                return "action: string expected";
+        if (message.category != null && message.hasOwnProperty("category"))
+            if (!$util.isInteger(message.category))
+                return "category: integer expected";
+        if (message.reason != null && message.hasOwnProperty("reason"))
+            if (!$util.isString(message.reason))
+                return "reason: string expected";
+        if (message.user != null && message.hasOwnProperty("user")) {
+            var error = $root.UserModerationAction.verify(message.user);
+            if (error)
+                return "user." + error;
+        }
+        if (message.endsAt != null && message.hasOwnProperty("endsAt"))
+            if (!$util.isInteger(message.endsAt) && !(message.endsAt && $util.isInteger(message.endsAt.low) && $util.isInteger(message.endsAt.high)))
+                return "endsAt: integer|Long expected";
+        return null;
+    };
+
+    /**
+     * Creates a ModerationAction message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ModerationAction
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ModerationAction} ModerationAction
+     */
+    ModerationAction.fromObject = function fromObject(object) {
+        if (object instanceof $root.ModerationAction)
+            return object;
+        var message = new $root.ModerationAction();
+        if (object.action != null)
+            message.action = String(object.action);
+        if (object.category != null)
+            message.category = object.category | 0;
+        if (object.reason != null)
+            message.reason = String(object.reason);
+        if (object.user != null) {
+            if (typeof object.user !== "object")
+                throw TypeError(".ModerationAction.user: object expected");
+            message.user = $root.UserModerationAction.fromObject(object.user);
+        }
+        if (object.endsAt != null)
+            if ($util.Long)
+                (message.endsAt = $util.Long.fromValue(object.endsAt)).unsigned = false;
+            else if (typeof object.endsAt === "string")
+                message.endsAt = parseInt(object.endsAt, 10);
+            else if (typeof object.endsAt === "number")
+                message.endsAt = object.endsAt;
+            else if (typeof object.endsAt === "object")
+                message.endsAt = new $util.LongBits(object.endsAt.low >>> 0, object.endsAt.high >>> 0).toNumber();
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ModerationAction message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ModerationAction
+     * @static
+     * @param {ModerationAction} message ModerationAction
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ModerationAction.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.action = "";
+            object.category = 0;
+            object.reason = "";
+            object.user = null;
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.endsAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.endsAt = options.longs === String ? "0" : 0;
+        }
+        if (message.action != null && message.hasOwnProperty("action"))
+            object.action = message.action;
+        if (message.category != null && message.hasOwnProperty("category"))
+            object.category = message.category;
+        if (message.reason != null && message.hasOwnProperty("reason"))
+            object.reason = message.reason;
+        if (message.user != null && message.hasOwnProperty("user"))
+            object.user = $root.UserModerationAction.toObject(message.user, options);
+        if (message.endsAt != null && message.hasOwnProperty("endsAt"))
+            if (typeof message.endsAt === "number")
+                object.endsAt = options.longs === String ? String(message.endsAt) : message.endsAt;
+            else
+                object.endsAt = options.longs === String ? $util.Long.prototype.toString.call(message.endsAt) : options.longs === Number ? new $util.LongBits(message.endsAt.low >>> 0, message.endsAt.high >>> 0).toNumber() : message.endsAt;
+        return object;
+    };
+
+    /**
+     * Converts this ModerationAction to JSON.
+     * @function toJSON
+     * @memberof ModerationAction
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ModerationAction.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return ModerationAction;
+})();
+
+$root.ThreadModerationAction = (function() {
+
+    /**
+     * Properties of a ThreadModerationAction.
+     * @exports IThreadModerationAction
+     * @interface IThreadModerationAction
+     * @property {IModerationAction|null} [action] ThreadModerationAction action
+     * @property {string|null} [threadId] ThreadModerationAction threadId
+     */
+
+    /**
+     * Constructs a new ThreadModerationAction.
+     * @exports ThreadModerationAction
+     * @classdesc Represents a ThreadModerationAction.
+     * @implements IThreadModerationAction
+     * @constructor
+     * @param {IThreadModerationAction=} [properties] Properties to set
+     */
+    function ThreadModerationAction(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * ThreadModerationAction action.
+     * @member {IModerationAction|null|undefined} action
+     * @memberof ThreadModerationAction
+     * @instance
+     */
+    ThreadModerationAction.prototype.action = null;
+
+    /**
+     * ThreadModerationAction threadId.
+     * @member {string} threadId
+     * @memberof ThreadModerationAction
+     * @instance
+     */
+    ThreadModerationAction.prototype.threadId = "";
+
+    /**
+     * Creates a new ThreadModerationAction instance using the specified properties.
+     * @function create
+     * @memberof ThreadModerationAction
+     * @static
+     * @param {IThreadModerationAction=} [properties] Properties to set
+     * @returns {ThreadModerationAction} ThreadModerationAction instance
+     */
+    ThreadModerationAction.create = function create(properties) {
+        return new ThreadModerationAction(properties);
+    };
+
+    /**
+     * Encodes the specified ThreadModerationAction message. Does not implicitly {@link ThreadModerationAction.verify|verify} messages.
+     * @function encode
+     * @memberof ThreadModerationAction
+     * @static
+     * @param {IThreadModerationAction} message ThreadModerationAction message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ThreadModerationAction.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.action != null && Object.hasOwnProperty.call(message, "action"))
+            $root.ModerationAction.encode(message.action, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        if (message.threadId != null && Object.hasOwnProperty.call(message, "threadId"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.threadId);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified ThreadModerationAction message, length delimited. Does not implicitly {@link ThreadModerationAction.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof ThreadModerationAction
+     * @static
+     * @param {IThreadModerationAction} message ThreadModerationAction message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ThreadModerationAction.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a ThreadModerationAction message from the specified reader or buffer.
+     * @function decode
+     * @memberof ThreadModerationAction
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {ThreadModerationAction} ThreadModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ThreadModerationAction.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ThreadModerationAction();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.action = $root.ModerationAction.decode(reader, reader.uint32());
+                break;
+            case 2:
+                message.threadId = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a ThreadModerationAction message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof ThreadModerationAction
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {ThreadModerationAction} ThreadModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ThreadModerationAction.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a ThreadModerationAction message.
+     * @function verify
+     * @memberof ThreadModerationAction
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    ThreadModerationAction.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.action != null && message.hasOwnProperty("action")) {
+            var error = $root.ModerationAction.verify(message.action);
+            if (error)
+                return "action." + error;
+        }
+        if (message.threadId != null && message.hasOwnProperty("threadId"))
+            if (!$util.isString(message.threadId))
+                return "threadId: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a ThreadModerationAction message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ThreadModerationAction
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ThreadModerationAction} ThreadModerationAction
+     */
+    ThreadModerationAction.fromObject = function fromObject(object) {
+        if (object instanceof $root.ThreadModerationAction)
+            return object;
+        var message = new $root.ThreadModerationAction();
+        if (object.action != null) {
+            if (typeof object.action !== "object")
+                throw TypeError(".ThreadModerationAction.action: object expected");
+            message.action = $root.ModerationAction.fromObject(object.action);
+        }
+        if (object.threadId != null)
+            message.threadId = String(object.threadId);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ThreadModerationAction message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ThreadModerationAction
+     * @static
+     * @param {ThreadModerationAction} message ThreadModerationAction
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ThreadModerationAction.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.action = null;
+            object.threadId = "";
+        }
+        if (message.action != null && message.hasOwnProperty("action"))
+            object.action = $root.ModerationAction.toObject(message.action, options);
+        if (message.threadId != null && message.hasOwnProperty("threadId"))
+            object.threadId = message.threadId;
+        return object;
+    };
+
+    /**
+     * Converts this ThreadModerationAction to JSON.
+     * @function toJSON
+     * @memberof ThreadModerationAction
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ThreadModerationAction.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return ThreadModerationAction;
+})();
+
+$root.CommentModerationAction = (function() {
+
+    /**
+     * Properties of a CommentModerationAction.
+     * @exports ICommentModerationAction
+     * @interface ICommentModerationAction
+     * @property {IModerationAction|null} [action] CommentModerationAction action
+     * @property {string|null} [commentId] CommentModerationAction commentId
+     */
+
+    /**
+     * Constructs a new CommentModerationAction.
+     * @exports CommentModerationAction
+     * @classdesc Represents a CommentModerationAction.
+     * @implements ICommentModerationAction
+     * @constructor
+     * @param {ICommentModerationAction=} [properties] Properties to set
+     */
+    function CommentModerationAction(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * CommentModerationAction action.
+     * @member {IModerationAction|null|undefined} action
+     * @memberof CommentModerationAction
+     * @instance
+     */
+    CommentModerationAction.prototype.action = null;
+
+    /**
+     * CommentModerationAction commentId.
+     * @member {string} commentId
+     * @memberof CommentModerationAction
+     * @instance
+     */
+    CommentModerationAction.prototype.commentId = "";
+
+    /**
+     * Creates a new CommentModerationAction instance using the specified properties.
+     * @function create
+     * @memberof CommentModerationAction
+     * @static
+     * @param {ICommentModerationAction=} [properties] Properties to set
+     * @returns {CommentModerationAction} CommentModerationAction instance
+     */
+    CommentModerationAction.create = function create(properties) {
+        return new CommentModerationAction(properties);
+    };
+
+    /**
+     * Encodes the specified CommentModerationAction message. Does not implicitly {@link CommentModerationAction.verify|verify} messages.
+     * @function encode
+     * @memberof CommentModerationAction
+     * @static
+     * @param {ICommentModerationAction} message CommentModerationAction message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    CommentModerationAction.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.action != null && Object.hasOwnProperty.call(message, "action"))
+            $root.ModerationAction.encode(message.action, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        if (message.commentId != null && Object.hasOwnProperty.call(message, "commentId"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.commentId);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified CommentModerationAction message, length delimited. Does not implicitly {@link CommentModerationAction.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof CommentModerationAction
+     * @static
+     * @param {ICommentModerationAction} message CommentModerationAction message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    CommentModerationAction.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a CommentModerationAction message from the specified reader or buffer.
+     * @function decode
+     * @memberof CommentModerationAction
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {CommentModerationAction} CommentModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    CommentModerationAction.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.CommentModerationAction();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.action = $root.ModerationAction.decode(reader, reader.uint32());
+                break;
+            case 2:
+                message.commentId = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a CommentModerationAction message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof CommentModerationAction
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {CommentModerationAction} CommentModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    CommentModerationAction.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a CommentModerationAction message.
+     * @function verify
+     * @memberof CommentModerationAction
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    CommentModerationAction.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.action != null && message.hasOwnProperty("action")) {
+            var error = $root.ModerationAction.verify(message.action);
+            if (error)
+                return "action." + error;
+        }
+        if (message.commentId != null && message.hasOwnProperty("commentId"))
+            if (!$util.isString(message.commentId))
+                return "commentId: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a CommentModerationAction message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof CommentModerationAction
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {CommentModerationAction} CommentModerationAction
+     */
+    CommentModerationAction.fromObject = function fromObject(object) {
+        if (object instanceof $root.CommentModerationAction)
+            return object;
+        var message = new $root.CommentModerationAction();
+        if (object.action != null) {
+            if (typeof object.action !== "object")
+                throw TypeError(".CommentModerationAction.action: object expected");
+            message.action = $root.ModerationAction.fromObject(object.action);
+        }
+        if (object.commentId != null)
+            message.commentId = String(object.commentId);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a CommentModerationAction message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof CommentModerationAction
+     * @static
+     * @param {CommentModerationAction} message CommentModerationAction
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    CommentModerationAction.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.action = null;
+            object.commentId = "";
+        }
+        if (message.action != null && message.hasOwnProperty("action"))
+            object.action = $root.ModerationAction.toObject(message.action, options);
+        if (message.commentId != null && message.hasOwnProperty("commentId"))
+            object.commentId = message.commentId;
+        return object;
+    };
+
+    /**
+     * Converts this CommentModerationAction to JSON.
+     * @function toJSON
+     * @memberof CommentModerationAction
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    CommentModerationAction.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return CommentModerationAction;
+})();
+
+$root.BoardModerationAction = (function() {
+
+    /**
+     * Properties of a BoardModerationAction.
+     * @exports IBoardModerationAction
+     * @interface IBoardModerationAction
+     * @property {IModerationAction|null} [action] BoardModerationAction action
+     * @property {string|null} [boardId] BoardModerationAction boardId
+     */
+
+    /**
+     * Constructs a new BoardModerationAction.
+     * @exports BoardModerationAction
+     * @classdesc Represents a BoardModerationAction.
+     * @implements IBoardModerationAction
+     * @constructor
+     * @param {IBoardModerationAction=} [properties] Properties to set
+     */
+    function BoardModerationAction(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * BoardModerationAction action.
+     * @member {IModerationAction|null|undefined} action
+     * @memberof BoardModerationAction
+     * @instance
+     */
+    BoardModerationAction.prototype.action = null;
+
+    /**
+     * BoardModerationAction boardId.
+     * @member {string} boardId
+     * @memberof BoardModerationAction
+     * @instance
+     */
+    BoardModerationAction.prototype.boardId = "";
+
+    /**
+     * Creates a new BoardModerationAction instance using the specified properties.
+     * @function create
+     * @memberof BoardModerationAction
+     * @static
+     * @param {IBoardModerationAction=} [properties] Properties to set
+     * @returns {BoardModerationAction} BoardModerationAction instance
+     */
+    BoardModerationAction.create = function create(properties) {
+        return new BoardModerationAction(properties);
+    };
+
+    /**
+     * Encodes the specified BoardModerationAction message. Does not implicitly {@link BoardModerationAction.verify|verify} messages.
+     * @function encode
+     * @memberof BoardModerationAction
+     * @static
+     * @param {IBoardModerationAction} message BoardModerationAction message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    BoardModerationAction.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.action != null && Object.hasOwnProperty.call(message, "action"))
+            $root.ModerationAction.encode(message.action, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        if (message.boardId != null && Object.hasOwnProperty.call(message, "boardId"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.boardId);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified BoardModerationAction message, length delimited. Does not implicitly {@link BoardModerationAction.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof BoardModerationAction
+     * @static
+     * @param {IBoardModerationAction} message BoardModerationAction message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    BoardModerationAction.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a BoardModerationAction message from the specified reader or buffer.
+     * @function decode
+     * @memberof BoardModerationAction
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {BoardModerationAction} BoardModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    BoardModerationAction.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.BoardModerationAction();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.action = $root.ModerationAction.decode(reader, reader.uint32());
+                break;
+            case 2:
+                message.boardId = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a BoardModerationAction message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof BoardModerationAction
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {BoardModerationAction} BoardModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    BoardModerationAction.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a BoardModerationAction message.
+     * @function verify
+     * @memberof BoardModerationAction
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    BoardModerationAction.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.action != null && message.hasOwnProperty("action")) {
+            var error = $root.ModerationAction.verify(message.action);
+            if (error)
+                return "action." + error;
+        }
+        if (message.boardId != null && message.hasOwnProperty("boardId"))
+            if (!$util.isString(message.boardId))
+                return "boardId: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a BoardModerationAction message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof BoardModerationAction
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {BoardModerationAction} BoardModerationAction
+     */
+    BoardModerationAction.fromObject = function fromObject(object) {
+        if (object instanceof $root.BoardModerationAction)
+            return object;
+        var message = new $root.BoardModerationAction();
+        if (object.action != null) {
+            if (typeof object.action !== "object")
+                throw TypeError(".BoardModerationAction.action: object expected");
+            message.action = $root.ModerationAction.fromObject(object.action);
+        }
+        if (object.boardId != null)
+            message.boardId = String(object.boardId);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a BoardModerationAction message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof BoardModerationAction
+     * @static
+     * @param {BoardModerationAction} message BoardModerationAction
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    BoardModerationAction.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.action = null;
+            object.boardId = "";
+        }
+        if (message.action != null && message.hasOwnProperty("action"))
+            object.action = $root.ModerationAction.toObject(message.action, options);
+        if (message.boardId != null && message.hasOwnProperty("boardId"))
+            object.boardId = message.boardId;
+        return object;
+    };
+
+    /**
+     * Converts this BoardModerationAction to JSON.
+     * @function toJSON
+     * @memberof BoardModerationAction
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    BoardModerationAction.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return BoardModerationAction;
 })();
 
 $root.UserInBoardContext = (function() {
@@ -11091,7 +12514,7 @@ $root.Event = (function() {
      * @interface IEvent
      * @property {string|null} [eventId] Event eventId
      * @property {string|null} [userId] Event userId
-     * @property {string|null} [data] Event data
+     * @property {Uint8Array|null} [data] Event data
      * @property {number|null} [createdAt] Event createdAt
      */
 
@@ -11128,11 +12551,11 @@ $root.Event = (function() {
 
     /**
      * Event data.
-     * @member {string} data
+     * @member {Uint8Array} data
      * @memberof Event
      * @instance
      */
-    Event.prototype.data = "";
+    Event.prototype.data = $util.newBuffer([]);
 
     /**
      * Event createdAt.
@@ -11171,7 +12594,7 @@ $root.Event = (function() {
         if (message.userId != null && Object.hasOwnProperty.call(message, "userId"))
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.userId);
         if (message.data != null && Object.hasOwnProperty.call(message, "data"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.data);
+            writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.data);
         if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
             writer.uint32(/* id 4, wireType 0 =*/32).int64(message.createdAt);
         return writer;
@@ -11215,7 +12638,7 @@ $root.Event = (function() {
                 message.userId = reader.string();
                 break;
             case 3:
-                message.data = reader.string();
+                message.data = reader.bytes();
                 break;
             case 4:
                 message.createdAt = reader.int64();
@@ -11262,8 +12685,8 @@ $root.Event = (function() {
             if (!$util.isString(message.userId))
                 return "userId: string expected";
         if (message.data != null && message.hasOwnProperty("data"))
-            if (!$util.isString(message.data))
-                return "data: string expected";
+            if (!(message.data && typeof message.data.length === "number" || $util.isString(message.data)))
+                return "data: buffer expected";
         if (message.createdAt != null && message.hasOwnProperty("createdAt"))
             if (!$util.isInteger(message.createdAt) && !(message.createdAt && $util.isInteger(message.createdAt.low) && $util.isInteger(message.createdAt.high)))
                 return "createdAt: integer|Long expected";
@@ -11287,7 +12710,10 @@ $root.Event = (function() {
         if (object.userId != null)
             message.userId = String(object.userId);
         if (object.data != null)
-            message.data = String(object.data);
+            if (typeof object.data === "string")
+                $util.base64.decode(object.data, message.data = $util.newBuffer($util.base64.length(object.data)), 0);
+            else if (object.data.length)
+                message.data = object.data;
         if (object.createdAt != null)
             if ($util.Long)
                 (message.createdAt = $util.Long.fromValue(object.createdAt)).unsigned = false;
@@ -11316,7 +12742,13 @@ $root.Event = (function() {
         if (options.defaults) {
             object.eventId = "";
             object.userId = "";
-            object.data = "";
+            if (options.bytes === String)
+                object.data = "";
+            else {
+                object.data = [];
+                if (options.bytes !== Array)
+                    object.data = $util.newBuffer(object.data);
+            }
             if ($util.Long) {
                 var long = new $util.Long(0, 0, false);
                 object.createdAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -11328,7 +12760,7 @@ $root.Event = (function() {
         if (message.userId != null && message.hasOwnProperty("userId"))
             object.userId = message.userId;
         if (message.data != null && message.hasOwnProperty("data"))
-            object.data = message.data;
+            object.data = options.bytes === String ? $util.base64.encode(message.data, 0, message.data.length) : options.bytes === Array ? Array.prototype.slice.call(message.data) : message.data;
         if (message.createdAt != null && message.hasOwnProperty("createdAt"))
             if (typeof message.createdAt === "number")
                 object.createdAt = options.longs === String ? String(message.createdAt) : message.createdAt;
@@ -11349,6 +12781,919 @@ $root.Event = (function() {
     };
 
     return Event;
+})();
+
+$root.CommentReplyEvent = (function() {
+
+    /**
+     * Properties of a CommentReplyEvent.
+     * @exports ICommentReplyEvent
+     * @interface ICommentReplyEvent
+     * @property {string|null} [userId] CommentReplyEvent userId
+     * @property {IComment|null} [comment] CommentReplyEvent comment
+     * @property {number|null} [createdAt] CommentReplyEvent createdAt
+     */
+
+    /**
+     * Constructs a new CommentReplyEvent.
+     * @exports CommentReplyEvent
+     * @classdesc Represents a CommentReplyEvent.
+     * @implements ICommentReplyEvent
+     * @constructor
+     * @param {ICommentReplyEvent=} [properties] Properties to set
+     */
+    function CommentReplyEvent(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * CommentReplyEvent userId.
+     * @member {string} userId
+     * @memberof CommentReplyEvent
+     * @instance
+     */
+    CommentReplyEvent.prototype.userId = "";
+
+    /**
+     * CommentReplyEvent comment.
+     * @member {IComment|null|undefined} comment
+     * @memberof CommentReplyEvent
+     * @instance
+     */
+    CommentReplyEvent.prototype.comment = null;
+
+    /**
+     * CommentReplyEvent createdAt.
+     * @member {number} createdAt
+     * @memberof CommentReplyEvent
+     * @instance
+     */
+    CommentReplyEvent.prototype.createdAt = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+    /**
+     * Creates a new CommentReplyEvent instance using the specified properties.
+     * @function create
+     * @memberof CommentReplyEvent
+     * @static
+     * @param {ICommentReplyEvent=} [properties] Properties to set
+     * @returns {CommentReplyEvent} CommentReplyEvent instance
+     */
+    CommentReplyEvent.create = function create(properties) {
+        return new CommentReplyEvent(properties);
+    };
+
+    /**
+     * Encodes the specified CommentReplyEvent message. Does not implicitly {@link CommentReplyEvent.verify|verify} messages.
+     * @function encode
+     * @memberof CommentReplyEvent
+     * @static
+     * @param {ICommentReplyEvent} message CommentReplyEvent message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    CommentReplyEvent.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.userId != null && Object.hasOwnProperty.call(message, "userId"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.userId);
+        if (message.comment != null && Object.hasOwnProperty.call(message, "comment"))
+            $root.Comment.encode(message.comment, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
+            writer.uint32(/* id 4, wireType 0 =*/32).int64(message.createdAt);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified CommentReplyEvent message, length delimited. Does not implicitly {@link CommentReplyEvent.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof CommentReplyEvent
+     * @static
+     * @param {ICommentReplyEvent} message CommentReplyEvent message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    CommentReplyEvent.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a CommentReplyEvent message from the specified reader or buffer.
+     * @function decode
+     * @memberof CommentReplyEvent
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {CommentReplyEvent} CommentReplyEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    CommentReplyEvent.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.CommentReplyEvent();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.userId = reader.string();
+                break;
+            case 2:
+                message.comment = $root.Comment.decode(reader, reader.uint32());
+                break;
+            case 4:
+                message.createdAt = reader.int64();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a CommentReplyEvent message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof CommentReplyEvent
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {CommentReplyEvent} CommentReplyEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    CommentReplyEvent.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a CommentReplyEvent message.
+     * @function verify
+     * @memberof CommentReplyEvent
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    CommentReplyEvent.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.userId != null && message.hasOwnProperty("userId"))
+            if (!$util.isString(message.userId))
+                return "userId: string expected";
+        if (message.comment != null && message.hasOwnProperty("comment")) {
+            var error = $root.Comment.verify(message.comment);
+            if (error)
+                return "comment." + error;
+        }
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (!$util.isInteger(message.createdAt) && !(message.createdAt && $util.isInteger(message.createdAt.low) && $util.isInteger(message.createdAt.high)))
+                return "createdAt: integer|Long expected";
+        return null;
+    };
+
+    /**
+     * Creates a CommentReplyEvent message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof CommentReplyEvent
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {CommentReplyEvent} CommentReplyEvent
+     */
+    CommentReplyEvent.fromObject = function fromObject(object) {
+        if (object instanceof $root.CommentReplyEvent)
+            return object;
+        var message = new $root.CommentReplyEvent();
+        if (object.userId != null)
+            message.userId = String(object.userId);
+        if (object.comment != null) {
+            if (typeof object.comment !== "object")
+                throw TypeError(".CommentReplyEvent.comment: object expected");
+            message.comment = $root.Comment.fromObject(object.comment);
+        }
+        if (object.createdAt != null)
+            if ($util.Long)
+                (message.createdAt = $util.Long.fromValue(object.createdAt)).unsigned = false;
+            else if (typeof object.createdAt === "string")
+                message.createdAt = parseInt(object.createdAt, 10);
+            else if (typeof object.createdAt === "number")
+                message.createdAt = object.createdAt;
+            else if (typeof object.createdAt === "object")
+                message.createdAt = new $util.LongBits(object.createdAt.low >>> 0, object.createdAt.high >>> 0).toNumber();
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a CommentReplyEvent message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof CommentReplyEvent
+     * @static
+     * @param {CommentReplyEvent} message CommentReplyEvent
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    CommentReplyEvent.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.userId = "";
+            object.comment = null;
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.createdAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.createdAt = options.longs === String ? "0" : 0;
+        }
+        if (message.userId != null && message.hasOwnProperty("userId"))
+            object.userId = message.userId;
+        if (message.comment != null && message.hasOwnProperty("comment"))
+            object.comment = $root.Comment.toObject(message.comment, options);
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (typeof message.createdAt === "number")
+                object.createdAt = options.longs === String ? String(message.createdAt) : message.createdAt;
+            else
+                object.createdAt = options.longs === String ? $util.Long.prototype.toString.call(message.createdAt) : options.longs === Number ? new $util.LongBits(message.createdAt.low >>> 0, message.createdAt.high >>> 0).toNumber() : message.createdAt;
+        return object;
+    };
+
+    /**
+     * Converts this CommentReplyEvent to JSON.
+     * @function toJSON
+     * @memberof CommentReplyEvent
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    CommentReplyEvent.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return CommentReplyEvent;
+})();
+
+$root.UserMentionEvent = (function() {
+
+    /**
+     * Properties of a UserMentionEvent.
+     * @exports IUserMentionEvent
+     * @interface IUserMentionEvent
+     * @property {string|null} [userId] UserMentionEvent userId
+     * @property {string|null} [location] UserMentionEvent location
+     * @property {number|null} [createdAt] UserMentionEvent createdAt
+     * @property {string|null} [board] UserMentionEvent board
+     * @property {string|null} [title] UserMentionEvent title
+     * @property {string|null} [comment] UserMentionEvent comment
+     */
+
+    /**
+     * Constructs a new UserMentionEvent.
+     * @exports UserMentionEvent
+     * @classdesc Represents a UserMentionEvent.
+     * @implements IUserMentionEvent
+     * @constructor
+     * @param {IUserMentionEvent=} [properties] Properties to set
+     */
+    function UserMentionEvent(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * UserMentionEvent userId.
+     * @member {string} userId
+     * @memberof UserMentionEvent
+     * @instance
+     */
+    UserMentionEvent.prototype.userId = "";
+
+    /**
+     * UserMentionEvent location.
+     * @member {string} location
+     * @memberof UserMentionEvent
+     * @instance
+     */
+    UserMentionEvent.prototype.location = "";
+
+    /**
+     * UserMentionEvent createdAt.
+     * @member {number} createdAt
+     * @memberof UserMentionEvent
+     * @instance
+     */
+    UserMentionEvent.prototype.createdAt = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+    /**
+     * UserMentionEvent board.
+     * @member {string} board
+     * @memberof UserMentionEvent
+     * @instance
+     */
+    UserMentionEvent.prototype.board = "";
+
+    /**
+     * UserMentionEvent title.
+     * @member {string} title
+     * @memberof UserMentionEvent
+     * @instance
+     */
+    UserMentionEvent.prototype.title = "";
+
+    /**
+     * UserMentionEvent comment.
+     * @member {string} comment
+     * @memberof UserMentionEvent
+     * @instance
+     */
+    UserMentionEvent.prototype.comment = "";
+
+    /**
+     * Creates a new UserMentionEvent instance using the specified properties.
+     * @function create
+     * @memberof UserMentionEvent
+     * @static
+     * @param {IUserMentionEvent=} [properties] Properties to set
+     * @returns {UserMentionEvent} UserMentionEvent instance
+     */
+    UserMentionEvent.create = function create(properties) {
+        return new UserMentionEvent(properties);
+    };
+
+    /**
+     * Encodes the specified UserMentionEvent message. Does not implicitly {@link UserMentionEvent.verify|verify} messages.
+     * @function encode
+     * @memberof UserMentionEvent
+     * @static
+     * @param {IUserMentionEvent} message UserMentionEvent message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    UserMentionEvent.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.userId != null && Object.hasOwnProperty.call(message, "userId"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.userId);
+        if (message.location != null && Object.hasOwnProperty.call(message, "location"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.location);
+        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
+            writer.uint32(/* id 3, wireType 0 =*/24).int64(message.createdAt);
+        if (message.board != null && Object.hasOwnProperty.call(message, "board"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.board);
+        if (message.title != null && Object.hasOwnProperty.call(message, "title"))
+            writer.uint32(/* id 5, wireType 2 =*/42).string(message.title);
+        if (message.comment != null && Object.hasOwnProperty.call(message, "comment"))
+            writer.uint32(/* id 6, wireType 2 =*/50).string(message.comment);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified UserMentionEvent message, length delimited. Does not implicitly {@link UserMentionEvent.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof UserMentionEvent
+     * @static
+     * @param {IUserMentionEvent} message UserMentionEvent message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    UserMentionEvent.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a UserMentionEvent message from the specified reader or buffer.
+     * @function decode
+     * @memberof UserMentionEvent
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {UserMentionEvent} UserMentionEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    UserMentionEvent.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.UserMentionEvent();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.userId = reader.string();
+                break;
+            case 2:
+                message.location = reader.string();
+                break;
+            case 3:
+                message.createdAt = reader.int64();
+                break;
+            case 4:
+                message.board = reader.string();
+                break;
+            case 5:
+                message.title = reader.string();
+                break;
+            case 6:
+                message.comment = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a UserMentionEvent message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof UserMentionEvent
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {UserMentionEvent} UserMentionEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    UserMentionEvent.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a UserMentionEvent message.
+     * @function verify
+     * @memberof UserMentionEvent
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    UserMentionEvent.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.userId != null && message.hasOwnProperty("userId"))
+            if (!$util.isString(message.userId))
+                return "userId: string expected";
+        if (message.location != null && message.hasOwnProperty("location"))
+            if (!$util.isString(message.location))
+                return "location: string expected";
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (!$util.isInteger(message.createdAt) && !(message.createdAt && $util.isInteger(message.createdAt.low) && $util.isInteger(message.createdAt.high)))
+                return "createdAt: integer|Long expected";
+        if (message.board != null && message.hasOwnProperty("board"))
+            if (!$util.isString(message.board))
+                return "board: string expected";
+        if (message.title != null && message.hasOwnProperty("title"))
+            if (!$util.isString(message.title))
+                return "title: string expected";
+        if (message.comment != null && message.hasOwnProperty("comment"))
+            if (!$util.isString(message.comment))
+                return "comment: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a UserMentionEvent message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof UserMentionEvent
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {UserMentionEvent} UserMentionEvent
+     */
+    UserMentionEvent.fromObject = function fromObject(object) {
+        if (object instanceof $root.UserMentionEvent)
+            return object;
+        var message = new $root.UserMentionEvent();
+        if (object.userId != null)
+            message.userId = String(object.userId);
+        if (object.location != null)
+            message.location = String(object.location);
+        if (object.createdAt != null)
+            if ($util.Long)
+                (message.createdAt = $util.Long.fromValue(object.createdAt)).unsigned = false;
+            else if (typeof object.createdAt === "string")
+                message.createdAt = parseInt(object.createdAt, 10);
+            else if (typeof object.createdAt === "number")
+                message.createdAt = object.createdAt;
+            else if (typeof object.createdAt === "object")
+                message.createdAt = new $util.LongBits(object.createdAt.low >>> 0, object.createdAt.high >>> 0).toNumber();
+        if (object.board != null)
+            message.board = String(object.board);
+        if (object.title != null)
+            message.title = String(object.title);
+        if (object.comment != null)
+            message.comment = String(object.comment);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a UserMentionEvent message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof UserMentionEvent
+     * @static
+     * @param {UserMentionEvent} message UserMentionEvent
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    UserMentionEvent.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.userId = "";
+            object.location = "";
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.createdAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.createdAt = options.longs === String ? "0" : 0;
+            object.board = "";
+            object.title = "";
+            object.comment = "";
+        }
+        if (message.userId != null && message.hasOwnProperty("userId"))
+            object.userId = message.userId;
+        if (message.location != null && message.hasOwnProperty("location"))
+            object.location = message.location;
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (typeof message.createdAt === "number")
+                object.createdAt = options.longs === String ? String(message.createdAt) : message.createdAt;
+            else
+                object.createdAt = options.longs === String ? $util.Long.prototype.toString.call(message.createdAt) : options.longs === Number ? new $util.LongBits(message.createdAt.low >>> 0, message.createdAt.high >>> 0).toNumber() : message.createdAt;
+        if (message.board != null && message.hasOwnProperty("board"))
+            object.board = message.board;
+        if (message.title != null && message.hasOwnProperty("title"))
+            object.title = message.title;
+        if (message.comment != null && message.hasOwnProperty("comment"))
+            object.comment = message.comment;
+        return object;
+    };
+
+    /**
+     * Converts this UserMentionEvent to JSON.
+     * @function toJSON
+     * @memberof UserMentionEvent
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    UserMentionEvent.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return UserMentionEvent;
+})();
+
+$root.ThreadVoteEvent = (function() {
+
+    /**
+     * Properties of a ThreadVoteEvent.
+     * @exports IThreadVoteEvent
+     * @interface IThreadVoteEvent
+     * @property {string|null} [userId] ThreadVoteEvent userId
+     * @property {number|null} [createdAt] ThreadVoteEvent createdAt
+     * @property {string|null} [threadId] ThreadVoteEvent threadId
+     * @property {number|null} [totalVotes] ThreadVoteEvent totalVotes
+     * @property {Object.<string,number>|null} [votes] ThreadVoteEvent votes
+     */
+
+    /**
+     * Constructs a new ThreadVoteEvent.
+     * @exports ThreadVoteEvent
+     * @classdesc Represents a ThreadVoteEvent.
+     * @implements IThreadVoteEvent
+     * @constructor
+     * @param {IThreadVoteEvent=} [properties] Properties to set
+     */
+    function ThreadVoteEvent(properties) {
+        this.votes = {};
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * ThreadVoteEvent userId.
+     * @member {string} userId
+     * @memberof ThreadVoteEvent
+     * @instance
+     */
+    ThreadVoteEvent.prototype.userId = "";
+
+    /**
+     * ThreadVoteEvent createdAt.
+     * @member {number} createdAt
+     * @memberof ThreadVoteEvent
+     * @instance
+     */
+    ThreadVoteEvent.prototype.createdAt = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+    /**
+     * ThreadVoteEvent threadId.
+     * @member {string} threadId
+     * @memberof ThreadVoteEvent
+     * @instance
+     */
+    ThreadVoteEvent.prototype.threadId = "";
+
+    /**
+     * ThreadVoteEvent totalVotes.
+     * @member {number} totalVotes
+     * @memberof ThreadVoteEvent
+     * @instance
+     */
+    ThreadVoteEvent.prototype.totalVotes = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+    /**
+     * ThreadVoteEvent votes.
+     * @member {Object.<string,number>} votes
+     * @memberof ThreadVoteEvent
+     * @instance
+     */
+    ThreadVoteEvent.prototype.votes = $util.emptyObject;
+
+    /**
+     * Creates a new ThreadVoteEvent instance using the specified properties.
+     * @function create
+     * @memberof ThreadVoteEvent
+     * @static
+     * @param {IThreadVoteEvent=} [properties] Properties to set
+     * @returns {ThreadVoteEvent} ThreadVoteEvent instance
+     */
+    ThreadVoteEvent.create = function create(properties) {
+        return new ThreadVoteEvent(properties);
+    };
+
+    /**
+     * Encodes the specified ThreadVoteEvent message. Does not implicitly {@link ThreadVoteEvent.verify|verify} messages.
+     * @function encode
+     * @memberof ThreadVoteEvent
+     * @static
+     * @param {IThreadVoteEvent} message ThreadVoteEvent message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ThreadVoteEvent.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.userId != null && Object.hasOwnProperty.call(message, "userId"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.userId);
+        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
+            writer.uint32(/* id 2, wireType 0 =*/16).int64(message.createdAt);
+        if (message.threadId != null && Object.hasOwnProperty.call(message, "threadId"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.threadId);
+        if (message.totalVotes != null && Object.hasOwnProperty.call(message, "totalVotes"))
+            writer.uint32(/* id 4, wireType 0 =*/32).int64(message.totalVotes);
+        if (message.votes != null && Object.hasOwnProperty.call(message, "votes"))
+            for (var keys = Object.keys(message.votes), i = 0; i < keys.length; ++i)
+                writer.uint32(/* id 5, wireType 2 =*/42).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).int64(message.votes[keys[i]]).ldelim();
+        return writer;
+    };
+
+    /**
+     * Encodes the specified ThreadVoteEvent message, length delimited. Does not implicitly {@link ThreadVoteEvent.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof ThreadVoteEvent
+     * @static
+     * @param {IThreadVoteEvent} message ThreadVoteEvent message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ThreadVoteEvent.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a ThreadVoteEvent message from the specified reader or buffer.
+     * @function decode
+     * @memberof ThreadVoteEvent
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {ThreadVoteEvent} ThreadVoteEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ThreadVoteEvent.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ThreadVoteEvent(), key, value;
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.userId = reader.string();
+                break;
+            case 2:
+                message.createdAt = reader.int64();
+                break;
+            case 3:
+                message.threadId = reader.string();
+                break;
+            case 4:
+                message.totalVotes = reader.int64();
+                break;
+            case 5:
+                if (message.votes === $util.emptyObject)
+                    message.votes = {};
+                var end2 = reader.uint32() + reader.pos;
+                key = "";
+                value = 0;
+                while (reader.pos < end2) {
+                    var tag2 = reader.uint32();
+                    switch (tag2 >>> 3) {
+                    case 1:
+                        key = reader.string();
+                        break;
+                    case 2:
+                        value = reader.int64();
+                        break;
+                    default:
+                        reader.skipType(tag2 & 7);
+                        break;
+                    }
+                }
+                message.votes[key] = value;
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a ThreadVoteEvent message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof ThreadVoteEvent
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {ThreadVoteEvent} ThreadVoteEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ThreadVoteEvent.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a ThreadVoteEvent message.
+     * @function verify
+     * @memberof ThreadVoteEvent
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    ThreadVoteEvent.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.userId != null && message.hasOwnProperty("userId"))
+            if (!$util.isString(message.userId))
+                return "userId: string expected";
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (!$util.isInteger(message.createdAt) && !(message.createdAt && $util.isInteger(message.createdAt.low) && $util.isInteger(message.createdAt.high)))
+                return "createdAt: integer|Long expected";
+        if (message.threadId != null && message.hasOwnProperty("threadId"))
+            if (!$util.isString(message.threadId))
+                return "threadId: string expected";
+        if (message.totalVotes != null && message.hasOwnProperty("totalVotes"))
+            if (!$util.isInteger(message.totalVotes) && !(message.totalVotes && $util.isInteger(message.totalVotes.low) && $util.isInteger(message.totalVotes.high)))
+                return "totalVotes: integer|Long expected";
+        if (message.votes != null && message.hasOwnProperty("votes")) {
+            if (!$util.isObject(message.votes))
+                return "votes: object expected";
+            var key = Object.keys(message.votes);
+            for (var i = 0; i < key.length; ++i)
+                if (!$util.isInteger(message.votes[key[i]]) && !(message.votes[key[i]] && $util.isInteger(message.votes[key[i]].low) && $util.isInteger(message.votes[key[i]].high)))
+                    return "votes: integer|Long{k:string} expected";
+        }
+        return null;
+    };
+
+    /**
+     * Creates a ThreadVoteEvent message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ThreadVoteEvent
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ThreadVoteEvent} ThreadVoteEvent
+     */
+    ThreadVoteEvent.fromObject = function fromObject(object) {
+        if (object instanceof $root.ThreadVoteEvent)
+            return object;
+        var message = new $root.ThreadVoteEvent();
+        if (object.userId != null)
+            message.userId = String(object.userId);
+        if (object.createdAt != null)
+            if ($util.Long)
+                (message.createdAt = $util.Long.fromValue(object.createdAt)).unsigned = false;
+            else if (typeof object.createdAt === "string")
+                message.createdAt = parseInt(object.createdAt, 10);
+            else if (typeof object.createdAt === "number")
+                message.createdAt = object.createdAt;
+            else if (typeof object.createdAt === "object")
+                message.createdAt = new $util.LongBits(object.createdAt.low >>> 0, object.createdAt.high >>> 0).toNumber();
+        if (object.threadId != null)
+            message.threadId = String(object.threadId);
+        if (object.totalVotes != null)
+            if ($util.Long)
+                (message.totalVotes = $util.Long.fromValue(object.totalVotes)).unsigned = false;
+            else if (typeof object.totalVotes === "string")
+                message.totalVotes = parseInt(object.totalVotes, 10);
+            else if (typeof object.totalVotes === "number")
+                message.totalVotes = object.totalVotes;
+            else if (typeof object.totalVotes === "object")
+                message.totalVotes = new $util.LongBits(object.totalVotes.low >>> 0, object.totalVotes.high >>> 0).toNumber();
+        if (object.votes) {
+            if (typeof object.votes !== "object")
+                throw TypeError(".ThreadVoteEvent.votes: object expected");
+            message.votes = {};
+            for (var keys = Object.keys(object.votes), i = 0; i < keys.length; ++i)
+                if ($util.Long)
+                    (message.votes[keys[i]] = $util.Long.fromValue(object.votes[keys[i]])).unsigned = false;
+                else if (typeof object.votes[keys[i]] === "string")
+                    message.votes[keys[i]] = parseInt(object.votes[keys[i]], 10);
+                else if (typeof object.votes[keys[i]] === "number")
+                    message.votes[keys[i]] = object.votes[keys[i]];
+                else if (typeof object.votes[keys[i]] === "object")
+                    message.votes[keys[i]] = new $util.LongBits(object.votes[keys[i]].low >>> 0, object.votes[keys[i]].high >>> 0).toNumber();
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ThreadVoteEvent message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ThreadVoteEvent
+     * @static
+     * @param {ThreadVoteEvent} message ThreadVoteEvent
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ThreadVoteEvent.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.objects || options.defaults)
+            object.votes = {};
+        if (options.defaults) {
+            object.userId = "";
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.createdAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.createdAt = options.longs === String ? "0" : 0;
+            object.threadId = "";
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.totalVotes = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.totalVotes = options.longs === String ? "0" : 0;
+        }
+        if (message.userId != null && message.hasOwnProperty("userId"))
+            object.userId = message.userId;
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (typeof message.createdAt === "number")
+                object.createdAt = options.longs === String ? String(message.createdAt) : message.createdAt;
+            else
+                object.createdAt = options.longs === String ? $util.Long.prototype.toString.call(message.createdAt) : options.longs === Number ? new $util.LongBits(message.createdAt.low >>> 0, message.createdAt.high >>> 0).toNumber() : message.createdAt;
+        if (message.threadId != null && message.hasOwnProperty("threadId"))
+            object.threadId = message.threadId;
+        if (message.totalVotes != null && message.hasOwnProperty("totalVotes"))
+            if (typeof message.totalVotes === "number")
+                object.totalVotes = options.longs === String ? String(message.totalVotes) : message.totalVotes;
+            else
+                object.totalVotes = options.longs === String ? $util.Long.prototype.toString.call(message.totalVotes) : options.longs === Number ? new $util.LongBits(message.totalVotes.low >>> 0, message.totalVotes.high >>> 0).toNumber() : message.totalVotes;
+        var keys2;
+        if (message.votes && (keys2 = Object.keys(message.votes)).length) {
+            object.votes = {};
+            for (var j = 0; j < keys2.length; ++j)
+                if (typeof message.votes[keys2[j]] === "number")
+                    object.votes[keys2[j]] = options.longs === String ? String(message.votes[keys2[j]]) : message.votes[keys2[j]];
+                else
+                    object.votes[keys2[j]] = options.longs === String ? $util.Long.prototype.toString.call(message.votes[keys2[j]]) : options.longs === Number ? new $util.LongBits(message.votes[keys2[j]].low >>> 0, message.votes[keys2[j]].high >>> 0).toNumber() : message.votes[keys2[j]];
+        }
+        return object;
+    };
+
+    /**
+     * Converts this ThreadVoteEvent to JSON.
+     * @function toJSON
+     * @memberof ThreadVoteEvent
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ThreadVoteEvent.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return ThreadVoteEvent;
 })();
 
 $root.EventContextUpdate = (function() {
@@ -11628,6 +13973,743 @@ $root.EventContextUpdate = (function() {
     };
 
     return EventContextUpdate;
+})();
+
+$root.Error = (function() {
+
+    /**
+     * Properties of an Error.
+     * @exports IError
+     * @interface IError
+     * @property {string|null} [message] Error message
+     * @property {number|null} [code] Error code
+     */
+
+    /**
+     * Constructs a new Error.
+     * @exports Error
+     * @classdesc Represents an Error.
+     * @implements IError
+     * @constructor
+     * @param {IError=} [properties] Properties to set
+     */
+    function Error(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * Error message.
+     * @member {string} message
+     * @memberof Error
+     * @instance
+     */
+    Error.prototype.message = "";
+
+    /**
+     * Error code.
+     * @member {number} code
+     * @memberof Error
+     * @instance
+     */
+    Error.prototype.code = 0;
+
+    /**
+     * Creates a new Error instance using the specified properties.
+     * @function create
+     * @memberof Error
+     * @static
+     * @param {IError=} [properties] Properties to set
+     * @returns {Error} Error instance
+     */
+    Error.create = function create(properties) {
+        return new Error(properties);
+    };
+
+    /**
+     * Encodes the specified Error message. Does not implicitly {@link Error.verify|verify} messages.
+     * @function encode
+     * @memberof Error
+     * @static
+     * @param {IError} message Error message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    Error.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.message != null && Object.hasOwnProperty.call(message, "message"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.message);
+        if (message.code != null && Object.hasOwnProperty.call(message, "code"))
+            writer.uint32(/* id 2, wireType 0 =*/16).int32(message.code);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified Error message, length delimited. Does not implicitly {@link Error.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof Error
+     * @static
+     * @param {IError} message Error message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    Error.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes an Error message from the specified reader or buffer.
+     * @function decode
+     * @memberof Error
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {Error} Error
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    Error.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Error();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.message = reader.string();
+                break;
+            case 2:
+                message.code = reader.int32();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes an Error message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof Error
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {Error} Error
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    Error.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies an Error message.
+     * @function verify
+     * @memberof Error
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    Error.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.message != null && message.hasOwnProperty("message"))
+            if (!$util.isString(message.message))
+                return "message: string expected";
+        if (message.code != null && message.hasOwnProperty("code"))
+            if (!$util.isInteger(message.code))
+                return "code: integer expected";
+        return null;
+    };
+
+    /**
+     * Creates an Error message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof Error
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {Error} Error
+     */
+    Error.fromObject = function fromObject(object) {
+        if (object instanceof $root.Error)
+            return object;
+        var message = new $root.Error();
+        if (object.message != null)
+            message.message = String(object.message);
+        if (object.code != null)
+            message.code = object.code | 0;
+        return message;
+    };
+
+    /**
+     * Creates a plain object from an Error message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof Error
+     * @static
+     * @param {Error} message Error
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    Error.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.message = "";
+            object.code = 0;
+        }
+        if (message.message != null && message.hasOwnProperty("message"))
+            object.message = message.message;
+        if (message.code != null && message.hasOwnProperty("code"))
+            object.code = message.code;
+        return object;
+    };
+
+    /**
+     * Converts this Error to JSON.
+     * @function toJSON
+     * @memberof Error
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    Error.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return Error;
+})();
+
+$root.BanInfo = (function() {
+
+    /**
+     * Properties of a BanInfo.
+     * @exports IBanInfo
+     * @interface IBanInfo
+     * @property {string|null} [bannedBy] BanInfo bannedBy
+     * @property {string|null} [banReason] BanInfo banReason
+     * @property {string|null} [approvedBy] BanInfo approvedBy
+     * @property {string|null} [createdAt] BanInfo createdAt
+     * @property {string|null} [reason] BanInfo reason
+     */
+
+    /**
+     * Constructs a new BanInfo.
+     * @exports BanInfo
+     * @classdesc Represents a BanInfo.
+     * @implements IBanInfo
+     * @constructor
+     * @param {IBanInfo=} [properties] Properties to set
+     */
+    function BanInfo(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * BanInfo bannedBy.
+     * @member {string} bannedBy
+     * @memberof BanInfo
+     * @instance
+     */
+    BanInfo.prototype.bannedBy = "";
+
+    /**
+     * BanInfo banReason.
+     * @member {string} banReason
+     * @memberof BanInfo
+     * @instance
+     */
+    BanInfo.prototype.banReason = "";
+
+    /**
+     * BanInfo approvedBy.
+     * @member {string} approvedBy
+     * @memberof BanInfo
+     * @instance
+     */
+    BanInfo.prototype.approvedBy = "";
+
+    /**
+     * BanInfo createdAt.
+     * @member {string} createdAt
+     * @memberof BanInfo
+     * @instance
+     */
+    BanInfo.prototype.createdAt = "";
+
+    /**
+     * BanInfo reason.
+     * @member {string} reason
+     * @memberof BanInfo
+     * @instance
+     */
+    BanInfo.prototype.reason = "";
+
+    /**
+     * Creates a new BanInfo instance using the specified properties.
+     * @function create
+     * @memberof BanInfo
+     * @static
+     * @param {IBanInfo=} [properties] Properties to set
+     * @returns {BanInfo} BanInfo instance
+     */
+    BanInfo.create = function create(properties) {
+        return new BanInfo(properties);
+    };
+
+    /**
+     * Encodes the specified BanInfo message. Does not implicitly {@link BanInfo.verify|verify} messages.
+     * @function encode
+     * @memberof BanInfo
+     * @static
+     * @param {IBanInfo} message BanInfo message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    BanInfo.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.bannedBy != null && Object.hasOwnProperty.call(message, "bannedBy"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.bannedBy);
+        if (message.approvedBy != null && Object.hasOwnProperty.call(message, "approvedBy"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.approvedBy);
+        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.createdAt);
+        if (message.banReason != null && Object.hasOwnProperty.call(message, "banReason"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.banReason);
+        if (message.reason != null && Object.hasOwnProperty.call(message, "reason"))
+            writer.uint32(/* id 5, wireType 2 =*/42).string(message.reason);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified BanInfo message, length delimited. Does not implicitly {@link BanInfo.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof BanInfo
+     * @static
+     * @param {IBanInfo} message BanInfo message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    BanInfo.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a BanInfo message from the specified reader or buffer.
+     * @function decode
+     * @memberof BanInfo
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {BanInfo} BanInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    BanInfo.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.BanInfo();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.bannedBy = reader.string();
+                break;
+            case 4:
+                message.banReason = reader.string();
+                break;
+            case 2:
+                message.approvedBy = reader.string();
+                break;
+            case 3:
+                message.createdAt = reader.string();
+                break;
+            case 5:
+                message.reason = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a BanInfo message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof BanInfo
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {BanInfo} BanInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    BanInfo.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a BanInfo message.
+     * @function verify
+     * @memberof BanInfo
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    BanInfo.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.bannedBy != null && message.hasOwnProperty("bannedBy"))
+            if (!$util.isString(message.bannedBy))
+                return "bannedBy: string expected";
+        if (message.banReason != null && message.hasOwnProperty("banReason"))
+            if (!$util.isString(message.banReason))
+                return "banReason: string expected";
+        if (message.approvedBy != null && message.hasOwnProperty("approvedBy"))
+            if (!$util.isString(message.approvedBy))
+                return "approvedBy: string expected";
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (!$util.isString(message.createdAt))
+                return "createdAt: string expected";
+        if (message.reason != null && message.hasOwnProperty("reason"))
+            if (!$util.isString(message.reason))
+                return "reason: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a BanInfo message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof BanInfo
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {BanInfo} BanInfo
+     */
+    BanInfo.fromObject = function fromObject(object) {
+        if (object instanceof $root.BanInfo)
+            return object;
+        var message = new $root.BanInfo();
+        if (object.bannedBy != null)
+            message.bannedBy = String(object.bannedBy);
+        if (object.banReason != null)
+            message.banReason = String(object.banReason);
+        if (object.approvedBy != null)
+            message.approvedBy = String(object.approvedBy);
+        if (object.createdAt != null)
+            message.createdAt = String(object.createdAt);
+        if (object.reason != null)
+            message.reason = String(object.reason);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a BanInfo message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof BanInfo
+     * @static
+     * @param {BanInfo} message BanInfo
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    BanInfo.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.bannedBy = "";
+            object.approvedBy = "";
+            object.createdAt = "";
+            object.banReason = "";
+            object.reason = "";
+        }
+        if (message.bannedBy != null && message.hasOwnProperty("bannedBy"))
+            object.bannedBy = message.bannedBy;
+        if (message.approvedBy != null && message.hasOwnProperty("approvedBy"))
+            object.approvedBy = message.approvedBy;
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            object.createdAt = message.createdAt;
+        if (message.banReason != null && message.hasOwnProperty("banReason"))
+            object.banReason = message.banReason;
+        if (message.reason != null && message.hasOwnProperty("reason"))
+            object.reason = message.reason;
+        return object;
+    };
+
+    /**
+     * Converts this BanInfo to JSON.
+     * @function toJSON
+     * @memberof BanInfo
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    BanInfo.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return BanInfo;
+})();
+
+$root.ReportInfo = (function() {
+
+    /**
+     * Properties of a ReportInfo.
+     * @exports IReportInfo
+     * @interface IReportInfo
+     * @property {string|null} [report] ReportInfo report
+     * @property {IUserRef|null} [user] ReportInfo user
+     * @property {number|null} [createdAt] ReportInfo createdAt
+     */
+
+    /**
+     * Constructs a new ReportInfo.
+     * @exports ReportInfo
+     * @classdesc Represents a ReportInfo.
+     * @implements IReportInfo
+     * @constructor
+     * @param {IReportInfo=} [properties] Properties to set
+     */
+    function ReportInfo(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * ReportInfo report.
+     * @member {string} report
+     * @memberof ReportInfo
+     * @instance
+     */
+    ReportInfo.prototype.report = "";
+
+    /**
+     * ReportInfo user.
+     * @member {IUserRef|null|undefined} user
+     * @memberof ReportInfo
+     * @instance
+     */
+    ReportInfo.prototype.user = null;
+
+    /**
+     * ReportInfo createdAt.
+     * @member {number} createdAt
+     * @memberof ReportInfo
+     * @instance
+     */
+    ReportInfo.prototype.createdAt = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+    /**
+     * Creates a new ReportInfo instance using the specified properties.
+     * @function create
+     * @memberof ReportInfo
+     * @static
+     * @param {IReportInfo=} [properties] Properties to set
+     * @returns {ReportInfo} ReportInfo instance
+     */
+    ReportInfo.create = function create(properties) {
+        return new ReportInfo(properties);
+    };
+
+    /**
+     * Encodes the specified ReportInfo message. Does not implicitly {@link ReportInfo.verify|verify} messages.
+     * @function encode
+     * @memberof ReportInfo
+     * @static
+     * @param {IReportInfo} message ReportInfo message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ReportInfo.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.report != null && Object.hasOwnProperty.call(message, "report"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.report);
+        if (message.user != null && Object.hasOwnProperty.call(message, "user"))
+            $root.UserRef.encode(message.user, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+        if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
+            writer.uint32(/* id 3, wireType 0 =*/24).int64(message.createdAt);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified ReportInfo message, length delimited. Does not implicitly {@link ReportInfo.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof ReportInfo
+     * @static
+     * @param {IReportInfo} message ReportInfo message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ReportInfo.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a ReportInfo message from the specified reader or buffer.
+     * @function decode
+     * @memberof ReportInfo
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {ReportInfo} ReportInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ReportInfo.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.ReportInfo();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.report = reader.string();
+                break;
+            case 2:
+                message.user = $root.UserRef.decode(reader, reader.uint32());
+                break;
+            case 3:
+                message.createdAt = reader.int64();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a ReportInfo message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof ReportInfo
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {ReportInfo} ReportInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ReportInfo.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a ReportInfo message.
+     * @function verify
+     * @memberof ReportInfo
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    ReportInfo.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.report != null && message.hasOwnProperty("report"))
+            if (!$util.isString(message.report))
+                return "report: string expected";
+        if (message.user != null && message.hasOwnProperty("user")) {
+            var error = $root.UserRef.verify(message.user);
+            if (error)
+                return "user." + error;
+        }
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (!$util.isInteger(message.createdAt) && !(message.createdAt && $util.isInteger(message.createdAt.low) && $util.isInteger(message.createdAt.high)))
+                return "createdAt: integer|Long expected";
+        return null;
+    };
+
+    /**
+     * Creates a ReportInfo message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ReportInfo
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ReportInfo} ReportInfo
+     */
+    ReportInfo.fromObject = function fromObject(object) {
+        if (object instanceof $root.ReportInfo)
+            return object;
+        var message = new $root.ReportInfo();
+        if (object.report != null)
+            message.report = String(object.report);
+        if (object.user != null) {
+            if (typeof object.user !== "object")
+                throw TypeError(".ReportInfo.user: object expected");
+            message.user = $root.UserRef.fromObject(object.user);
+        }
+        if (object.createdAt != null)
+            if ($util.Long)
+                (message.createdAt = $util.Long.fromValue(object.createdAt)).unsigned = false;
+            else if (typeof object.createdAt === "string")
+                message.createdAt = parseInt(object.createdAt, 10);
+            else if (typeof object.createdAt === "number")
+                message.createdAt = object.createdAt;
+            else if (typeof object.createdAt === "object")
+                message.createdAt = new $util.LongBits(object.createdAt.low >>> 0, object.createdAt.high >>> 0).toNumber();
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ReportInfo message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ReportInfo
+     * @static
+     * @param {ReportInfo} message ReportInfo
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ReportInfo.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.report = "";
+            object.user = null;
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.createdAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.createdAt = options.longs === String ? "0" : 0;
+        }
+        if (message.report != null && message.hasOwnProperty("report"))
+            object.report = message.report;
+        if (message.user != null && message.hasOwnProperty("user"))
+            object.user = $root.UserRef.toObject(message.user, options);
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (typeof message.createdAt === "number")
+                object.createdAt = options.longs === String ? String(message.createdAt) : message.createdAt;
+            else
+                object.createdAt = options.longs === String ? $util.Long.prototype.toString.call(message.createdAt) : options.longs === Number ? new $util.LongBits(message.createdAt.low >>> 0, message.createdAt.high >>> 0).toNumber() : message.createdAt;
+        return object;
+    };
+
+    /**
+     * Converts this ReportInfo to JSON.
+     * @function toJSON
+     * @memberof ReportInfo
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ReportInfo.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return ReportInfo;
 })();
 
 module.exports = $root;

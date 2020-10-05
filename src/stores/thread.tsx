@@ -3,7 +3,7 @@ import { useLocalStore } from 'mobx-react';
 import { AppStore, useAppStore } from "./app";
 import { ObservableRequestState, APIError, Response } from "service/api"
 import { useBoardStore, useBoardStoreUnsafe, BoardStore, Board, Thread } from "./board";
-import { IThread, IThreadWithBoardContext, IThreadsSelectResponse, ICommentSelectGraphResponse, IComment, IVote, ICommentCreateRequest, IEntityVoteRequest, ICommentSelectResponse } from 'model/compiled'
+import { IThread, IThreadWithBoardContext, ICommentSelectGraphResponse, IComment, IVote, ICommentCreateRequest, IEntityVoteRequest, ICommentSelectResponse, IThreadsSelectResponse } from 'model/compiled'
 import { observable } from 'mobx';
 
 interface ThreadResponse {
@@ -52,14 +52,14 @@ export class ThreadStore extends ObservableRequestState {
             threadId: this.threadId,
             comment: comment,
         }
-        return this.wrap(() => this.app.api.endpointPost("thread/comment", wrapper, 200)
-            .then(t => this._insertCommentList(comment)).finally(() => this.load()))
+        return this.wrap(() => this.app.api.endpointPost("board/thread/comment", wrapper, 200)
+            .then(t => this._insertCommentList(comment)).finally(() => this.loadComments()))
     }
 
     _insertCommentList(comment: IComment) {
-        if (this.comments && this.comments.data) {
-            this.comments.data.splice(1, 0, comment);
-        }
+        //if (this.comments && this.comments.data) {
+        //    this.comments.data.splice(1, 0, comment);
+        //}
     }
 
     editComment(content: string, commentId: string): Promise<void> {
@@ -67,13 +67,21 @@ export class ThreadStore extends ObservableRequestState {
             return Promise.reject();
         }
         this.isFetching = true;
-        return this.app.api.endpointPost("thread/comment", {}, 200).
+        return this.app.api.endpointPost("board/thread/comment", {}, 200).
             then((t: IComment) => { }).
             finally(() => this.isFetching = false);
     }
 
     voteThread(): Promise<void> {
         return Promise.reject();
+    }
+
+    event(event: string) {
+
+    }
+
+    loadComments(more: boolean = false) {
+
     }
 
     voteComment(commentId: string, action: string): Promise<void> {
@@ -86,12 +94,12 @@ export class ThreadStore extends ObservableRequestState {
             entityId: commentId,
             vote: v,
         }
-        return this.app.api.endpointPost("thread/comment/vote", vote, 200).finally(() => this.isFetching = false);
+        return this.app.api.endpointPost("board/thread/comment/vote", vote, 200).finally(() => this.isFetching = false);
     }
 
     load(): Promise<void> {
         const withContext: boolean = (this.thread == undefined);
-        return this.wrap(() => this.app.api.endpointGet("thread", {
+        return this.wrap(() => this.app.api.endpointGet("board/thread", {
             'threadId': this.threadId,
             'withContext': withContext,
         }, 200).then((t: IThreadWithBoardContext) => {

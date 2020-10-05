@@ -4,20 +4,27 @@ import {
     Switch,
     RouteComponentProps,
     useParams,
+    useHistory,
 } from "react-router-dom";
 
-import { Container, Navbar, NavbarBrand, Jumbotron } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col'
-
+import { useAsObservableSource } from "mobx-react";
+import { Button, Row, Form, Container, Navbar, Jumbotron } from 'react-bootstrap';
 import { observer } from 'mobx-react';
 import { NetworkedButton } from 'components/button'
 import { BoardStoreProvider, useBoardStore } from "../../stores/board";
 import { ThreadStoreProvider } from '../../stores/thread';
 import { BoardView, Portal, SidebarInfoCard, BoardModPreview } from "../../components/board/board";
 import { ThreadView } from "../../components/board/thread";
-import { Button, Row } from 'react-bootstrap';
 import { CircleAvatar } from 'components/user/avatar';
+import ScreenEdit from 'screens/board/edit';
 import moment from 'moment';
+import _ from 'lodash';
+
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { IUserRef, ThreadSelectFilters } from 'model/compiled';
+import { EnumToArray, DropdownEnum } from 'components/dropdown';
 
 const ScreenBoard: React.FC = () => {
     return (
@@ -34,40 +41,47 @@ export const RouterThread: React.FC<{}> = ({ }) => {
     )
 }
 
+
 const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
     const store = useBoardStore();
+    const history = useHistory();
+    //const source = useAsObservableSource();
+    React.useEffect(() => {
+        console.log("scaffold arguments changed");
+    }, [store]);
+
     return (
-        <Container fluid className="p-0 bg-white rounded">
-            <Jumbotron fluid className="d-block d-md-none p-4 m-0">
-                <h1>{store.info?.title ?? "%notset%"}</h1>
-                <h6>+/{boardId}</h6>
-            </Jumbotron>
-            <Navbar bg="white" variant="dark" className="justify-content-between border-bottom no-gutters mb-1 px-4 p-0" style={{
-                zIndex: 4,
-                position: 'sticky',
-                top: 0,
-            }}>
-                <div className="d-flex flex-row align-items-center board-header">
-                    <CircleAvatar size={32} />
-                    <div className="d-flex flex-column">
-                        <h4>{store.info?.description ?? ""}</h4>
-                        <h6>+{boardId}</h6>
-                    </div>
-                    <div>{store.info?.members} Members</div>
-                    <div>{store.info?.posts} Posts</div>
-                    <div>{store.info?.posts} Votes given</div>
-                </div>
-                {!store.info?.isMember && <NetworkedButton
-                    message="Join"
-                    successMessage="Unsubscribe"
-                    onClick={() => store.subscribe()} />}
-                {store.info?.isMember && <Button onClick={() => store.unsubscribe()}>Unsubscribe</Button>}
-            </Navbar>
-            <Switch>
-                <Route path={`/+${boardId}/:threadId/`} component={RouterThread} />
-                <Route exact path={`/+${boardId}`} component={BoardView} />
-            </Switch>
-            <Portal target="screen-left">
+        <Container
+            fluid
+            className="m-0 p-0"
+            style={{
+                backgroundImage: store.backgroundImage,
+                backgroundSize: store.backgroundSize,
+                backgroundRepeat: store.backgroundRepeat,
+            }}
+        >
+            <Container
+                className="card p-0 rounded"
+                fluid={store.fluid}
+                style={{
+                    minHeight: "100vh"
+                }}
+            >
+                <Jumbotron fluid className="d-block _d-md-none p-4 m-0 contrast-background" style={{
+                    backgroundImage: "url(https://source.unsplash.com/collection/wallpapers/1280x800)",
+                    backgroundSize: "cover",
+                }}>
+                    <h1>{store.info?.title ?? boardId}</h1>
+                    <h4>{store.info?.description ?? ""}</h4>
+                    <h6>+/{boardId}</h6>
+                </Jumbotron>
+                <Switch>
+                    <Route exact path={`/+${boardId}/edit`} component={ScreenEdit} />
+                    <Route path={`/+${boardId}/:threadId/`} component={RouterThread} />
+                    <Route exact path={`/+${boardId}`} component={BoardView} />
+                </Switch>
+            </Container>
+            <Portal target="screen-right">
                 <SidebarInfoCard>
                     {store.boardId}
                     <p>

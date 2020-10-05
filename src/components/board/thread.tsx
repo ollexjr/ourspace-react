@@ -8,12 +8,10 @@ import { IComment, ICommentNode } from 'model/compiled';
 import { InlineVoter, VerticalVoter } from './vote';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
-
+import ReactPlayer from 'react-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpand, faExternalLinkAlt, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { NetworkGateway } from 'components/network/gateway';
-
-//import { debounce } from 'lodash';
 
 const TextEditor: React.FC<{
     source?: string,
@@ -208,7 +206,7 @@ export const ExternalFrame: React.FC<{ src: string }> = ({ src }) => {
 export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }) => {
     const store = useThreadStore();
     const [showModal, setModal] = React.useState(false);
-
+    const canShowMedia = store.thread?.link && store.thread.link != null && ReactPlayer.canPlay(store.thread.link);
     return (
         <NetworkGateway retry={() => store.load()} state={() => store}>
             <div>
@@ -230,14 +228,41 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                     </div>
                     <div className="mb-2">
                         <h4>{store.thread?.title ?? "%notset%"}</h4>
-                        <a>{store.thread?.link && <small>({(new URL(store.thread!.link)).hostname})</small>}</a>
+                        {store.thread?.link &&
+                            <a 
+                                target="_blank" 
+                                href={store.thread.link}>
+                                <small>({(new URL(store.thread!.link)).hostname})</small>
+                            </a>}
+                        {//store.thread?.link && <a href={store.thread!.link!}>{store.thread!.link!.trimMax(100)}</a>
+                        }
                     </div>
+                    {canShowMedia && <div className="d-flex justify-content-center rounded-iframe-container mb-2">
+                        <ReactPlayer
+                            light
+                            controls
+                            onPlay={() => store.event("link/playing")}
+                            onPause={() => store.event("link/pause")}
+                            url={store.thread?.link ?? ""} />
+                    </div>}
                     <div className="d-flex flex-row button-row">
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faRandom} /></Button>
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faExpand} /></Button>
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faShare} /></Button>
                     </div>
                 </div>
+                <InlineVoter
+                    simple
+                    size="sm"
+                    className="d-flex flex-row"
+                    table={store.thread?.acceptedVotes ?? []}
+                    votes={store.thread?.votes ?? undefined}
+                    onClick={(v) => Promise.reject()}
+                    //onClick={(v) =>
+                    //    store.voteThread(store.thread?.uId ?? "undefined", v)
+                    //        .then(
+                    //            t => store.thread!.me!.vote = t)} 
+                    value={store.thread?.me?.vote ?? "unset"} />
                 <div className="p-2">
                     <small>Comment as @system</small>
                     <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />

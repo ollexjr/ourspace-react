@@ -6,7 +6,7 @@ import { BoardStoreProvider } from "../../stores/board"
 export const ScreenFrontpage: React.FC<RouteComponentProps<{}>> = () => {
     console.log("[frontpage] constructing")
     return (
-        <BoardStoreProvider boardId="_">
+        <BoardStoreProvider boardId="all">
             <BoardView />
         </BoardStoreProvider>
     )

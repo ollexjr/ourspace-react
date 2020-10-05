@@ -1007,222 +1007,6 @@ export class CommentSelectResponse implements ICommentSelectResponse {
     public toJSON(): { [k: string]: any };
 }
 
-/** Properties of a BanInfo. */
-export interface IBanInfo {
-
-    /** BanInfo bannedBy */
-    bannedBy?: (string|null);
-
-    /** BanInfo banReason */
-    banReason?: (string|null);
-
-    /** BanInfo approvedBy */
-    approvedBy?: (string|null);
-
-    /** BanInfo createdAt */
-    createdAt?: (string|null);
-
-    /** BanInfo reportId */
-    reportId?: (string|null);
-}
-
-/** Represents a BanInfo. */
-export class BanInfo implements IBanInfo {
-
-    /**
-     * Constructs a new BanInfo.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IBanInfo);
-
-    /** BanInfo bannedBy. */
-    public bannedBy: string;
-
-    /** BanInfo banReason. */
-    public banReason: string;
-
-    /** BanInfo approvedBy. */
-    public approvedBy: string;
-
-    /** BanInfo createdAt. */
-    public createdAt: string;
-
-    /** BanInfo reportId. */
-    public reportId: string;
-
-    /**
-     * Creates a new BanInfo instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns BanInfo instance
-     */
-    public static create(properties?: IBanInfo): BanInfo;
-
-    /**
-     * Encodes the specified BanInfo message. Does not implicitly {@link BanInfo.verify|verify} messages.
-     * @param message BanInfo message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IBanInfo, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified BanInfo message, length delimited. Does not implicitly {@link BanInfo.verify|verify} messages.
-     * @param message BanInfo message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IBanInfo, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a BanInfo message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns BanInfo
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): BanInfo;
-
-    /**
-     * Decodes a BanInfo message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns BanInfo
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): BanInfo;
-
-    /**
-     * Verifies a BanInfo message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a BanInfo message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns BanInfo
-     */
-    public static fromObject(object: { [k: string]: any }): BanInfo;
-
-    /**
-     * Creates a plain object from a BanInfo message. Also converts values to other types if specified.
-     * @param message BanInfo
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: BanInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this BanInfo to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-}
-
-/** Properties of a ReportInfo. */
-export interface IReportInfo {
-
-    /** ReportInfo report */
-    report?: (string|null);
-
-    /** ReportInfo user */
-    user?: (IUserRef|null);
-
-    /** ReportInfo createdAt */
-    createdAt?: (number|null);
-}
-
-/** Represents a ReportInfo. */
-export class ReportInfo implements IReportInfo {
-
-    /**
-     * Constructs a new ReportInfo.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IReportInfo);
-
-    /** ReportInfo report. */
-    public report: string;
-
-    /** ReportInfo user. */
-    public user?: (IUserRef|null);
-
-    /** ReportInfo createdAt. */
-    public createdAt: number;
-
-    /**
-     * Creates a new ReportInfo instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns ReportInfo instance
-     */
-    public static create(properties?: IReportInfo): ReportInfo;
-
-    /**
-     * Encodes the specified ReportInfo message. Does not implicitly {@link ReportInfo.verify|verify} messages.
-     * @param message ReportInfo message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IReportInfo, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified ReportInfo message, length delimited. Does not implicitly {@link ReportInfo.verify|verify} messages.
-     * @param message ReportInfo message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IReportInfo, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a ReportInfo message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns ReportInfo
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ReportInfo;
-
-    /**
-     * Decodes a ReportInfo message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns ReportInfo
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ReportInfo;
-
-    /**
-     * Verifies a ReportInfo message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a ReportInfo message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns ReportInfo
-     */
-    public static fromObject(object: { [k: string]: any }): ReportInfo;
-
-    /**
-     * Creates a plain object from a ReportInfo message. Also converts values to other types if specified.
-     * @param message ReportInfo
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: ReportInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this ReportInfo to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-}
-
 /** Properties of a Vote. */
 export interface IVote {
 
@@ -1334,6 +1118,9 @@ export class Vote implements IVote {
 /** Properties of a CommentActionedContext. */
 export interface ICommentActionedContext {
 
+    /** CommentActionedContext isModerator */
+    isModerator?: (boolean|null);
+
     /** CommentActionedContext vote */
     vote?: (string|null);
 }
@@ -1346,6 +1133,9 @@ export class CommentActionedContext implements ICommentActionedContext {
      * @param [properties] Properties to set
      */
     constructor(properties?: ICommentActionedContext);
+
+    /** CommentActionedContext isModerator. */
+    public isModerator: boolean;
 
     /** CommentActionedContext vote. */
     public vote: string;
@@ -1424,6 +1214,9 @@ export class CommentActionedContext implements ICommentActionedContext {
 /** Properties of a ThreadActionedContext. */
 export interface IThreadActionedContext {
 
+    /** ThreadActionedContext isModerator */
+    isModerator?: (boolean|null);
+
     /** ThreadActionedContext vote */
     vote?: (string|null);
 }
@@ -1436,6 +1229,9 @@ export class ThreadActionedContext implements IThreadActionedContext {
      * @param [properties] Properties to set
      */
     constructor(properties?: IThreadActionedContext);
+
+    /** ThreadActionedContext isModerator. */
+    public isModerator: boolean;
 
     /** ThreadActionedContext vote. */
     public vote: string;
@@ -1835,6 +1631,12 @@ export interface IComment {
     /** Comment me */
     me?: (ICommentActionedContext|null);
 
+    /** Comment unhandledReports */
+    unhandledReports?: (number|null);
+
+    /** Comment reports */
+    reports?: (number|null);
+
     /** Comment depth */
     depth?: (number|null);
 }
@@ -1874,6 +1676,12 @@ export class Comment implements IComment {
 
     /** Comment me. */
     public me?: (ICommentActionedContext|null);
+
+    /** Comment unhandledReports. */
+    public unhandledReports: number;
+
+    /** Comment reports. */
+    public reports: number;
 
     /** Comment depth. */
     public depth: number;
@@ -1944,6 +1752,102 @@ export class Comment implements IComment {
 
     /**
      * Converts this Comment to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a SelectReportsResponse. */
+export interface ISelectReportsResponse {
+
+    /** SelectReportsResponse reports */
+    reports?: (IReportInfo[]|null);
+
+    /** SelectReportsResponse token */
+    token?: (string|null);
+}
+
+/** Represents a SelectReportsResponse. */
+export class SelectReportsResponse implements ISelectReportsResponse {
+
+    /**
+     * Constructs a new SelectReportsResponse.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: ISelectReportsResponse);
+
+    /** SelectReportsResponse reports. */
+    public reports: IReportInfo[];
+
+    /** SelectReportsResponse token. */
+    public token: string;
+
+    /**
+     * Creates a new SelectReportsResponse instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns SelectReportsResponse instance
+     */
+    public static create(properties?: ISelectReportsResponse): SelectReportsResponse;
+
+    /**
+     * Encodes the specified SelectReportsResponse message. Does not implicitly {@link SelectReportsResponse.verify|verify} messages.
+     * @param message SelectReportsResponse message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: ISelectReportsResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified SelectReportsResponse message, length delimited. Does not implicitly {@link SelectReportsResponse.verify|verify} messages.
+     * @param message SelectReportsResponse message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: ISelectReportsResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a SelectReportsResponse message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns SelectReportsResponse
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): SelectReportsResponse;
+
+    /**
+     * Decodes a SelectReportsResponse message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns SelectReportsResponse
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): SelectReportsResponse;
+
+    /**
+     * Verifies a SelectReportsResponse message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a SelectReportsResponse message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns SelectReportsResponse
+     */
+    public static fromObject(object: { [k: string]: any }): SelectReportsResponse;
+
+    /**
+     * Creates a plain object from a SelectReportsResponse message. Also converts values to other types if specified.
+     * @param message SelectReportsResponse
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: SelectReportsResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this SelectReportsResponse to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
@@ -2108,11 +2012,11 @@ export class Board implements IBoard {
 /** Properties of a Thread. */
 export interface IThread {
 
-    /** Thread url */
-    url?: (string|null);
-
     /** Thread uId */
     uId?: (string|null);
+
+    /** Thread url */
+    url?: (string|null);
 
     /** Thread type */
     type?: (number|null);
@@ -2122,6 +2026,9 @@ export interface IThread {
 
     /** Thread link */
     link?: (string|null);
+
+    /** Thread linkType */
+    linkType?: (string|null);
 
     /** Thread content */
     content?: (string|null);
@@ -2144,11 +2051,11 @@ export interface IThread {
     /** Thread isArchived */
     isArchived?: (boolean|null);
 
-    /** Thread up */
-    up?: (number|null);
+    /** Thread aspectRatio */
+    aspectRatio?: (number|null);
 
-    /** Thread down */
-    down?: (number|null);
+    /** Thread location */
+    location?: (string|null);
 
     /** Thread numComments */
     numComments?: (number|null);
@@ -2157,7 +2064,7 @@ export interface IThread {
     lastCommentAt?: (number|null);
 
     /** Thread votes */
-    votes?: (IVote[]|null);
+    votes?: ({ [k: string]: number }|null);
 
     /** Thread acceptedVotes */
     acceptedVotes?: (string[]|null);
@@ -2167,6 +2074,12 @@ export interface IThread {
 
     /** Thread mod */
     mod?: (IBanInfo[]|null);
+
+    /** Thread unhandledReports */
+    unhandledReports?: (number|null);
+
+    /** Thread reports */
+    reports?: (number|null);
 
     /** Thread me */
     me?: (IThreadActionedContext|null);
@@ -2181,11 +2094,11 @@ export class Thread implements IThread {
      */
     constructor(properties?: IThread);
 
-    /** Thread url. */
-    public url: string;
-
     /** Thread uId. */
     public uId: string;
+
+    /** Thread url. */
+    public url: string;
 
     /** Thread type. */
     public type: number;
@@ -2195,6 +2108,9 @@ export class Thread implements IThread {
 
     /** Thread link. */
     public link: string;
+
+    /** Thread linkType. */
+    public linkType: string;
 
     /** Thread content. */
     public content: string;
@@ -2217,11 +2133,11 @@ export class Thread implements IThread {
     /** Thread isArchived. */
     public isArchived: boolean;
 
-    /** Thread up. */
-    public up: number;
+    /** Thread aspectRatio. */
+    public aspectRatio: number;
 
-    /** Thread down. */
-    public down: number;
+    /** Thread location. */
+    public location: string;
 
     /** Thread numComments. */
     public numComments: number;
@@ -2230,7 +2146,7 @@ export class Thread implements IThread {
     public lastCommentAt: number;
 
     /** Thread votes. */
-    public votes: IVote[];
+    public votes: { [k: string]: number };
 
     /** Thread acceptedVotes. */
     public acceptedVotes: string[];
@@ -2240,6 +2156,12 @@ export class Thread implements IThread {
 
     /** Thread mod. */
     public mod: IBanInfo[];
+
+    /** Thread unhandledReports. */
+    public unhandledReports: number;
+
+    /** Thread reports. */
+    public reports: number;
 
     /** Thread me. */
     public me?: (IThreadActionedContext|null);
@@ -2711,23 +2633,150 @@ export class CommentCreateResponse implements ICommentCreateResponse {
     public toJSON(): { [k: string]: any };
 }
 
+/** Properties of a CommentSelectFilters. */
+export interface ICommentSelectFilters {
+
+    /** CommentSelectFilters rankMethod */
+    rankMethod?: (CommentSelectFilters.Method|null);
+
+    /** CommentSelectFilters sortDirection */
+    sortDirection?: (CommentSelectFilters.SortDirection|null);
+
+    /** CommentSelectFilters parentId */
+    parentId?: (string|null);
+
+    /** CommentSelectFilters token */
+    token?: (string|null);
+}
+
+/** Represents a CommentSelectFilters. */
+export class CommentSelectFilters implements ICommentSelectFilters {
+
+    /**
+     * Constructs a new CommentSelectFilters.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: ICommentSelectFilters);
+
+    /** CommentSelectFilters rankMethod. */
+    public rankMethod: CommentSelectFilters.Method;
+
+    /** CommentSelectFilters sortDirection. */
+    public sortDirection: CommentSelectFilters.SortDirection;
+
+    /** CommentSelectFilters parentId. */
+    public parentId: string;
+
+    /** CommentSelectFilters token. */
+    public token: string;
+
+    /**
+     * Creates a new CommentSelectFilters instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns CommentSelectFilters instance
+     */
+    public static create(properties?: ICommentSelectFilters): CommentSelectFilters;
+
+    /**
+     * Encodes the specified CommentSelectFilters message. Does not implicitly {@link CommentSelectFilters.verify|verify} messages.
+     * @param message CommentSelectFilters message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: ICommentSelectFilters, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified CommentSelectFilters message, length delimited. Does not implicitly {@link CommentSelectFilters.verify|verify} messages.
+     * @param message CommentSelectFilters message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: ICommentSelectFilters, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a CommentSelectFilters message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns CommentSelectFilters
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): CommentSelectFilters;
+
+    /**
+     * Decodes a CommentSelectFilters message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns CommentSelectFilters
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): CommentSelectFilters;
+
+    /**
+     * Verifies a CommentSelectFilters message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a CommentSelectFilters message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns CommentSelectFilters
+     */
+    public static fromObject(object: { [k: string]: any }): CommentSelectFilters;
+
+    /**
+     * Creates a plain object from a CommentSelectFilters message. Also converts values to other types if specified.
+     * @param message CommentSelectFilters
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: CommentSelectFilters, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this CommentSelectFilters to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+export namespace CommentSelectFilters {
+
+    /** Method enum. */
+    enum Method {
+        BEST = 0,
+        CONTROVERSIAL = 1,
+        DATE = 2
+    }
+
+    /** SortDirection enum. */
+    enum SortDirection {
+        DESC = 0,
+        ASC = 1
+    }
+}
+
 /** Properties of a ThreadSelectFilters. */
 export interface IThreadSelectFilters {
 
     /** ThreadSelectFilters rankMethod */
-    rankMethod?: (string|null);
+    rankMethod?: (ThreadSelectFilters.Method|null);
+
+    /** ThreadSelectFilters sortDirection */
+    sortDirection?: (ThreadSelectFilters.SortDirection|null);
+
+    /** ThreadSelectFilters limit */
+    limit?: (number|null);
+
+    /** ThreadSelectFilters query */
+    query?: (string|null);
 
     /** ThreadSelectFilters createdStart */
     createdStart?: (number|null);
 
     /** ThreadSelectFilters createdEnd */
     createdEnd?: (number|null);
-
-    /** ThreadSelectFilters sortDirection */
-    sortDirection?: (string|null);
-
-    /** ThreadSelectFilters token */
-    token?: (string|null);
 }
 
 /** Represents a ThreadSelectFilters. */
@@ -2740,19 +2789,22 @@ export class ThreadSelectFilters implements IThreadSelectFilters {
     constructor(properties?: IThreadSelectFilters);
 
     /** ThreadSelectFilters rankMethod. */
-    public rankMethod: string;
+    public rankMethod: ThreadSelectFilters.Method;
+
+    /** ThreadSelectFilters sortDirection. */
+    public sortDirection: ThreadSelectFilters.SortDirection;
+
+    /** ThreadSelectFilters limit. */
+    public limit: number;
+
+    /** ThreadSelectFilters query. */
+    public query: string;
 
     /** ThreadSelectFilters createdStart. */
     public createdStart: number;
 
     /** ThreadSelectFilters createdEnd. */
     public createdEnd: number;
-
-    /** ThreadSelectFilters sortDirection. */
-    public sortDirection: string;
-
-    /** ThreadSelectFilters token. */
-    public token: string;
 
     /**
      * Creates a new ThreadSelectFilters instance using the specified properties.
@@ -2820,6 +2872,144 @@ export class ThreadSelectFilters implements IThreadSelectFilters {
 
     /**
      * Converts this ThreadSelectFilters to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+export namespace ThreadSelectFilters {
+
+    /** ThreadContentFilter enum. */
+    enum ThreadContentFilter {
+        TITLE = 0,
+        CONTENT = 1,
+        FLAIR = 2
+    }
+
+    /** SortDirection enum. */
+    enum SortDirection {
+        DESC = 0,
+        ASC = 1
+    }
+
+    /** ContentWarning enum. */
+    enum ContentWarning {
+        NORMAL = 0,
+        NSFW = 1,
+        NSFL = 2
+    }
+
+    /** Method enum. */
+    enum Method {
+        HOT = 0,
+        TOP = 1,
+        CONTROVERSIAL = 2
+    }
+}
+
+/** Properties of a ThreadSelectRequest. */
+export interface IThreadSelectRequest {
+
+    /** ThreadSelectRequest filters */
+    filters?: (IThreadSelectFilters|null);
+
+    /** ThreadSelectRequest boardId */
+    boardId?: (string|null);
+
+    /** ThreadSelectRequest token */
+    token?: (string|null);
+
+    /** ThreadSelectRequest withContext */
+    withContext?: (boolean|null);
+}
+
+/** Represents a ThreadSelectRequest. */
+export class ThreadSelectRequest implements IThreadSelectRequest {
+
+    /**
+     * Constructs a new ThreadSelectRequest.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IThreadSelectRequest);
+
+    /** ThreadSelectRequest filters. */
+    public filters?: (IThreadSelectFilters|null);
+
+    /** ThreadSelectRequest boardId. */
+    public boardId: string;
+
+    /** ThreadSelectRequest token. */
+    public token: string;
+
+    /** ThreadSelectRequest withContext. */
+    public withContext: boolean;
+
+    /**
+     * Creates a new ThreadSelectRequest instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns ThreadSelectRequest instance
+     */
+    public static create(properties?: IThreadSelectRequest): ThreadSelectRequest;
+
+    /**
+     * Encodes the specified ThreadSelectRequest message. Does not implicitly {@link ThreadSelectRequest.verify|verify} messages.
+     * @param message ThreadSelectRequest message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IThreadSelectRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified ThreadSelectRequest message, length delimited. Does not implicitly {@link ThreadSelectRequest.verify|verify} messages.
+     * @param message ThreadSelectRequest message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IThreadSelectRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a ThreadSelectRequest message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns ThreadSelectRequest
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ThreadSelectRequest;
+
+    /**
+     * Decodes a ThreadSelectRequest message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns ThreadSelectRequest
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ThreadSelectRequest;
+
+    /**
+     * Verifies a ThreadSelectRequest message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a ThreadSelectRequest message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns ThreadSelectRequest
+     */
+    public static fromObject(object: { [k: string]: any }): ThreadSelectRequest;
+
+    /**
+     * Creates a plain object from a ThreadSelectRequest message. Also converts values to other types if specified.
+     * @param message ThreadSelectRequest
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: ThreadSelectRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this ThreadSelectRequest to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
@@ -3605,109 +3795,493 @@ export class BoardCreate implements IBoardCreate {
     public toJSON(): { [k: string]: any };
 }
 
-/** Properties of an AllSort. */
-export interface IAllSort {
+/** Properties of a UserModerationAction. */
+export interface IUserModerationAction {
 
-    /** AllSort sort */
-    sort?: (string|null);
-
-    /** AllSort createdAt */
-    createdAt?: (string|null);
-
-    /** AllSort createdEnd */
-    createdEnd?: (string|null);
-
-    /** AllSort token */
-    token?: (string|null);
+    /** UserModerationAction endsAt */
+    endsAt?: (number|null);
 }
 
-/** Represents an AllSort. */
-export class AllSort implements IAllSort {
+/** Represents a UserModerationAction. */
+export class UserModerationAction implements IUserModerationAction {
 
     /**
-     * Constructs a new AllSort.
+     * Constructs a new UserModerationAction.
      * @param [properties] Properties to set
      */
-    constructor(properties?: IAllSort);
+    constructor(properties?: IUserModerationAction);
 
-    /** AllSort sort. */
-    public sort: string;
-
-    /** AllSort createdAt. */
-    public createdAt: string;
-
-    /** AllSort createdEnd. */
-    public createdEnd: string;
-
-    /** AllSort token. */
-    public token: string;
+    /** UserModerationAction endsAt. */
+    public endsAt: number;
 
     /**
-     * Creates a new AllSort instance using the specified properties.
+     * Creates a new UserModerationAction instance using the specified properties.
      * @param [properties] Properties to set
-     * @returns AllSort instance
+     * @returns UserModerationAction instance
      */
-    public static create(properties?: IAllSort): AllSort;
+    public static create(properties?: IUserModerationAction): UserModerationAction;
 
     /**
-     * Encodes the specified AllSort message. Does not implicitly {@link AllSort.verify|verify} messages.
-     * @param message AllSort message or plain object to encode
+     * Encodes the specified UserModerationAction message. Does not implicitly {@link UserModerationAction.verify|verify} messages.
+     * @param message UserModerationAction message or plain object to encode
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: IAllSort, writer?: $protobuf.Writer): $protobuf.Writer;
+    public static encode(message: IUserModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified AllSort message, length delimited. Does not implicitly {@link AllSort.verify|verify} messages.
-     * @param message AllSort message or plain object to encode
+     * Encodes the specified UserModerationAction message, length delimited. Does not implicitly {@link UserModerationAction.verify|verify} messages.
+     * @param message UserModerationAction message or plain object to encode
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: IAllSort, writer?: $protobuf.Writer): $protobuf.Writer;
+    public static encodeDelimited(message: IUserModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Decodes an AllSort message from the specified reader or buffer.
+     * Decodes a UserModerationAction message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
-     * @returns AllSort
+     * @returns UserModerationAction
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AllSort;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): UserModerationAction;
 
     /**
-     * Decodes an AllSort message from the specified reader or buffer, length delimited.
+     * Decodes a UserModerationAction message from the specified reader or buffer, length delimited.
      * @param reader Reader or buffer to decode from
-     * @returns AllSort
+     * @returns UserModerationAction
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AllSort;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): UserModerationAction;
 
     /**
-     * Verifies an AllSort message.
+     * Verifies a UserModerationAction message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
     public static verify(message: { [k: string]: any }): (string|null);
 
     /**
-     * Creates an AllSort message from a plain object. Also converts values to their respective internal types.
+     * Creates a UserModerationAction message from a plain object. Also converts values to their respective internal types.
      * @param object Plain object
-     * @returns AllSort
+     * @returns UserModerationAction
      */
-    public static fromObject(object: { [k: string]: any }): AllSort;
+    public static fromObject(object: { [k: string]: any }): UserModerationAction;
 
     /**
-     * Creates a plain object from an AllSort message. Also converts values to other types if specified.
-     * @param message AllSort
+     * Creates a plain object from a UserModerationAction message. Also converts values to other types if specified.
+     * @param message UserModerationAction
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: AllSort, options?: $protobuf.IConversionOptions): { [k: string]: any };
+    public static toObject(message: UserModerationAction, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
     /**
-     * Converts this AllSort to JSON.
+     * Converts this UserModerationAction to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a ModerationAction. */
+export interface IModerationAction {
+
+    /** ModerationAction action */
+    action?: (string|null);
+
+    /** ModerationAction category */
+    category?: (number|null);
+
+    /** ModerationAction reason */
+    reason?: (string|null);
+
+    /** ModerationAction user */
+    user?: (IUserModerationAction|null);
+
+    /** ModerationAction endsAt */
+    endsAt?: (number|null);
+}
+
+/** Represents a ModerationAction. */
+export class ModerationAction implements IModerationAction {
+
+    /**
+     * Constructs a new ModerationAction.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IModerationAction);
+
+    /** ModerationAction action. */
+    public action: string;
+
+    /** ModerationAction category. */
+    public category: number;
+
+    /** ModerationAction reason. */
+    public reason: string;
+
+    /** ModerationAction user. */
+    public user?: (IUserModerationAction|null);
+
+    /** ModerationAction endsAt. */
+    public endsAt: number;
+
+    /**
+     * Creates a new ModerationAction instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns ModerationAction instance
+     */
+    public static create(properties?: IModerationAction): ModerationAction;
+
+    /**
+     * Encodes the specified ModerationAction message. Does not implicitly {@link ModerationAction.verify|verify} messages.
+     * @param message ModerationAction message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified ModerationAction message, length delimited. Does not implicitly {@link ModerationAction.verify|verify} messages.
+     * @param message ModerationAction message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a ModerationAction message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns ModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ModerationAction;
+
+    /**
+     * Decodes a ModerationAction message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns ModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ModerationAction;
+
+    /**
+     * Verifies a ModerationAction message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a ModerationAction message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns ModerationAction
+     */
+    public static fromObject(object: { [k: string]: any }): ModerationAction;
+
+    /**
+     * Creates a plain object from a ModerationAction message. Also converts values to other types if specified.
+     * @param message ModerationAction
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: ModerationAction, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this ModerationAction to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a ThreadModerationAction. */
+export interface IThreadModerationAction {
+
+    /** ThreadModerationAction action */
+    action?: (IModerationAction|null);
+
+    /** ThreadModerationAction threadId */
+    threadId?: (string|null);
+}
+
+/** Represents a ThreadModerationAction. */
+export class ThreadModerationAction implements IThreadModerationAction {
+
+    /**
+     * Constructs a new ThreadModerationAction.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IThreadModerationAction);
+
+    /** ThreadModerationAction action. */
+    public action?: (IModerationAction|null);
+
+    /** ThreadModerationAction threadId. */
+    public threadId: string;
+
+    /**
+     * Creates a new ThreadModerationAction instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns ThreadModerationAction instance
+     */
+    public static create(properties?: IThreadModerationAction): ThreadModerationAction;
+
+    /**
+     * Encodes the specified ThreadModerationAction message. Does not implicitly {@link ThreadModerationAction.verify|verify} messages.
+     * @param message ThreadModerationAction message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IThreadModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified ThreadModerationAction message, length delimited. Does not implicitly {@link ThreadModerationAction.verify|verify} messages.
+     * @param message ThreadModerationAction message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IThreadModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a ThreadModerationAction message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns ThreadModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ThreadModerationAction;
+
+    /**
+     * Decodes a ThreadModerationAction message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns ThreadModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ThreadModerationAction;
+
+    /**
+     * Verifies a ThreadModerationAction message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a ThreadModerationAction message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns ThreadModerationAction
+     */
+    public static fromObject(object: { [k: string]: any }): ThreadModerationAction;
+
+    /**
+     * Creates a plain object from a ThreadModerationAction message. Also converts values to other types if specified.
+     * @param message ThreadModerationAction
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: ThreadModerationAction, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this ThreadModerationAction to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a CommentModerationAction. */
+export interface ICommentModerationAction {
+
+    /** CommentModerationAction action */
+    action?: (IModerationAction|null);
+
+    /** CommentModerationAction commentId */
+    commentId?: (string|null);
+}
+
+/** Represents a CommentModerationAction. */
+export class CommentModerationAction implements ICommentModerationAction {
+
+    /**
+     * Constructs a new CommentModerationAction.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: ICommentModerationAction);
+
+    /** CommentModerationAction action. */
+    public action?: (IModerationAction|null);
+
+    /** CommentModerationAction commentId. */
+    public commentId: string;
+
+    /**
+     * Creates a new CommentModerationAction instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns CommentModerationAction instance
+     */
+    public static create(properties?: ICommentModerationAction): CommentModerationAction;
+
+    /**
+     * Encodes the specified CommentModerationAction message. Does not implicitly {@link CommentModerationAction.verify|verify} messages.
+     * @param message CommentModerationAction message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: ICommentModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified CommentModerationAction message, length delimited. Does not implicitly {@link CommentModerationAction.verify|verify} messages.
+     * @param message CommentModerationAction message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: ICommentModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a CommentModerationAction message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns CommentModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): CommentModerationAction;
+
+    /**
+     * Decodes a CommentModerationAction message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns CommentModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): CommentModerationAction;
+
+    /**
+     * Verifies a CommentModerationAction message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a CommentModerationAction message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns CommentModerationAction
+     */
+    public static fromObject(object: { [k: string]: any }): CommentModerationAction;
+
+    /**
+     * Creates a plain object from a CommentModerationAction message. Also converts values to other types if specified.
+     * @param message CommentModerationAction
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: CommentModerationAction, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this CommentModerationAction to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a BoardModerationAction. */
+export interface IBoardModerationAction {
+
+    /** BoardModerationAction action */
+    action?: (IModerationAction|null);
+
+    /** BoardModerationAction boardId */
+    boardId?: (string|null);
+}
+
+/** Represents a BoardModerationAction. */
+export class BoardModerationAction implements IBoardModerationAction {
+
+    /**
+     * Constructs a new BoardModerationAction.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IBoardModerationAction);
+
+    /** BoardModerationAction action. */
+    public action?: (IModerationAction|null);
+
+    /** BoardModerationAction boardId. */
+    public boardId: string;
+
+    /**
+     * Creates a new BoardModerationAction instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns BoardModerationAction instance
+     */
+    public static create(properties?: IBoardModerationAction): BoardModerationAction;
+
+    /**
+     * Encodes the specified BoardModerationAction message. Does not implicitly {@link BoardModerationAction.verify|verify} messages.
+     * @param message BoardModerationAction message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IBoardModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified BoardModerationAction message, length delimited. Does not implicitly {@link BoardModerationAction.verify|verify} messages.
+     * @param message BoardModerationAction message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IBoardModerationAction, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a BoardModerationAction message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns BoardModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): BoardModerationAction;
+
+    /**
+     * Decodes a BoardModerationAction message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns BoardModerationAction
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): BoardModerationAction;
+
+    /**
+     * Verifies a BoardModerationAction message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a BoardModerationAction message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns BoardModerationAction
+     */
+    public static fromObject(object: { [k: string]: any }): BoardModerationAction;
+
+    /**
+     * Creates a plain object from a BoardModerationAction message. Also converts values to other types if specified.
+     * @param message BoardModerationAction
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: BoardModerationAction, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this BoardModerationAction to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
@@ -4365,7 +4939,7 @@ export interface IEvent {
     userId?: (string|null);
 
     /** Event data */
-    data?: (string|null);
+    data?: (Uint8Array|null);
 
     /** Event createdAt */
     createdAt?: (number|null);
@@ -4387,7 +4961,7 @@ export class Event implements IEvent {
     public userId: string;
 
     /** Event data. */
-    public data: string;
+    public data: Uint8Array;
 
     /** Event createdAt. */
     public createdAt: number;
@@ -4458,6 +5032,342 @@ export class Event implements IEvent {
 
     /**
      * Converts this Event to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a CommentReplyEvent. */
+export interface ICommentReplyEvent {
+
+    /** CommentReplyEvent userId */
+    userId?: (string|null);
+
+    /** CommentReplyEvent comment */
+    comment?: (IComment|null);
+
+    /** CommentReplyEvent createdAt */
+    createdAt?: (number|null);
+}
+
+/** Represents a CommentReplyEvent. */
+export class CommentReplyEvent implements ICommentReplyEvent {
+
+    /**
+     * Constructs a new CommentReplyEvent.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: ICommentReplyEvent);
+
+    /** CommentReplyEvent userId. */
+    public userId: string;
+
+    /** CommentReplyEvent comment. */
+    public comment?: (IComment|null);
+
+    /** CommentReplyEvent createdAt. */
+    public createdAt: number;
+
+    /**
+     * Creates a new CommentReplyEvent instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns CommentReplyEvent instance
+     */
+    public static create(properties?: ICommentReplyEvent): CommentReplyEvent;
+
+    /**
+     * Encodes the specified CommentReplyEvent message. Does not implicitly {@link CommentReplyEvent.verify|verify} messages.
+     * @param message CommentReplyEvent message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: ICommentReplyEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified CommentReplyEvent message, length delimited. Does not implicitly {@link CommentReplyEvent.verify|verify} messages.
+     * @param message CommentReplyEvent message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: ICommentReplyEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a CommentReplyEvent message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns CommentReplyEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): CommentReplyEvent;
+
+    /**
+     * Decodes a CommentReplyEvent message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns CommentReplyEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): CommentReplyEvent;
+
+    /**
+     * Verifies a CommentReplyEvent message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a CommentReplyEvent message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns CommentReplyEvent
+     */
+    public static fromObject(object: { [k: string]: any }): CommentReplyEvent;
+
+    /**
+     * Creates a plain object from a CommentReplyEvent message. Also converts values to other types if specified.
+     * @param message CommentReplyEvent
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: CommentReplyEvent, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this CommentReplyEvent to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a UserMentionEvent. */
+export interface IUserMentionEvent {
+
+    /** UserMentionEvent userId */
+    userId?: (string|null);
+
+    /** UserMentionEvent location */
+    location?: (string|null);
+
+    /** UserMentionEvent createdAt */
+    createdAt?: (number|null);
+
+    /** UserMentionEvent board */
+    board?: (string|null);
+
+    /** UserMentionEvent title */
+    title?: (string|null);
+
+    /** UserMentionEvent comment */
+    comment?: (string|null);
+}
+
+/** Represents a UserMentionEvent. */
+export class UserMentionEvent implements IUserMentionEvent {
+
+    /**
+     * Constructs a new UserMentionEvent.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IUserMentionEvent);
+
+    /** UserMentionEvent userId. */
+    public userId: string;
+
+    /** UserMentionEvent location. */
+    public location: string;
+
+    /** UserMentionEvent createdAt. */
+    public createdAt: number;
+
+    /** UserMentionEvent board. */
+    public board: string;
+
+    /** UserMentionEvent title. */
+    public title: string;
+
+    /** UserMentionEvent comment. */
+    public comment: string;
+
+    /**
+     * Creates a new UserMentionEvent instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns UserMentionEvent instance
+     */
+    public static create(properties?: IUserMentionEvent): UserMentionEvent;
+
+    /**
+     * Encodes the specified UserMentionEvent message. Does not implicitly {@link UserMentionEvent.verify|verify} messages.
+     * @param message UserMentionEvent message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IUserMentionEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified UserMentionEvent message, length delimited. Does not implicitly {@link UserMentionEvent.verify|verify} messages.
+     * @param message UserMentionEvent message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IUserMentionEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a UserMentionEvent message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns UserMentionEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): UserMentionEvent;
+
+    /**
+     * Decodes a UserMentionEvent message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns UserMentionEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): UserMentionEvent;
+
+    /**
+     * Verifies a UserMentionEvent message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a UserMentionEvent message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns UserMentionEvent
+     */
+    public static fromObject(object: { [k: string]: any }): UserMentionEvent;
+
+    /**
+     * Creates a plain object from a UserMentionEvent message. Also converts values to other types if specified.
+     * @param message UserMentionEvent
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: UserMentionEvent, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this UserMentionEvent to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a ThreadVoteEvent. */
+export interface IThreadVoteEvent {
+
+    /** ThreadVoteEvent userId */
+    userId?: (string|null);
+
+    /** ThreadVoteEvent createdAt */
+    createdAt?: (number|null);
+
+    /** ThreadVoteEvent threadId */
+    threadId?: (string|null);
+
+    /** ThreadVoteEvent totalVotes */
+    totalVotes?: (number|null);
+
+    /** ThreadVoteEvent votes */
+    votes?: ({ [k: string]: number }|null);
+}
+
+/** Represents a ThreadVoteEvent. */
+export class ThreadVoteEvent implements IThreadVoteEvent {
+
+    /**
+     * Constructs a new ThreadVoteEvent.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IThreadVoteEvent);
+
+    /** ThreadVoteEvent userId. */
+    public userId: string;
+
+    /** ThreadVoteEvent createdAt. */
+    public createdAt: number;
+
+    /** ThreadVoteEvent threadId. */
+    public threadId: string;
+
+    /** ThreadVoteEvent totalVotes. */
+    public totalVotes: number;
+
+    /** ThreadVoteEvent votes. */
+    public votes: { [k: string]: number };
+
+    /**
+     * Creates a new ThreadVoteEvent instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns ThreadVoteEvent instance
+     */
+    public static create(properties?: IThreadVoteEvent): ThreadVoteEvent;
+
+    /**
+     * Encodes the specified ThreadVoteEvent message. Does not implicitly {@link ThreadVoteEvent.verify|verify} messages.
+     * @param message ThreadVoteEvent message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IThreadVoteEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified ThreadVoteEvent message, length delimited. Does not implicitly {@link ThreadVoteEvent.verify|verify} messages.
+     * @param message ThreadVoteEvent message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IThreadVoteEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a ThreadVoteEvent message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns ThreadVoteEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ThreadVoteEvent;
+
+    /**
+     * Decodes a ThreadVoteEvent message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns ThreadVoteEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ThreadVoteEvent;
+
+    /**
+     * Verifies a ThreadVoteEvent message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a ThreadVoteEvent message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns ThreadVoteEvent
+     */
+    public static fromObject(object: { [k: string]: any }): ThreadVoteEvent;
+
+    /**
+     * Creates a plain object from a ThreadVoteEvent message. Also converts values to other types if specified.
+     * @param message ThreadVoteEvent
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: ThreadVoteEvent, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this ThreadVoteEvent to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
@@ -4560,6 +5470,318 @@ export class EventContextUpdate implements IEventContextUpdate {
 
     /**
      * Converts this EventContextUpdate to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of an Error. */
+export interface IError {
+
+    /** Error message */
+    message?: (string|null);
+
+    /** Error code */
+    code?: (number|null);
+}
+
+/** Represents an Error. */
+export class Error implements IError {
+
+    /**
+     * Constructs a new Error.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IError);
+
+    /** Error message. */
+    public message: string;
+
+    /** Error code. */
+    public code: number;
+
+    /**
+     * Creates a new Error instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns Error instance
+     */
+    public static create(properties?: IError): Error;
+
+    /**
+     * Encodes the specified Error message. Does not implicitly {@link Error.verify|verify} messages.
+     * @param message Error message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IError, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified Error message, length delimited. Does not implicitly {@link Error.verify|verify} messages.
+     * @param message Error message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IError, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes an Error message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns Error
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Error;
+
+    /**
+     * Decodes an Error message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns Error
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Error;
+
+    /**
+     * Verifies an Error message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates an Error message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns Error
+     */
+    public static fromObject(object: { [k: string]: any }): Error;
+
+    /**
+     * Creates a plain object from an Error message. Also converts values to other types if specified.
+     * @param message Error
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: Error, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this Error to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a BanInfo. */
+export interface IBanInfo {
+
+    /** BanInfo bannedBy */
+    bannedBy?: (string|null);
+
+    /** BanInfo banReason */
+    banReason?: (string|null);
+
+    /** BanInfo approvedBy */
+    approvedBy?: (string|null);
+
+    /** BanInfo createdAt */
+    createdAt?: (string|null);
+
+    /** BanInfo reason */
+    reason?: (string|null);
+}
+
+/** Represents a BanInfo. */
+export class BanInfo implements IBanInfo {
+
+    /**
+     * Constructs a new BanInfo.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IBanInfo);
+
+    /** BanInfo bannedBy. */
+    public bannedBy: string;
+
+    /** BanInfo banReason. */
+    public banReason: string;
+
+    /** BanInfo approvedBy. */
+    public approvedBy: string;
+
+    /** BanInfo createdAt. */
+    public createdAt: string;
+
+    /** BanInfo reason. */
+    public reason: string;
+
+    /**
+     * Creates a new BanInfo instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns BanInfo instance
+     */
+    public static create(properties?: IBanInfo): BanInfo;
+
+    /**
+     * Encodes the specified BanInfo message. Does not implicitly {@link BanInfo.verify|verify} messages.
+     * @param message BanInfo message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IBanInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified BanInfo message, length delimited. Does not implicitly {@link BanInfo.verify|verify} messages.
+     * @param message BanInfo message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IBanInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a BanInfo message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns BanInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): BanInfo;
+
+    /**
+     * Decodes a BanInfo message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns BanInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): BanInfo;
+
+    /**
+     * Verifies a BanInfo message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a BanInfo message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns BanInfo
+     */
+    public static fromObject(object: { [k: string]: any }): BanInfo;
+
+    /**
+     * Creates a plain object from a BanInfo message. Also converts values to other types if specified.
+     * @param message BanInfo
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: BanInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this BanInfo to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a ReportInfo. */
+export interface IReportInfo {
+
+    /** ReportInfo report */
+    report?: (string|null);
+
+    /** ReportInfo user */
+    user?: (IUserRef|null);
+
+    /** ReportInfo createdAt */
+    createdAt?: (number|null);
+}
+
+/** Represents a ReportInfo. */
+export class ReportInfo implements IReportInfo {
+
+    /**
+     * Constructs a new ReportInfo.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IReportInfo);
+
+    /** ReportInfo report. */
+    public report: string;
+
+    /** ReportInfo user. */
+    public user?: (IUserRef|null);
+
+    /** ReportInfo createdAt. */
+    public createdAt: number;
+
+    /**
+     * Creates a new ReportInfo instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns ReportInfo instance
+     */
+    public static create(properties?: IReportInfo): ReportInfo;
+
+    /**
+     * Encodes the specified ReportInfo message. Does not implicitly {@link ReportInfo.verify|verify} messages.
+     * @param message ReportInfo message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IReportInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified ReportInfo message, length delimited. Does not implicitly {@link ReportInfo.verify|verify} messages.
+     * @param message ReportInfo message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IReportInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a ReportInfo message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns ReportInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ReportInfo;
+
+    /**
+     * Decodes a ReportInfo message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns ReportInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ReportInfo;
+
+    /**
+     * Verifies a ReportInfo message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a ReportInfo message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns ReportInfo
+     */
+    public static fromObject(object: { [k: string]: any }): ReportInfo;
+
+    /**
+     * Creates a plain object from a ReportInfo message. Also converts values to other types if specified.
+     * @param message ReportInfo
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: ReportInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this ReportInfo to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };

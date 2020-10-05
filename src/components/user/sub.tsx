@@ -1,11 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { useAppStore } from '../../stores/app';
-import { Link } from "react-router-dom";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { OverlayTrigger, Tooltip, Form, Button } from 'react-bootstrap';
 import { CircleAvatar } from "components/user/avatar";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 /*
 const CircleAvatar: React.FC<{ url: string }> = ({ url }) => {
     return (
@@ -13,22 +13,36 @@ const CircleAvatar: React.FC<{ url: string }> = ({ url }) => {
     )
 }*/
 
-const Subscription: React.FC<{ boardId: string }> = ({ boardId }) => {
+const Subscription: React.FC<{
+    active: boolean,
+    boardId: string
+}> = ({ active, boardId }) => {
+    const o = active ? "border-primary community-icon-active" : "community-icon";
     return (
         <Link to={`/+${boardId}`}>
-            <div className="d-flex flex-row flex-wrap mb-2 align-items-center">
-                <CircleAvatar src="" size={32} />
-                <span className="ml-2" >+{boardId}</span>
-            </div>
+            <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">+{boardId}</Tooltip>}>
+                <div className="d-flex flex-row flex-no-wrap mb-2 align-items-center" style={{ overflowX: 'hidden' }}>
+                    <CircleAvatar className={o} src="" label={boardId} size={48} />
+                    <span className="d-none ml-2" >+{boardId}</span>
+                </div>
+            </OverlayTrigger>
         </Link>
     )
 }
 
+interface Params {
+    pathId: string
+}
+
 const SubscriptionList: React.FC<{ data: Array<any> }> = observer(({ data }) => {
+    const params: Params = useParams();
+    console.log("router params => ", params)
     return (
         <>
-            <h4 className="pt-3 d-none">Subscriptions</h4>
-            {data.map(t => <Subscription key={t.boardId} boardId={t.boardId} />)}
+            {data.map(t => <Subscription
+                active={params.pathId == t.boardId}
+                key={t.boardId}
+                boardId={t.boardId} />)}
         </>
     )
 });
@@ -38,9 +52,14 @@ export const SubscriptionListWithSearch: React.FC = observer(() => {
     const [state, setFilter] = React.useState("");
 
     return (
-        <div className="pt-2">
+        <div className="subscription-list pt-2">
+            <div className="d-flex flex-row justify-content-center mb-2">
+                <Button onClick={() => store.showSpotlight()} >
+                    <FontAwesomeIcon icon={faPlus} />
+                </Button>
+            </div>
             <Form.Control type="text"
-                className="mb-2"
+                className="mb-2 d-none"
                 placeholder="Search subscriptions"
                 onChange={(v) => setFilter(v.target.value)} />
             <div /*style={{ maxHeight: "800px", overflowY: "scroll", overflowX: "hidden" }}*/ >

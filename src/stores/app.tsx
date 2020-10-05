@@ -1,11 +1,11 @@
 import React from 'react';
-import { observable, action, autorun } from 'mobx';
+import { observable, action, autorun, IObservableArray } from 'mobx';
 import { useLocalStore } from 'mobx-react';
 import { UserStore, UserRef } from './user';
 import { NetworkService, TokenPair, AccessJwt, Jwt } from '../service/api';
 import JwtDecode from 'jwt-decode';
-import { ILoginResponse, ILoginRequest } from 'model/compiled'
-
+import { IEvent } from 'model/net';
+import { ILoginResponse, ILoginRequest, IComment, ICommentReplyEvent } from 'model/compiled'
 
 const hydrateAppStore = (): AppStore => {
     // load a new app object, or
@@ -22,22 +22,55 @@ export class AppStore {
     protected _api: NetworkService = new NetworkService();
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;
+    @observable isBottomOfPage: boolean = false;
+    @observable displayableEvent: IObservableArray<IEvent> = observable.array([])
+    @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([])
+    //@observable threadCrosspost: IObservableArray<I
 
-    openSocket() {
-        this._api.getWebSocket();
+    async openSocket() {
+        Notification.requestPermission();
+        await this._api.initWebSocket().then(t => t.addEventListener('message', (ev) => {
+            //debugger;
+            let event: IEvent = JSON.parse(ev.data);
+            this.addEvent(event);
+        }))
+    }
+
+    addEvent(data: IEvent) {
+        //debugger;
+        let nop: NotificationOptions = {}
+        switch (data.entityId) {
+            case "comment.reply":
+                let commentReply: ICommentReplyEvent = data.data;
+                this.commentReplyEvent.push();
+                this.displayableEvent.push(data);
+                new Notification(
+                    `@${commentReply.comment?.user?.username ?? "%unknown%"} replied to your comment\n"${commentReply.comment?.content ?? ""}"\n`, {});
+                break;
+            case "comment.vote":
+                this.displayableEvent.push(data);
+            case "thread.vote":
+                this.displayableEvent.push(data);
+            case "thread.crosspost":
+                this.displayableEvent.push(data);
+                break;
+        }
     }
 
     constructor(
         accessToken: string | undefined,
         refreshToken: string | undefined) {
         console.log("[app store] constructed with tokens =>", accessToken, refreshToken)
+
+        this.openSocket();
+
         if (accessToken == undefined || refreshToken == undefined) {
             return
         }
+
         this.setupLogin(accessToken, refreshToken);
-        this.openSocket();
     }
-    
+
     accounts: Array<UserRef> = []
     auto = autorun((r) => this.persist())
     get api(): NetworkService {
@@ -110,7 +143,6 @@ export class AppStore {
         this._access = undefined;
         this.active = undefined;
         this.api.unsetGetToken();
-        //this.api.setAuthCallback(() => Promise.reject());
         this.persist();
     }
 
@@ -119,6 +151,11 @@ export class AppStore {
         this._refresh = new Jwt(refreshToken);
         this.api.setGetToken(this.getTokenCallback);
         this.persist();
+
+        this.api.closeWebSocket();
+        this.openSocket();
+        //this.api.getWebSocket();
+
         this.active = new UserStore(this, this._access.token.uid);
     }
 
@@ -149,6 +186,17 @@ export class AppStore {
         }
         console.log("[app] using existing access token");
         return Promise.resolve(this._access);
+    }
+
+    @observable UIShowSpotlight: boolean = false
+    @action
+    spotlightQuery(s: string): Promise<any> {
+        return Promise.reject();
+    }
+
+    @action
+    showSpotlight() {
+        this.UIShowSpotlight = true;
     }
 }
 

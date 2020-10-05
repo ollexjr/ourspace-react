@@ -1,74 +1,108 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import '@fortawesome/react-fontawesome';
 import { useBoardStore, Thread, User } from "../../stores/board";
-import { Container, Tooltip, OverlayTrigger, Navbar, Button, Card, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Form, Container, Tooltip, OverlayTrigger, Navbar, Button, Card, DropdownButton, Dropdown } from 'react-bootstrap';
 import { trace } from "mobx";
 import { InlineVoter } from 'components/board/vote';
-import { IUserRef, Vote } from 'model/compiled';
-import { useThreadStore } from 'stores/thread';
+import { IUserRef, ThreadSelectFilters } from 'model/compiled';
+import { EnumToArray, DropdownEnum } from 'components/dropdown';
+import { ScrollEventProvider } from 'components/scroll';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSync, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import Masonry from 'react-masonry-component';
+import ReactPlayer from 'react-player';
+import { NetworkGateway } from 'components/network/gateway';
+import { NetworkedButton } from 'components/button';
+import _ from 'lodash';
+import LazyLoad from 'react-lazyload';
 
-function trimMax(s: string, max: number) {
-    if (s.length > max) {
-        return s.substr(0, max) + "..."
-    }
-    return s
-}
+// @ts-ignore
 
-const ThreadCard: React.FC<{ data: Thread, showContext: boolean }> = ({ data, showContext }) => {
+
+var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
+
+const ThreadCard: React.FC<{
+    className?: string,
+    data: Thread, showContext: boolean
+}> = ({ className, data, showContext }) => {
     const store = useBoardStore();
-    const content = () => {
-        const placement = "bottom";
-        if (!data || !data.link || !data.title || !data.createdAt || !data.user) {
-            return null;
-        }
-        return (
-            <Container fluid>
-                <div className="d-flex flex-row justify-content-start align-items-center p-1">
+    const history = useHistory();
+    const cls = "_list-group-item _border-none p-0 p-sm-1 p-md-2 post-container " + className ?? className;
+
+    if (!data || !data.link || !data.title || !data.createdAt || !data.user) {
+        return null;
+    }
+    console.log(data.link);
+
+    const canShowImage = isImage.test(data.link ?? "");
+    const canShowMedia = data.link &&
+        data.link != null &&
+        ReactPlayer.canPlay(data.link);
+
+    let url: URL
+    try {
+        // TODO: handle weird urls on the server
+        // amend self urls to point to the hostname
+        url = new URL(data.link)
+    } catch {
+        return null;
+    }
+    //<Link to={data.url!}>
+    return (
+        <div className={cls}>
+            <div
+                onClick={() => history.push(data.url!)}
+                className="card border-none d-flex flex-column rounded-iframe-container shadow-sm page-link">
+                <div className="d-flex mb-1">
                     <InlineVoter
                         simple
                         size="sm"
-                        className="d-flex flex-column"
+                        className="d-flex flex-column mr-1"
                         table={data?.acceptedVotes ?? []}
+                        votes={data?.votes ?? undefined}
                         onClick={(v) =>
                             store.voteThread(data?.uId ?? "undefined", v)
                                 .then(
                                     t => data!.me!.vote = t.typeCode)} value={data?.me?.vote ?? "unset"} />
-
-                    {(data.link?.length ?? false) < 0 &&
-                        <img src="https://source.unsplash.com/random/100x100" className="card-img-top" />}
-                    <div className="rounded border m-1" style={{
-                        height: 60,
-                        width: 80,
-                        backgroundImage: `url(${data.link}/100x100)`
-                    }} />
-                    <div className="card-block text-left x-scroll-parent my-md-auto w-100">
-                        <div className="post-meta text-left d-none d-md-block mb-md-2">
+                    <div className="card-block text-left w-100">
+                        <div className="post-meta text-left">
                             <span className="mr-2">
                                 <Link to={`/+${data.boardId}`}>+{data.boardId}</Link>
                             </span>
-                            <span className="mr-2"><small>{moment.unix(data.createdAt).fromNow()} by <strong>@{data.user.username} </strong></small></span>
-                            <span><small>({(new URL(data.link)).hostname})</small></span>
+                            <span className="mr-2">
+                                <small>
+                                    {moment.unix(data.createdAt).fromNow()} by
+                                    <strong>@{data.user.username}</strong>
+                                </small>
+                            </span>
+                            <a
+                                target="_blank"
+                                href={data.link}>
+                                <small className="mr-1">{`${url.host}`}</small>
+                                <FontAwesomeIcon size="xs" icon={faExternalLinkAlt} />
+                            </a>
                         </div>
-                        <Card.Title className="post-title text-left w-lg-75 mb-0 mb-md-2"></Card.Title>
-                        <Link to={`/+${data.boardId}/${data.uId}/`}>
-                            {trimMax(data.title, 255)}
-                        </Link>
+                        <Card.Title className="post-title text-left w-lg-75 mb-0 mb-md-2">{data.title}</Card.Title>
                     </div>
                 </div>
-                <div className="d-flex flex-row justify-content-start">
-
-                </div>
-            </Container>
-        )
-    }
-    return (
-        <li className="list-group-item p-0 post-container">
-            {content()}
-        </li>
+                {(canShowImage || canShowMedia) &&
+                    <LazyLoad debounce once>
+                        {console.log("lazy loaded")}
+                        {canShowImage && <img className="card-img-top rounded" src={data.link}></img>}
+                        {canShowMedia && <ReactPlayer
+                            light
+                            width="100%"
+                            controls
+                            onPlay={() => store.event("link/playing")}
+                            onPause={() => store.event("link/pause")}
+                            url={data.link!} />}
+                    </LazyLoad>}
+            </div>
+        </div>
     )
 }
 
@@ -80,17 +114,36 @@ const ThreadCardWrapper: React.FC = ({ children }) => {
     )
 }
 
-export const ThreadsView: React.FC<{ data: Array<Thread> }> = observer(({ data }) => {
+export const ThreadsView: React.FC<{
+    layout: string,
+    data: Array<Thread>
+}> = observer(({ layout, data }) => {
     const store = useBoardStore();
     return (
-        <ThreadCardWrapper>
+        <ScrollEventProvider
+            listener={document}
+            target={document.body}
+            onScrollBottom={() => store.requestMore()}
+        >
             {store.error && <div className="d-flex flex-column justify-content-center p-4 rounded border m-5">
-                <h3>Something went wrong loading +{store.boardId}</h3>
-                <h4>{store.error.message}" ({store.error.response.statusText})</h4>
+                <h2>Uh Oh</h2>
+                <h5>Something went wrong while loading +{store.boardId}</h5>
+                <p>{store.error.message}" ({store.error.response.statusText})</p>
                 <Button onClick={() => store.request()} >Try again</Button>
             </div>}
-            {data.map((t) => t.uId && <ThreadCard showContext={false} key={t.uId} data={t} />)}
-        </ThreadCardWrapper>
+            {layout == "masonry" ?
+                <Masonry
+                    elementType="div"
+                    className="_list-group _list-group-flush"
+                >
+                    {data.map((t) => t.uId &&
+                        <ThreadCard
+                            className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                            showContext={false} key={t.uId} data={t} />)}
+                </Masonry>
+                : data.map((t) => t.uId && <ThreadCard showContext={false} key={t.uId} data={t} />)
+            }
+        </ScrollEventProvider>
     )
 })
 
@@ -119,56 +172,104 @@ export const BoardModPreview: React.FC<{ users: Array<IUserRef> }> = ({ users })
     )
 }
 
-export const BoardView: React.FC = observer(() => {
-    //trace(true)
+
+const BoardTextSearch: React.FC<{ value?: string, boardId?: string }> = observer(({ value, boardId }) => {
     const store = useBoardStore();
+    const [state, setState] = React.useState("");
+
+    React.useEffect(() => {
+        setState("");
+    }, [boardId])
+    const onChange = _.debounce((v: any) => {
+        store.filters.query = v.target.value;
+        store.request();
+    }, 100);
+
     return (
-        <>
-            <Navbar bg="white">
-                <div className="d-flex">
-                    <ThreadFilterTime />
-                </div>
-                <div className="border-right">
-                    <ThreadFilterSort />
-                </div>
-                <div className="ml-auto">
-                    <Button variant="outline-primary" onClick={() => store.request()}>Refresh</Button>
-                </div>
-            </Navbar>
-            {store.debug && <div>
-                <p>Id: {store.boardId}</p>
-                <p>Length: {store.data.length}</p>
-                <p>fetching: {store.isFetching} {store.requests} </p>
-            </div>}
-            <ThreadsView data={store.data} />
-        </>
+        <Form.Control
+            className="mr-2"
+            type="text"
+            value={state}
+            onSubmit={() => {
+                onChange(state);
+            }}
+            //https://stackoverflow.com/questions/46986259/react-lodash-debounce-always-return-null
+            placeholder="Search"
+            onChange={(e) => {
+                e.persist();
+                setState(e.target.value);
+                onChange(e);
+            }} />
     )
 })
 
-export interface DropDownItem {
-    label: string,
-    key: string,
-}
-
-export const DropDown: React.FC<{ items: Array<DropDownItem>, onSelected: (key: string) => void, value: string }> = ({ items }) => {
-    const set = (t: string | null, e: any): void => {
-        //store.filters.sortTime = t!
-    }
+const BoardNavbar: React.FC = observer(() => {
+    const store = useBoardStore();
+    const history = useHistory();
     return (
-        <DropdownButton variant="outline-muted" id="dropdown-basic-button" title={""}>
-            <Dropdown.Header>Time span</Dropdown.Header>
-            {items.map((t) => <Dropdown.Item eventKey={t.key} onSelect={set}>{t.label}</Dropdown.Item>)}
-        </DropdownButton>
+        <Navbar bg="white" variant="dark"
+            className="shadow-sm justify-content-between border no-gutters mb-1 px-4 p-0" style={{
+                zIndex: 4,
+                position: 'sticky',
+                top: 0,
+            }}>
+            <div className="d-flex flex-row align-items-center board-header mr-2">
+                <div className="d-flex flex-column p-2">
+                    <span>+{store.boardId}</span>
+                    <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
+                </div>
+            </div>
+            <div className="d-none d-md-flex flex-row">
+                <DropdownEnum
+                    title="Ranking"
+                    labels={["Hot", "Top", "Controversial"]}
+                    values={EnumToArray(ThreadSelectFilters.Method)}
+                    value={store.filters.rankMethod!}
+                    onSelect={(t: number) => {
+                        store.filters.rankMethod = t;
+                        history.push({
+                            search: store.getQueryParams(),
+                        });
+                    }} />
+                <DropdownEnum
+                    title="Direction"
+                    labels={["Decending", "Ascending"]}
+                    values={EnumToArray(ThreadSelectFilters.Method)}
+                    value={store.filters.sortDirection!}
+                    onSelect={(t: number) => {
+                        store.filters.sortDirection = t;
+                        history.push({
+                            search: store.getQueryParams(),
+                        });
+                    }} />
+            </div>
+            <BoardTextSearch boardId={store.boardId} />
+            {!store.info?.isMember && <NetworkedButton
+                message="Join"
+                successMessage="Unsubscribe"
+                onClick={() => store.subscribe()} />}
+            {store.info?.isMember && <Button onClick={() => store.unsubscribe()}>Unsubscribe</Button>}
+            <Button className="ml-2" variant="outline-primary" onClick={() => store.request()}>
+                <FontAwesomeIcon icon={faSync} />
+            </Button>
+        </Navbar>
     )
-}
+})
 
-export const ThreadFilterTime: React.FC = observer(() => {
+export const BoardView: React.FC = observer(() => {
     const store = useBoardStore();
     return (
-        <DropDown
-            items={[]}
-            value={store.filters?.sortDirection ?? "default"}
-            onSelected={(k) => store.filters.sortDirection = k} />
+        <>
+            <BoardNavbar />
+            <NetworkGateway retry={() => store.request()} state={() => store}>
+                {store.debug && <div>
+                    <p>Id: {store.boardId}</p>
+                    <p>Length: {store.data.length}</p>
+                    <p>fetching: {store.isFetching} {store.requests} </p>
+                </div>}
+                <ThreadsView layout="masonry" data={store.data} />
+            </NetworkGateway>
+        </>
     )
 })
 

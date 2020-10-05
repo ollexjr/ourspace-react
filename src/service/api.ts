@@ -100,7 +100,9 @@ export interface Response {
 const HOST = "http://app.prestigiousaddresses.com/"
 const API = "http://app.prestigiousaddresses.com/api/v1/";
 const WEBSOCKET_HOST = "ws://app.prestigiousaddresses.com/api/v1/socket"
+
 export class NetworkService {
+    socket?: WebSocket
     private getToken?: () => Promise<Jwt>;
     constructor() { }
     setGetToken(f: () => Promise<Jwt>) {
@@ -120,24 +122,57 @@ export class NetworkService {
         return Promise.resolve({});
     }
 
-    getWebSocket() {
-        let s = new WebSocket(WEBSOCKET_HOST);
-        s.addEventListener('open', function (event) {
-            s.send('hello');
+    timer?: NodeJS.Timeout
+    retryFactor: number = 1
+
+    async closeWebSocket() {
+        this.socket = undefined;
+    }
+
+    setupSocket(token?: string) {
+        this.socket = token ? new WebSocket(WEBSOCKET_HOST, ["Bearer", token]) : new WebSocket(WEBSOCKET_HOST);
+        this.socket.addEventListener('open', (event) => {
+            console.log("[NetworkService] opened socket connection");
+            //new Notification(`Connected to event server`, {});
+            this.retryFactor = 1;
         });
-        s.addEventListener('close', function (ev) {
-            console.log("[socket] close: ", ev)
-            alert("[socket] close: " + ev)
+        this.socket.addEventListener('close', (ev) => {
+            console.log("[socket] close: ", JSON.stringify(ev))
+            //new Notification(`Disconnected from event server`, {});
+            this.socket = undefined;
+            if (this.retryFactor < 10) {
+                this.retryFactor += .8;
+            }
+            console.log("[NetworkService] retry scale: ", this.retryFactor, (1000 * this.retryFactor) / 1000)
+            this.timer = setTimeout(() => this.initWebSocket(), 1000 * this.retryFactor);
         });
-        s.addEventListener('error', (ev) => {
-            console.log("[socket] error: ", ev)
-            alert("[socket] error: " + ev)
+        this.socket.addEventListener('error', (ev) => {
+            console.log("[socket] error: ", JSON.stringify(ev))
         })
-        s.addEventListener('message', (ev) => {
-            console.log("[socket] message: ", ev)
-            alert("[socket] message: " + ev)
+        this.socket.addEventListener('message', (ev) => {
+            console.log("[socket] message: ", JSON.stringify(ev.data))
         })
-        return s;
+        return this.socket;
+    }
+
+    getSocket(): WebSocket | undefined {
+        return this.socket;
+    }
+
+    async initWebSocket(): Promise<WebSocket> {
+        if (this.socket) {
+            return this.socket;
+        }
+
+        console.log("[NetworkService] trying socket connection ...");
+        try{
+            return this.setupSocket(this.getToken ? await this.getToken().then(t => t.encoded) : undefined);
+        } catch {
+            return this.setupSocket(undefined);
+        }
+        //let token = this.getToken ? this.getToken().then(t => this.setupSocket(t.encoded)) : this.setupSocket(undefined);
+        //this.setupSocket(token ?? undefined);
+        //return this.socket!;
     }
 
     basicGet(path: string, args: any, expects: number): Promise<any> {
@@ -196,6 +231,7 @@ export class ObservableRequestState {
     @observable isFetching: boolean = false
     @observable requests: number = 0
     @observable error?: APIError
+    @observable ignore: boolean = false
     wrap(f: () => Promise<any>): Promise<any> {
         if (this.isFetching) {
             console.log("[networkwrapper] rejecting, already fetching")

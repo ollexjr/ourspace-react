@@ -33,7 +33,7 @@ export const InlineNavCard: React.FC = ({ }) => {
                                 <Dropdown.Item variant="primary" onClick={() => show()}>Logout</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <CircleAvatar size={36} username={store.active?.username ?? ""} />
+                        <CircleAvatar size={36} label={store.active?.username ?? ""} />
                         <span className="ml-2">
                             <strong>@</strong>{store.active!.username ?? "unknown_username?"}
                         </span>
