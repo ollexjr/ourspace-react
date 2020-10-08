@@ -9,19 +9,17 @@ import { Form, Container, Tooltip, OverlayTrigger, Navbar, Button, Card, Dropdow
 import { trace } from "mobx";
 import { InlineVoter } from 'components/board/vote';
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
-import { EnumToArray, DropdownEnum } from 'components/dropdown';
+import { EnumToArray, DropdownEnum, ButtonDropdown } from 'components/dropdown';
 import { ScrollEventProvider } from 'components/scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSync, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faReply, faCompress, faSync, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import Masonry from 'react-masonry-component';
 import ReactPlayer from 'react-player';
 import { NetworkGateway } from 'components/network/gateway';
 import { NetworkedButton } from 'components/button';
 import _ from 'lodash';
 import LazyLoad from 'react-lazyload';
-
-// @ts-ignore
-
+import { CircleAvatar } from 'components/user/avatar';
 
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
 
@@ -36,7 +34,6 @@ const ThreadCard: React.FC<{
     if (!data || !data.link || !data.title || !data.createdAt || !data.user) {
         return null;
     }
-    console.log(data.link);
 
     const canShowImage = isImage.test(data.link ?? "");
     const canShowMedia = data.link &&
@@ -51,24 +48,43 @@ const ThreadCard: React.FC<{
     } catch {
         return null;
     }
+
+    const onClick = (e: any) => { //React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (e.target.id == 'thread-card' || e.target.id == 'thread-card-inner')
+            history.push(data.url!);
+    }
+
     //<Link to={data.url!}>
     return (
         <div className={cls}>
             <div
-                onClick={() => history.push(data.url!)}
+                onClick={onClick}
+                id="thread-card"
                 className="card border-none d-flex flex-column rounded-iframe-container shadow-sm page-link">
                 <div className="d-flex mb-1">
-                    <InlineVoter
-                        simple
-                        size="sm"
-                        className="d-flex flex-column mr-1"
-                        table={data?.acceptedVotes ?? []}
-                        votes={data?.votes ?? undefined}
-                        onClick={(v) =>
-                            store.voteThread(data?.uId ?? "undefined", v)
-                                .then(
-                                    t => data!.me!.vote = t.typeCode)} value={data?.me?.vote ?? "unset"} />
-                    <div className="card-block text-left w-100">
+                    <div>
+                        <InlineVoter
+                            simple
+                            size="sm"
+                            className="d-flex flex-column mr-1"
+                            table={data?.acceptedVotes ?? []}
+                            votes={data?.votes ?? undefined}
+                            onClick={(v) =>
+                                store.voteThread(data?.uId ?? "undefined", v)
+                                    .then(
+                                        t => data!.me!.vote = t.typeCode)} value={data?.me?.vote ?? "unset"} />
+                        <ButtonDropdown
+                            items={[
+                                { label: "Bookmark/Save", icon: "" },
+                                { label: "Crosspost", icon: "" },
+                                { label: "Share", icon: "" },
+                                { label: "Tab it", icon: "" },
+                                { label: "Moderate (M)", icon: "" }
+                            ]}
+                        />
+                        <Button variant="outline"><FontAwesomeIcon icon={faCompress} /></Button>
+                    </div>
+                    <div id="thread-card-inner" className="card-block text-left w-100">
                         <div className="post-meta text-left">
                             <span className="mr-2">
                                 <Link to={`/+${data.boardId}`}>+{data.boardId}</Link>
@@ -91,7 +107,7 @@ const ThreadCard: React.FC<{
                 </div>
                 {(canShowImage || canShowMedia) &&
                     <LazyLoad debounce once>
-                        {console.log("lazy loaded")}
+                        {console.log("[thread-card] => lazy loaded link")}
                         {canShowImage && <img className="card-img-top rounded" src={data.link}></img>}
                         {canShowMedia && <ReactPlayer
                             light
@@ -134,7 +150,7 @@ export const ThreadsView: React.FC<{
             {layout == "masonry" ?
                 <Masonry
                     elementType="div"
-                    className="_list-group _list-group-flush"
+                    className="_list-group _list-group-flush p-0 container"
                 >
                     {data.map((t) => t.uId &&
                         <ThreadCard
@@ -208,14 +224,15 @@ const BoardNavbar: React.FC = observer(() => {
     const history = useHistory();
     return (
         <Navbar bg="white" variant="dark"
-            className="shadow-sm justify-content-between border no-gutters mb-1 px-4 p-0" style={{
+            className="shadow-sm justify-content-between border-y no-gutters mb-1 px-4 p-0" style={{
                 zIndex: 4,
                 position: 'sticky',
                 top: 0,
             }}>
             <div className="d-flex flex-row align-items-center board-header mr-2">
+                <CircleAvatar size={48} />
                 <div className="d-flex flex-column p-2">
-                    <span>+{store.boardId}</span>
+                    <span className="font-weight-bold">+{store.boardId}</span>
                     <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
                 </div>
             </div>
@@ -244,14 +261,14 @@ const BoardNavbar: React.FC = observer(() => {
                     }} />
             </div>
             <BoardTextSearch boardId={store.boardId} />
+            <Button className="ml-2" variant="outline-primary" onClick={() => store.request()}>
+                <FontAwesomeIcon icon={faSync} />
+            </Button>
             {!store.info?.isMember && <NetworkedButton
                 message="Join"
                 successMessage="Unsubscribe"
                 onClick={() => store.subscribe()} />}
             {store.info?.isMember && <Button onClick={() => store.unsubscribe()}>Unsubscribe</Button>}
-            <Button className="ml-2" variant="outline-primary" onClick={() => store.request()}>
-                <FontAwesomeIcon icon={faSync} />
-            </Button>
         </Navbar>
     )
 })

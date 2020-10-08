@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import { useAsObservableSource } from "mobx-react";
-import { Button, Row, Form, Container, Navbar, Jumbotron } from 'react-bootstrap';
+import { Button, Col, Row, Form, Container, Navbar, Jumbotron, Modal } from 'react-bootstrap';
 import { observer } from 'mobx-react';
 import { NetworkedButton } from 'components/button'
 import { BoardStoreProvider, useBoardStore } from "../../stores/board";
@@ -19,12 +19,14 @@ import { CircleAvatar } from 'components/user/avatar';
 import ScreenEdit from 'screens/board/edit';
 import moment from 'moment';
 import _ from 'lodash';
+import { useWindowSize } from 'components/layout';
 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { EnumToArray, DropdownEnum } from 'components/dropdown';
+import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 
 const ScreenBoard: React.FC = () => {
     return (
@@ -41,6 +43,36 @@ export const RouterThread: React.FC<{}> = ({ }) => {
     )
 }
 
+const TwoPaneScaffold: React.FC<{ renderPane: () => any, onHandle?: () => any }> = ({ onHandle, renderPane, children }) => {
+    const [width, height] = useWindowSize();
+    return (
+        <Row>
+            <Col>
+                <p>{width}{height}</p>
+                {children}
+            </Col>
+            {width > 800 && <Col>
+                {renderPane()}
+            </Col>}
+        </Row>
+    )
+}
+
+const BoardThreadOverlay: React.FC<{}> = observer(({ }) => {
+    const store = useBoardStore();
+    return (
+        <Modal show={false}>
+            <Modal.Header closeButton>
+                <Modal.Title>""</Modal.Title>
+                <Modal.Body>
+                    <Switch>
+                        <Route path={`/+${store.boardId}/:threadId/`} component={RouterThread} />
+                    </Switch>
+                </Modal.Body>
+            </Modal.Header>
+        </Modal>
+    )
+})
 
 const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
     const store = useBoardStore();
@@ -58,18 +90,20 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                 backgroundImage: store.backgroundImage,
                 backgroundSize: store.backgroundSize,
                 backgroundRepeat: store.backgroundRepeat,
+                backgroundAttachment: 'fixed',
             }}
         >
+
             <Container
-                className="card p-0 rounded"
-                fluid={store.fluid}
+                className="border-none border-y p-0 rounded"
+                fluid={store.containerFluid}
                 style={{
-                    minHeight: "100vh"
+                    minHeight: 'calc(100vh - 20px);'
                 }}
             >
                 <Jumbotron fluid className="d-block _d-md-none p-4 m-0 contrast-background" style={{
-                    backgroundImage: "url(https://source.unsplash.com/collection/wallpapers/1280x800)",
-                    backgroundSize: "cover",
+                    backgroundImage: store.headerImage,
+                    backgroundSize: 'unset',
                 }}>
                     <h1>{store.info?.title ?? boardId}</h1>
                     <h4>{store.info?.description ?? ""}</h4>
@@ -81,6 +115,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     <Route exact path={`/+${boardId}`} component={BoardView} />
                 </Switch>
             </Container>
+            <BoardThreadOverlay />
             <Portal target="screen-right">
                 <SidebarInfoCard>
                     {store.boardId}

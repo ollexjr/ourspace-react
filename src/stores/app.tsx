@@ -4,8 +4,15 @@ import { useLocalStore } from 'mobx-react';
 import { UserStore, UserRef } from './user';
 import { NetworkService, TokenPair, AccessJwt, Jwt } from '../service/api';
 import JwtDecode from 'jwt-decode';
-import { IEvent } from 'model/net';
-import { ILoginResponse, ILoginRequest, IComment, ICommentReplyEvent } from 'model/compiled'
+import { IEvent, join } from 'model/net';
+import {
+    ILoginResponse,
+    ILoginRequest,
+    IComment,
+    ICommunitySelectRequest,
+    ICommunitySelectResponse,
+    ICommentReplyEvent
+} from 'model/compiled'
 
 const hydrateAppStore = (): AppStore => {
     // load a new app object, or
@@ -133,9 +140,6 @@ export class AppStore {
             console.log("[app store] logged in");
             this.setupLogin(json.tokens!.accessToken!, json.tokens!.refreshToken!);
         })
-        //.finally((v) => {
-        //    return new UserStore();
-        //});
     }
 
     private tearDownLogin() {
@@ -152,10 +156,10 @@ export class AppStore {
         this.api.setGetToken(this.getTokenCallback);
         this.persist();
 
+        this.spotlightQuery("");
+
         this.api.closeWebSocket();
         this.openSocket();
-        //this.api.getWebSocket();
-
         this.active = new UserStore(this, this._access.token.uid);
     }
 
@@ -189,8 +193,22 @@ export class AppStore {
     }
 
     @observable UIShowSpotlight: boolean = false
+
+    @observable communitySearch?: ICommunitySelectResponse
+
     @action
     spotlightQuery(s: string): Promise<any> {
+
+        let o: ICommunitySelectRequest = {
+            query: s,
+            limit: 5,
+        }
+
+        this.api.endpointGet("communities/search", o, 200).then((t: ICommunitySelectResponse) => {
+            this.communitySearch = t;
+            //this.communitySearch = join(this.communitySearch ?? { data: [], token: "" }, t);
+        });
+
         return Promise.reject();
     }
 

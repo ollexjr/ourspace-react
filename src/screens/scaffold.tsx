@@ -31,6 +31,10 @@ import { NotificationListObserver } from 'components/user/notification';
 import { ScreenExploreGraph } from 'screens/home/explore';
 import { SpotlightModal } from 'components/spotlight';
 
+//import info from './gitinfo.js';
+
+const info = "";
+
 // scaffold the navigation sidebar around the main screen
 const Scaffold: React.FC = ({ children }) => {
   const app = useAppStore()
@@ -39,7 +43,7 @@ const Scaffold: React.FC = ({ children }) => {
   return (
     <>
       <SiteNavbar />
-      <Container fluid className="_header-spacer no-gutters h-100" >
+      <Container fluid className="_header-spacer no-gutters _h-100" >
         <Row className="justify-content-around flex-xl-nowrap">
           <Col id="wrapper-screen-left" className="d-none d-md-block border-right bg-white col-12 col-md-2 col-xl-1" style={{
             maxWidth: "80px",
@@ -50,17 +54,15 @@ const Scaffold: React.FC = ({ children }) => {
               <NotificationListObserver />
             </div>
           </Col>
-          <Col className="h-100 main-content p-0 _p-md-3" style={{}}>
+          <Col className="_h-100 main-content p-0 _p-md-3" style={{}}>
             {children}
           </Col>
           <Col id="wrapper-screen-right" className="d-none d-lg-block border-left _p-0 bg-white col-12 col-md-2 col-xl-2">
             <div id="screen-left" className="sticky">
-
-            </div>
-            <div className="card footer p-1">
-              <small><strong>Copyright</strong> Big Corp 2020</small>
-              <small>Still not decided on a name</small>
-              <small>Please read the terms and conditions</small>
+              <div className="card footer p-2">
+                <small><strong>Copyright</strong> ourspace 2020</small>
+                <small>Version: {info ?? "not defined"}</small>
+              </div>
             </div>
           </Col>
         </Row>

@@ -1,103 +1,21 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { useThreadStore, ThreadStoreProvider } from '../../stores/thread';
-import { Editor as XEditor, EditorState, convertFromHTML, convertToRaw } from 'draft-js';
-import { Button, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
-import Editor from 'rich-markdown-editor';
+
+import { Navbar, Nav, Container, Button, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
+
+import { TextEditor } from 'components/editor/editor';
+
 import { IComment, ICommentNode } from 'model/compiled';
 import { InlineVoter, VerticalVoter } from './vote';
+
 import moment from 'moment';
+
 import ReactMarkdown from 'react-markdown';
 import ReactPlayer from 'react-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpand, faExternalLinkAlt, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { NetworkGateway } from 'components/network/gateway';
-
-const TextEditor: React.FC<{
-    source?: string,
-    cancelText: string,
-    acceptText: string,
-    onAccept: (data: any) => Promise<any>,
-    onCancel?: () => any
-}> = ({ source, onAccept, onCancel }) => {
-    //const [state, setState] = React.useState<EditorState>(() => EditorState.createEmpty())
-    const [state, setState] = React.useState<{
-        value: string,
-        readOnly: boolean,
-        template: boolean
-    }>({
-        readOnly: false,
-        template: false,
-        //dark: localStorage.getItem("dark") === "enabled",
-        value: "",
-    });
-    const [isWaiting, setWaiting] = React.useState<boolean>(false);
-    const target = React.useRef(null);
-
-    return (
-        <div className="border rounded p-3 bg-white" style={{ position: 'relative' }} ref={target}>
-            <div style={{
-                visibility: isWaiting ? "visible" : "hidden",
-                position: 'fixed',
-                top: 0, right: 0, left: 0, bottom: 0,
-                pointerEvents: 'none',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(255, 255, 255, .5)'
-
-            }}>
-                <Spinner animation="border" variant="primary" />
-            </div>
-            <div style={{ marginLeft: "25px", marginBottom: "1em" }}>
-                <Editor
-                    defaultValue={source}
-                    onChange={(v) => setState({ ...state, value: v() })}
-                    //onSave={(v) => v()}
-                    template={true}
-                />
-            </div>
-            <div className="d-flex flex-row justify-content-end button-row">
-                <Button onClick={() => {
-                    setWaiting(true);
-                    onAccept(state.value).finally(() => setWaiting(false))
-                }} >Accept</Button>
-                <Button onClick={() => onCancel && onCancel()} >Cancel</Button>
-            </div>
-        </div>
-    )
-}
-
-const TextEditorDraftJs: React.FC<{ onAccept: (data: any) => Promise<any>, onCancel?: () => any }> = ({ onAccept }) => {
-    const [state, setState] = React.useState<EditorState>(() => EditorState.createEmpty())
-    const [isWaiting, setWaiting] = React.useState<boolean>(false);
-    const target = React.useRef(null);
-
-    return (
-        <div className="border rounded p-3" style={{ position: 'relative' }} ref={target}>
-            <div style={{
-                visibility: isWaiting ? "visible" : "hidden",
-                position: 'fixed',
-                top: 0, right: 0, left: 0, bottom: 0,
-                pointerEvents: 'none',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(255, 255, 255, .5)'
-
-            }}>
-                <Spinner animation="border" variant="primary" />
-            </div>
-            <XEditor
-                placeholder={"Leave a comment"}
-                editorState={state} onChange={(editorState) => setState(editorState)} />
-            <Button onClick={() => {
-                setWaiting(true);
-                onAccept(convertToRaw(state.getCurrentContent())).finally(() => setWaiting(false))
-            }} >Accept</Button>
-        </div >
-    )
-}
 
 const CommentPadding: React.FC<{ depth: number }> = ({ depth }) => {
     let e = [];
@@ -209,7 +127,13 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
     const canShowMedia = store.thread?.link && store.thread.link != null && ReactPlayer.canPlay(store.thread.link);
     return (
         <NetworkGateway retry={() => store.load()} state={() => store}>
-            <div>
+            <Navbar bg="white" variant="dark"
+                className="shadow-sm justify-content-between border-y no-gutters mb-1 px-4 p-0">
+                <Nav>
+                    text
+                </Nav>
+            </Navbar>
+            <Container className="p-0 card h-100">
                 <Modal size="xl" className="iframe-container" show={showModal} onHide={() => setModal(false)}>
                     <Modal.Header closeButton>
                         <div>
@@ -229,8 +153,8 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                     <div className="mb-2">
                         <h4>{store.thread?.title ?? "%notset%"}</h4>
                         {store.thread?.link &&
-                            <a 
-                                target="_blank" 
+                            <a
+                                target="_blank"
                                 href={store.thread.link}>
                                 <small>({(new URL(store.thread!.link)).hostname})</small>
                             </a>}
@@ -268,7 +192,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                     <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />
                 </div>
                 <ThreadCommentView />
-            </div>
+            </Container>
         </NetworkGateway>
     )
 })

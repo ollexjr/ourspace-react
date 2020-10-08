@@ -35,14 +35,18 @@ export const NavbarBase: React.FC = ({ children }) => {
             }}
         >
             <Container fluid={true}>
-                <Nav.Item className="flex-grow-1">
+                <Nav className="flex-grow-1">
                     <Link to="/">
                         <Navbar.Brand href="/" className="rounded _px-2" style={{
                             fontWeight: 900,
                         }}>
-                            <FontAwesomeIcon className="mr-1 rounded" icon={faPlus} />Diskus<span>.dev</span></Navbar.Brand>
+                        <FontAwesomeIcon className="rounded mr-1" icon={faPlus} />
+                        ourspace<span>.dev</span></Navbar.Brand>
                     </Link>
-                </Nav.Item>
+                    <Nav.Link href="/+all">+All</Nav.Link>
+                    <Nav.Link href="/about-and-faq">Help</Nav.Link>
+                    <Nav.Link href="/blog">~Blogs</Nav.Link>
+                </Nav>
                 {children}
             </Container>
         </Navbar>

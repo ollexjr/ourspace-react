@@ -73,6 +73,14 @@ body, #root, #screen-left, #screen-right {
 
 body {
   font-family: 'Roboto' !important;
+  height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  height: 100vh;
 }
 
 .navbar-brand {
@@ -114,6 +122,10 @@ iframe.external-link {
 .board-header div {
   padding: .5em 1em;
   border-right: 1px solid rgba(0,0,0,.125);
+}
+
+.button-row-vertical button {
+  margin-bottom: 1em;
 }
 
 .button-row button {
@@ -167,6 +179,9 @@ iframe.external-link {
 
 .community-icon {
   transition: border-radius, border-width .5s ease-in-out;
+  border-color: #e2e2e2;
+  border-style: solid;
+  border-width: .125em;
 }
 
 .community-icon-active {
@@ -186,4 +201,48 @@ iframe.external-link {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.circle-avatar svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dropdown {
+  text-align: center;
+}
+
+.jumbotron-fluid:after {
+  position: relative;
+  bottom: 0;
+  background-color: red;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+.parallax-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-image {
+  background-size: cover;
+  background-position: center;
+/*
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  */
+}
+.wrapper-screen-left {
+  
+}
+
+#screen-left {
+  overflow-y: auto;
 }

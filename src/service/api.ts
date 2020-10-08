@@ -97,9 +97,9 @@ export interface Response {
     token: string
 }
 
-const HOST = "http://app.prestigiousaddresses.com/"
-const API = "http://app.prestigiousaddresses.com/api/v1/";
-const WEBSOCKET_HOST = "ws://app.prestigiousaddresses.com/api/v1/socket"
+export const HOST = "https://ourspace.dev/"
+export const API = "https://ourspace.dev/api/v1/";
+export const WEBSOCKET_HOST = "wss://api.ourspace.dev/api/v1/socket"
 
 export class NetworkService {
     socket?: WebSocket

@@ -1,0 +1,1 @@
+echo "export default '$(git log -1 --oneline)'" > src/gitinfo.js

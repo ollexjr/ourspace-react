@@ -1,6 +1,8 @@
 import React from 'react';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
+import { Button, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisH, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 // Helper
 //const StringIsNumber = value: string => isNaN(Number(value)) === false;
 
@@ -42,6 +44,40 @@ export const DropDown: React.FC<{ items: Array<DropDownItem>, onSelected: (key: 
             <Dropdown.Header>Time span</Dropdown.Header>
             {items.map((t) => <Dropdown.Item eventKey={t.key} onSelect={set}>{t.label}</Dropdown.Item>)}
         </DropdownButton>
+    )
+}
+
+const CustomToggle = React.forwardRef<{}, { onClick: (e: any /*React.MouseEvent<HTMLAnchorElement, MouseEvent>*/) => any }>(({ children, onClick }, ref) => (
+    <Button
+        //
+        variant="outline"
+        ref={ref as any}
+        onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+        }}
+    >
+        {children}
+        <FontAwesomeIcon icon={faEllipsisV} />
+    </Button>
+));
+
+
+export const ButtonDropdown: React.FC<{
+    //values: Array<any>,
+    items: Array<any>
+}> = ({ items }) => {
+    return (
+        <Dropdown>
+            <Dropdown.Toggle className="text-center" variant="white" as={CustomToggle} />
+            <Dropdown.Menu>
+                {items.map((e) => (
+                    <Dropdown.Item eventKey="2">
+                        <FontAwesomeIcon icon={faEllipsisH} />
+                    </Dropdown.Item>
+                ))}
+            </Dropdown.Menu>
+        </Dropdown>
     )
 }
 

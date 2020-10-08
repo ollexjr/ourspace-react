@@ -12,11 +12,15 @@ export class BoardStore extends ObservableRequestState {
     token?: string
     boardId: string
 
-    @observable fluid: boolean = false;
-    @observable backgroundImage?: string = `url("http://api.prestigiousaddresses.com/static/bg-2.png")`; 
-    backgroundRepeat: string = "repeat";
+    innerFluid: boolean = false;
+    @observable containerFluid: boolean = true;
+    @observable backgroundImage?: string; //= `url("https://ourspace.dev/res/bg-2.png")`;
+    headerImage?: string; //"url('http://app.prestigiousaddresses.com/res/bg-1.png')"
+    iconImage?: string;
+    
     //`url("https://source.unsplash.com/collection/wallpapers/1280x800")`;
-    backgroundSize: string = 'initial'; //"cover";
+    backgroundRepeat: string = "repeat";
+    backgroundSize: string = 'unset'; //"cover";
 
     @observable info?: IBoard
     @observable debug: boolean = false
@@ -25,6 +29,7 @@ export class BoardStore extends ObservableRequestState {
         rankMethod: ThreadSelectFilters.Method.TOP,
         limit: 25,
         query: "",
+        page: 0,
         //createdStart: 0,
         //createdEnd: 0,
         //token: ""
@@ -90,6 +95,7 @@ export class BoardStore extends ObservableRequestState {
         this.token = undefined;
         this.error = undefined;
         this.ignore = false;
+        this.filters.page = 0;
 
         const withContext = this.info == null && this.boardId != 'all';
         return this.wrap(() => this.app.api.endpointGet(
@@ -114,10 +120,13 @@ export class BoardStore extends ObservableRequestState {
     @action
     requestMore() {
         this.ignore = true;
+        this.filters!.page!++;
         return this.wrap(() => this.app.api.endpointGet(this.boardId == '_' ? 'all' : "board/threads", {
-            'boardId': this.boardId,
-            'sort': this.filters,
-            'token': this.token,
+            ...{
+                'boardId': this.boardId,
+                'sort': this.filters,
+                'token': this.token,
+            }, ...this.filters
         }, 200).then((res: Response) => {
             this.token = res.token;
             this.data.push(...res.data);
@@ -149,11 +158,11 @@ export class BoardStore extends ObservableRequestState {
 
 export const boardStoreContext = React.createContext<BoardStore | null>(null);
 export const BoardStoreProvider: React.FC<{ boardId: string }> = ({ boardId, children }) => {
-    
+
     console.log("[BoardStoreProvider] called with => ", boardId)
     const app = useAppStore();
     const store = new BoardStore(app, boardId);
-    
+
     /*
     const [store, setStore] = React.useState<BoardStore>();
     
@@ -168,9 +177,9 @@ export const BoardStoreProvider: React.FC<{ boardId: string }> = ({ boardId, chi
     //const store = useLocalStore<BoardStore>(() => new BoardStore(app, props.boardId));
     if (store) {
         return (
-        <boardStoreContext.Provider value={store}>
-            {children}
-        </boardStoreContext.Provider>
+            <boardStoreContext.Provider value={store}>
+                {children}
+            </boardStoreContext.Provider>
         )
     }
     return (
