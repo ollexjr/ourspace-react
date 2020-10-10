@@ -1,6 +1,7 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
-
+import { Image, OverlayTrigger, Tooltip, Popover } from 'react-bootstrap';
+import { IUserRef } from 'model/compiled';
+import { Link } from 'react-router-dom';
 
 export const CircleAvatar: React.FC<{
     onClick?: () => any,
@@ -16,17 +17,52 @@ export const CircleAvatar: React.FC<{
         size = 128
     }
     return (
-        <span className="circle-avatar">
-            <Image
-                className={className}
-                onClick={onClick}
-                src={src} style={{
-                    width: size,
-                    height: size,
-                    objectFit: "cover",
-                    borderRadius: size,
-                }} />
-            {label && <span>{label.substr(0, 2)}</span>}
-        </span>
+        <OverlayTrigger
+            trigger={["hover","focus"]}
+            overlay={
+                <Tooltip id="overlay-example">
+                    @{label}
+                </Tooltip>
+            }
+        >
+            <span className="circle-avatar">
+                <Image
+                    className={className}
+                    onClick={onClick}
+                    src={src} style={{
+                        width: size,
+                        height: size,
+                        objectFit: "cover",
+                        borderRadius: size,
+                    }} />
+                {label && <span>{label.substr(0, 2)}</span>}
+            </span>
+        </OverlayTrigger>
     )
-} 
+}
+
+export const UserLink: React.FC<{ user: IUserRef }> = ({ user, children }) => {
+    const debug = false;
+    return (
+        <OverlayTrigger
+        trigger={["hover","focus"]}
+            overlay={
+                <Popover id={`popopover-${user.username}`}>
+                    <Popover.Content>
+                        <h6>
+                            @{user.username} (Join x days ago)
+                        </h6>
+                        <div>
+                            Community Karma:
+                        </div>
+                    </Popover.Content>
+                </Popover>
+            }
+        >
+            <Link to={`/@${user.username}`}>
+                {debug && <strong>@{user.username}</strong>}
+                {children}
+            </Link>
+        </OverlayTrigger>
+    )
+}

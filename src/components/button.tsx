@@ -5,7 +5,7 @@ import {
     RouteComponentProps
 } from "react-router-dom";
 import { Button, ButtonProps, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
-import { faCheck, faCross } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const _LinkButton: React.FC<{ to: string } & RouteComponentProps & ButtonProps> = (props) => {
@@ -27,8 +27,22 @@ export const NetworkedButton: React.FC<{ onClick: () => Promise<any>, message: s
         })
     }}> {children}
         {state == 1 && <Spinner animation="border" />}
-        {state > 1 && <FontAwesomeIcon icon={state == 2 ? faCheck : faCross} />}
+        {state > 1 && <FontAwesomeIcon icon={state == 2 ? faCheck : faTimes} />}
         {state < 2 ? message : successMessage}
+    </Button>
+}
+
+export const PromiseButton: React.FC<{ onClick: () => Promise<any> } & ButtonProps> = ({ children, onClick }, props) => {
+    const [loading, setState] = React.useState<boolean>(false);
+    return <Button {...props} variant={""} onClick={() => {
+        if (loading)
+            return;
+        setState(true)
+        onClick().finally(() => {
+            setState(false);
+        })
+    }}>
+        {loading ? <Spinner animation="border" /> : children}
     </Button>
 }
 

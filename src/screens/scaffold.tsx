@@ -6,6 +6,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { observer } from 'mobx-react';
 
 import {
   Navbar, Nav,
@@ -15,10 +16,9 @@ import {
 } from 'react-bootstrap';
 
 import { ModalSheetWrapper } from "components/modal";
-
 import { RouterBoard } from './board';
 import { useAppStore, AppStoreProvider } from '../stores/app';
-import { observer } from 'mobx-react';
+
 import { ScreenFrontpage } from './home/front';
 import { SubscriptionListWithSearch } from '../components/user/sub';
 import ScreenCreate from 'screens/board/create';
@@ -30,13 +30,15 @@ import { SiteNavbar } from "components/navbar"
 import { NotificationListObserver } from 'components/user/notification';
 import { ScreenExploreGraph } from 'screens/home/explore';
 import { SpotlightModal } from 'components/spotlight';
-
+import classNames from 'classnames';
+import { SidebarSettings } from 'components/uisettings';
+import { SystemMessages } from 'components/app/messages';
 //import info from './gitinfo.js';
 
 const info = "";
 
 // scaffold the navigation sidebar around the main screen
-const Scaffold: React.FC = ({ children }) => {
+const Scaffold: React.FC = observer(({ children }) => {
   const app = useAppStore()
   const ref = React.useRef();
 
@@ -44,22 +46,28 @@ const Scaffold: React.FC = ({ children }) => {
     <>
       <SiteNavbar />
       <Container fluid className="_header-spacer no-gutters _h-100" >
-        <Row className="justify-content-around flex-xl-nowrap">
+        <Row className={"justify-content-around flex-xl-nowrap " + (app.UIconstrainContainer && "_container m-auto p-0")}
+          style={{
+            maxWidth: app.UIconstrainContainer ? 1400 : undefined
+          }}>
           <Col id="wrapper-screen-left" className="d-none d-md-block border-right bg-white col-12 col-md-2 col-xl-1" style={{
             maxWidth: "80px",
             minWidth: "64px"
           }}>
             <div id="screen-left" className="sticky">
               <SubscriptionListWithSearch />
-              <NotificationListObserver />
+
             </div>
           </Col>
-          <Col className="_h-100 main-content p-0 _p-md-3" style={{}}>
+          <Col className="_h-100 main-content p-0 _p-md-3">
             {children}
           </Col>
           <Col id="wrapper-screen-right" className="d-none d-lg-block border-left _p-0 bg-white col-12 col-md-2 col-xl-2">
-            <div id="screen-left" className="sticky">
-              <div className="card footer p-2">
+            <div id="screen-right" className="sticky">
+              <SidebarSettings />
+              <SystemMessages />
+              <NotificationListObserver />
+              <div className="footer">
                 <small><strong>Copyright</strong> ourspace 2020</small>
                 <small>Version: {info ?? "not defined"}</small>
               </div>
@@ -69,7 +77,7 @@ const Scaffold: React.FC = ({ children }) => {
       </Container>
     </>
   )
-}
+})
 
 export const BoardRouterWrapper: React.FC = () => {
   return (

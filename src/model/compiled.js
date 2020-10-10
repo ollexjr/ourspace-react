@@ -271,6 +271,10 @@ $root.UserRef = (function() {
      * @interface IUserRef
      * @property {string|null} [username] UserRef username
      * @property {string|null} [avatar] UserRef avatar
+     * @property {boolean|null} [isAdmin] UserRef isAdmin
+     * @property {boolean|null} [isMod] UserRef isMod
+     * @property {string|null} [flair] UserRef flair
+     * @property {Object.<string,number>|null} [awards] UserRef awards
      */
 
     /**
@@ -282,6 +286,7 @@ $root.UserRef = (function() {
      * @param {IUserRef=} [properties] Properties to set
      */
     function UserRef(properties) {
+        this.awards = {};
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
@@ -303,6 +308,38 @@ $root.UserRef = (function() {
      * @instance
      */
     UserRef.prototype.avatar = "";
+
+    /**
+     * UserRef isAdmin.
+     * @member {boolean} isAdmin
+     * @memberof UserRef
+     * @instance
+     */
+    UserRef.prototype.isAdmin = false;
+
+    /**
+     * UserRef isMod.
+     * @member {boolean} isMod
+     * @memberof UserRef
+     * @instance
+     */
+    UserRef.prototype.isMod = false;
+
+    /**
+     * UserRef flair.
+     * @member {string} flair
+     * @memberof UserRef
+     * @instance
+     */
+    UserRef.prototype.flair = "";
+
+    /**
+     * UserRef awards.
+     * @member {Object.<string,number>} awards
+     * @memberof UserRef
+     * @instance
+     */
+    UserRef.prototype.awards = $util.emptyObject;
 
     /**
      * Creates a new UserRef instance using the specified properties.
@@ -332,6 +369,15 @@ $root.UserRef = (function() {
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.username);
         if (message.avatar != null && Object.hasOwnProperty.call(message, "avatar"))
             writer.uint32(/* id 6, wireType 2 =*/50).string(message.avatar);
+        if (message.isAdmin != null && Object.hasOwnProperty.call(message, "isAdmin"))
+            writer.uint32(/* id 7, wireType 0 =*/56).bool(message.isAdmin);
+        if (message.isMod != null && Object.hasOwnProperty.call(message, "isMod"))
+            writer.uint32(/* id 8, wireType 0 =*/64).bool(message.isMod);
+        if (message.flair != null && Object.hasOwnProperty.call(message, "flair"))
+            writer.uint32(/* id 9, wireType 2 =*/74).string(message.flair);
+        if (message.awards != null && Object.hasOwnProperty.call(message, "awards"))
+            for (var keys = Object.keys(message.awards), i = 0; i < keys.length; ++i)
+                writer.uint32(/* id 10, wireType 2 =*/82).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 0 =*/16).uint32(message.awards[keys[i]]).ldelim();
         return writer;
     };
 
@@ -362,7 +408,7 @@ $root.UserRef = (function() {
     UserRef.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.UserRef();
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.UserRef(), key, value;
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
@@ -371,6 +417,37 @@ $root.UserRef = (function() {
                 break;
             case 6:
                 message.avatar = reader.string();
+                break;
+            case 7:
+                message.isAdmin = reader.bool();
+                break;
+            case 8:
+                message.isMod = reader.bool();
+                break;
+            case 9:
+                message.flair = reader.string();
+                break;
+            case 10:
+                if (message.awards === $util.emptyObject)
+                    message.awards = {};
+                var end2 = reader.uint32() + reader.pos;
+                key = "";
+                value = 0;
+                while (reader.pos < end2) {
+                    var tag2 = reader.uint32();
+                    switch (tag2 >>> 3) {
+                    case 1:
+                        key = reader.string();
+                        break;
+                    case 2:
+                        value = reader.uint32();
+                        break;
+                    default:
+                        reader.skipType(tag2 & 7);
+                        break;
+                    }
+                }
+                message.awards[key] = value;
                 break;
             default:
                 reader.skipType(tag & 7);
@@ -413,6 +490,23 @@ $root.UserRef = (function() {
         if (message.avatar != null && message.hasOwnProperty("avatar"))
             if (!$util.isString(message.avatar))
                 return "avatar: string expected";
+        if (message.isAdmin != null && message.hasOwnProperty("isAdmin"))
+            if (typeof message.isAdmin !== "boolean")
+                return "isAdmin: boolean expected";
+        if (message.isMod != null && message.hasOwnProperty("isMod"))
+            if (typeof message.isMod !== "boolean")
+                return "isMod: boolean expected";
+        if (message.flair != null && message.hasOwnProperty("flair"))
+            if (!$util.isString(message.flair))
+                return "flair: string expected";
+        if (message.awards != null && message.hasOwnProperty("awards")) {
+            if (!$util.isObject(message.awards))
+                return "awards: object expected";
+            var key = Object.keys(message.awards);
+            for (var i = 0; i < key.length; ++i)
+                if (!$util.isInteger(message.awards[key[i]]))
+                    return "awards: integer{k:string} expected";
+        }
         return null;
     };
 
@@ -432,6 +526,19 @@ $root.UserRef = (function() {
             message.username = String(object.username);
         if (object.avatar != null)
             message.avatar = String(object.avatar);
+        if (object.isAdmin != null)
+            message.isAdmin = Boolean(object.isAdmin);
+        if (object.isMod != null)
+            message.isMod = Boolean(object.isMod);
+        if (object.flair != null)
+            message.flair = String(object.flair);
+        if (object.awards) {
+            if (typeof object.awards !== "object")
+                throw TypeError(".UserRef.awards: object expected");
+            message.awards = {};
+            for (var keys = Object.keys(object.awards), i = 0; i < keys.length; ++i)
+                message.awards[keys[i]] = object.awards[keys[i]] >>> 0;
+        }
         return message;
     };
 
@@ -448,14 +555,31 @@ $root.UserRef = (function() {
         if (!options)
             options = {};
         var object = {};
+        if (options.objects || options.defaults)
+            object.awards = {};
         if (options.defaults) {
             object.username = "";
             object.avatar = "";
+            object.isAdmin = false;
+            object.isMod = false;
+            object.flair = "";
         }
         if (message.username != null && message.hasOwnProperty("username"))
             object.username = message.username;
         if (message.avatar != null && message.hasOwnProperty("avatar"))
             object.avatar = message.avatar;
+        if (message.isAdmin != null && message.hasOwnProperty("isAdmin"))
+            object.isAdmin = message.isAdmin;
+        if (message.isMod != null && message.hasOwnProperty("isMod"))
+            object.isMod = message.isMod;
+        if (message.flair != null && message.hasOwnProperty("flair"))
+            object.flair = message.flair;
+        var keys2;
+        if (message.awards && (keys2 = Object.keys(message.awards)).length) {
+            object.awards = {};
+            for (var j = 0; j < keys2.length; ++j)
+                object.awards[keys2[j]] = message.awards[keys2[j]];
+        }
         return object;
     };
 

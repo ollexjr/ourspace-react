@@ -63,9 +63,14 @@ const CustomToggle = React.forwardRef<{}, { onClick: (e: any /*React.MouseEvent<
 ));
 
 
+interface ButtonDropdownItem {
+    label: string,
+    icon: any
+}
+
 export const ButtonDropdown: React.FC<{
     //values: Array<any>,
-    items: Array<any>
+    items: Array<ButtonDropdownItem>
 }> = ({ items }) => {
     return (
         <Dropdown>
@@ -73,6 +78,7 @@ export const ButtonDropdown: React.FC<{
             <Dropdown.Menu>
                 {items.map((e) => (
                     <Dropdown.Item eventKey="2">
+                        {e.label}
                         <FontAwesomeIcon icon={faEllipsisH} />
                     </Dropdown.Item>
                 ))}

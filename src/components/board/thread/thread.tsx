@@ -1,14 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { useThreadStore, ThreadStoreProvider } from '../../stores/thread';
+import { useThreadStore, ThreadStoreProvider } from '../../../stores/thread';
+import { useBoardStore, Thread, User } from "../../../stores/board";
 
 import { Navbar, Nav, Container, Button, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
-
 import { TextEditor } from 'components/editor/editor';
-
 import { IComment, ICommentNode } from 'model/compiled';
-import { InlineVoter, VerticalVoter } from './vote';
-
+import { InlineVoter, VerticalVoter } from '../vote';
 import moment from 'moment';
 
 import ReactMarkdown from 'react-markdown';
@@ -16,6 +14,7 @@ import ReactPlayer from 'react-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpand, faExternalLinkAlt, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { NetworkGateway } from 'components/network/gateway';
+import { CircleAvatar } from 'components/user/avatar';
 
 const CommentPadding: React.FC<{ depth: number }> = ({ depth }) => {
     let e = [];
@@ -121,18 +120,29 @@ export const ExternalFrame: React.FC<{ src: string }> = ({ src }) => {
     )
 }
 
+const ThreadNavbar = () => {
+    const store = useBoardStore();
+    return (
+        <Navbar bg="white" variant="dark"
+            className="shadow-sm justify-content-between border-y no-gutters mb-1 px-4 p-0">
+            <div className="d-flex flex-row align-items-center board-header mr-2">
+                <CircleAvatar size={48} />
+                <div className="d-flex flex-column p-2">
+                    <span className="font-weight-bold">+{store.boardId}</span>
+                    <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
+                </div>
+            </div>
+        </Navbar>
+    )
+}
+
 export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }) => {
     const store = useThreadStore();
     const [showModal, setModal] = React.useState(false);
     const canShowMedia = store.thread?.link && store.thread.link != null && ReactPlayer.canPlay(store.thread.link);
     return (
         <NetworkGateway retry={() => store.load()} state={() => store}>
-            <Navbar bg="white" variant="dark"
-                className="shadow-sm justify-content-between border-y no-gutters mb-1 px-4 p-0">
-                <Nav>
-                    text
-                </Nav>
-            </Navbar>
+            <ThreadNavbar />
             <Container className="p-0 card h-100">
                 <Modal size="xl" className="iframe-container" show={showModal} onHide={() => setModal(false)}>
                     <Modal.Header closeButton>

@@ -41,7 +41,7 @@ export const NavbarBase: React.FC = ({ children }) => {
                             fontWeight: 900,
                         }}>
                         <FontAwesomeIcon className="rounded mr-1" icon={faPlus} />
-                        ourspace<span>.dev</span></Navbar.Brand>
+                        our.space<span>.dev</span></Navbar.Brand>
                     </Link>
                     <Nav.Link href="/+all">+All</Nav.Link>
                     <Nav.Link href="/about-and-faq">Help</Nav.Link>

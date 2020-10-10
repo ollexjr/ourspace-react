@@ -28,7 +28,7 @@ export const InlineNavCard: React.FC = ({ }) => {
                             <Dropdown.Menu>
                                 <Dropdown.Item onClick={() => history.push("/account")}>Account</Dropdown.Item>
                                 <Dropdown.Item onClick={() => history.push("/account/inbox")}>Inbox</Dropdown.Item>
-                                <Dropdown.Item onClick={() => history.push("/create")}>Create Board</Dropdown.Item>
+                                <Dropdown.Item onClick={() => history.push("/create")}>Create Community</Dropdown.Item>
                                 <Dropdown.Divider />
                                 <Dropdown.Item variant="primary" onClick={() => show()}>Logout</Dropdown.Item>
                             </Dropdown.Menu>

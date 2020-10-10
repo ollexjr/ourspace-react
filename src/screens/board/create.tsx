@@ -8,7 +8,7 @@ const ScreenCreate: React.FC<{ onSubmit: () => Promise<any> }> = ({ onSubmit }) 
     const app = useAppStore();
     
     return (
-        <ScreenScaffold title="Create a board">
+        <ScreenScaffold title="Create a new Community">
             
         </ScreenScaffold>
     )

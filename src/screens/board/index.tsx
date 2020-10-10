@@ -6,27 +6,30 @@ import {
     useParams,
     useHistory,
 } from "react-router-dom";
+import moment from 'moment';
+import _ from 'lodash';
 
-import { useAsObservableSource } from "mobx-react";
+import { observer, useAsObservableSource } from "mobx-react";
 import { Button, Col, Row, Form, Container, Navbar, Jumbotron, Modal } from 'react-bootstrap';
-import { observer } from 'mobx-react';
+
 import { NetworkedButton } from 'components/button'
 import { BoardStoreProvider, useBoardStore } from "../../stores/board";
 import { ThreadStoreProvider } from '../../stores/thread';
-import { BoardView, Portal, SidebarInfoCard, BoardModPreview } from "../../components/board/board";
-import { ThreadView } from "../../components/board/thread";
-import { CircleAvatar } from 'components/user/avatar';
+import { ThreadView } from "../../components/board/thread/thread";
+import ScreenCreate from 'screens/board/thread/create';
+import { BoardView, BoardModPreview } from "../../components/board/board";
 import ScreenEdit from 'screens/board/edit';
-import moment from 'moment';
-import _ from 'lodash';
+import { Portal } from 'components/app/sidebar';
+import { EnumToArray, DropdownEnum } from 'components/dropdown';
+import { CircleAvatar } from 'components/user/avatar';
 import { useWindowSize } from 'components/layout';
 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
-import { EnumToArray, DropdownEnum } from 'components/dropdown';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
+
 
 const ScreenBoard: React.FC = () => {
     return (
@@ -96,7 +99,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
 
             <Container
                 className="border-none border-y p-0 rounded"
-                fluid={store.containerFluid}
+                fluid={store.UIcontainerFluid}
                 style={{
                     minHeight: 'calc(100vh - 20px);'
                 }}
@@ -110,6 +113,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     <h6>+/{boardId}</h6>
                 </Jumbotron>
                 <Switch>
+                    <Route exact path={`/+${boardId}/create`} component={ScreenCreate} />
                     <Route exact path={`/+${boardId}/edit`} component={ScreenEdit} />
                     <Route path={`/+${boardId}/:threadId/`} component={RouterThread} />
                     <Route exact path={`/+${boardId}`} component={BoardView} />
@@ -117,13 +121,13 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
             </Container>
             <BoardThreadOverlay />
             <Portal target="screen-right">
-                <SidebarInfoCard>
+                <h6>
                     {store.boardId}
-                    <p>
-                        <small>Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</small>
-                    </p>
-                    <BoardModPreview users={store.info?.preview ?? []} />
-                </SidebarInfoCard>
+                </h6>
+                <p>
+                    <small>Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</small>
+                </p>
+                <BoardModPreview users={store.info?.preview ?? []} />
             </Portal>
         </Container>
     )

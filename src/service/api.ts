@@ -97,9 +97,10 @@ export interface Response {
     token: string
 }
 
-export const HOST = "https://ourspace.dev/"
-export const API = "https://ourspace.dev/api/v1/";
-export const WEBSOCKET_HOST = "wss://api.ourspace.dev/api/v1/socket"
+const subdomain = "dev.";
+export const HOST = `https://${subdomain}ourspace.dev/`;
+export const API = `https://${subdomain}ourspace.dev/api/v1/`;
+export const WEBSOCKET_HOST = `wss://${subdomain}ourspace.dev/api/v1/socket`;
 
 export class NetworkService {
     socket?: WebSocket
@@ -165,7 +166,7 @@ export class NetworkService {
         }
 
         console.log("[NetworkService] trying socket connection ...");
-        try{
+        try {
             return this.setupSocket(this.getToken ? await this.getToken().then(t => t.encoded) : undefined);
         } catch {
             return this.setupSocket(undefined);

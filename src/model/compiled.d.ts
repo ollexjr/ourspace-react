@@ -115,6 +115,18 @@ export interface IUserRef {
 
     /** UserRef avatar */
     avatar?: (string|null);
+
+    /** UserRef isAdmin */
+    isAdmin?: (boolean|null);
+
+    /** UserRef isMod */
+    isMod?: (boolean|null);
+
+    /** UserRef flair */
+    flair?: (string|null);
+
+    /** UserRef awards */
+    awards?: ({ [k: string]: number }|null);
 }
 
 /** Represents a UserRef. */
@@ -131,6 +143,18 @@ export class UserRef implements IUserRef {
 
     /** UserRef avatar. */
     public avatar: string;
+
+    /** UserRef isAdmin. */
+    public isAdmin: boolean;
+
+    /** UserRef isMod. */
+    public isMod: boolean;
+
+    /** UserRef flair. */
+    public flair: string;
+
+    /** UserRef awards. */
+    public awards: { [k: string]: number };
 
     /**
      * Creates a new UserRef instance using the specified properties.

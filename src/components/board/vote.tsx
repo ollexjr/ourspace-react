@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from "classnames";
-import { Spinner } from 'react-bootstrap';
+import { Spinner, OverlayTrigger, Popover } from 'react-bootstrap';
 import { IVote } from 'model/compiled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -29,6 +29,7 @@ export const InlineVoter: React.FC<{
 }> = ({ onClick, value, votes, table, className, size }) => {
     const [state, setLoading] = React.useState(false);
     const [valueState, setValue] = React.useState<string>(value);
+    const [pop, setPop] = React.useState<boolean>(false);
 
     const fire = (v: string) => {
         setLoading(true);
@@ -37,20 +38,38 @@ export const InlineVoter: React.FC<{
     const def = " rounded border";
     const cls = className ? className + def : def;
     return (
-        <div className={cls}>
-            {table.map((v, i) =>
-                <button
-                    key={v}
-                    style={{ padding: size }}
-                    type="button" className={
-                        classNames("btn",
-                            "btn-sm",
-                            { "btn-outline": v != valueState },
-                            { "btn-outline-primary": v == valueState },
-                            { "selected": v == valueState })}
-                    onClick={() => fire(v)}>{codeMap[v] ?? ""} <span>{(votes && votes[v])}</span></button>)}
-            {state && <Spinner animation="border" role="status" size="sm" />}
-        </div>
+        <OverlayTrigger
+            trigger={["hover","focus"]}
+            overlay={
+                <Popover id={`popover${state}`}>
+                    <Popover.Title as="h3">Vote</Popover.Title>
+                    <Popover.Content>
+                        %info%
+                    </Popover.Content>
+                </Popover>
+            }
+        >
+            <div className={cls}
+                onMouseLeave={(e) => {
+
+                }}
+                onMouseEnter={(e) => {
+
+                }} >
+                {table.map((v, i) =>
+                    <button
+                        key={v}
+                        style={{ padding: size }}
+                        type="button" className={
+                            classNames("btn",
+                                "btn-sm",
+                                { "btn-outline": v != valueState },
+                                { "btn-outline-primary": v == valueState },
+                                { "selected": v == valueState })}
+                        onClick={() => fire(v)}>{codeMap[v] ?? ""} <span>{(votes && votes[v])}</span></button>)}
+                {state && <Spinner animation="border" role="status" size="sm" />}
+            </div>
+        </OverlayTrigger>
     )
 }
 

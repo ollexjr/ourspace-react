@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, useHistory } from 'react-router-dom';
+
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import '@fortawesome/react-fontawesome';
@@ -8,18 +8,19 @@ import { useBoardStore, Thread, User } from "../../stores/board";
 import { Form, Container, Tooltip, OverlayTrigger, Navbar, Button, Card, DropdownButton, Dropdown } from 'react-bootstrap';
 import { trace } from "mobx";
 import { InlineVoter } from 'components/board/vote';
+import { CommunityLinkPopover } from 'components/board/avatar';
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { EnumToArray, DropdownEnum, ButtonDropdown } from 'components/dropdown';
 import { ScrollEventProvider } from 'components/scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply, faCompress, faSync, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faReply, faPlus, faCompress, faSync, faExternalLinkAlt, faUsers, faUsersSlash } from '@fortawesome/free-solid-svg-icons';
 import Masonry from 'react-masonry-component';
 import ReactPlayer from 'react-player';
 import { NetworkGateway } from 'components/network/gateway';
-import { NetworkedButton } from 'components/button';
+import { PromiseButton, LinkButton } from 'components/button';
 import _ from 'lodash';
 import LazyLoad from 'react-lazyload';
-import { CircleAvatar } from 'components/user/avatar';
+import { UserLink, CircleAvatar } from 'components/user/avatar';
 
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
 
@@ -87,13 +88,17 @@ const ThreadCard: React.FC<{
                     <div id="thread-card-inner" className="card-block text-left w-100">
                         <div className="post-meta text-left">
                             <span className="mr-2">
-                                <Link to={`/+${data.boardId}`}>+{data.boardId}</Link>
+                                <CommunityLinkPopover boardId={data.boardId!}>
+                                    +{data.boardId}
+                                </CommunityLinkPopover>
                             </span>
                             <span className="mr-2">
-                                <small>
-                                    {moment.unix(data.createdAt).fromNow()} by
+                                <UserLink user={data.user}>
+                                    <small>
+                                        {moment.unix(data.createdAt).fromNow()} by
                                     <strong>@{data.user.username}</strong>
-                                </small>
+                                    </small>
+                                </UserLink>
                             </span>
                             <a
                                 target="_blank"
@@ -157,33 +162,21 @@ export const ThreadsView: React.FC<{
                             className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12"
                             showContext={false} key={t.uId} data={t} />)}
                 </Masonry>
-                : data.map((t) => t.uId && <ThreadCard showContext={false} key={t.uId} data={t} />)
+                : data.map((t) => t.uId && 
+                    <ThreadCard 
+                        showContext={false} key={t.uId} data={t} />)
             }
         </ScrollEventProvider>
     )
 })
 
-export const SidebarInfoCard: React.FC = ({ children }) => {
-    return (
-        <div className="border-bottom p-2">
-            {children}
-        </div>
-    )
-}
-
-export const Portal: React.FC<{ target: string }> = ({ children, target }) => {
-    const v = document.getElementById(target);
-    if (!v) {
-        return <div></div>
-    }
-    return ReactDOM.createPortal(children, v);
-}
-
 export const BoardModPreview: React.FC<{ users: Array<IUserRef> }> = ({ users }) => {
     return (
         <div>
-            <h5>Moderators</h5>
-            {users.map(u => <div>{u.username}</div>)}
+            <h6>Moderators</h6>
+            <div>
+                {users.map(u => <small>@{u.username}</small>)}
+            </div>
         </div>
     )
 }
@@ -222,21 +215,33 @@ const BoardTextSearch: React.FC<{ value?: string, boardId?: string }> = observer
 const BoardNavbar: React.FC = observer(() => {
     const store = useBoardStore();
     const history = useHistory();
+    //const params: { boardId: string } = useParams();
     return (
         <Navbar bg="white" variant="dark"
-            className="shadow-sm justify-content-between border-y no-gutters mb-1 px-4 p-0" style={{
+            className="shadow-sm justify-content-between border-y no-gutters mb-1 px-1 px-md-4 p-0" style={{
                 zIndex: 4,
                 position: 'sticky',
                 top: 0,
             }}>
             <div className="d-flex flex-row align-items-center board-header mr-2">
-                <CircleAvatar size={48} />
+                <CircleAvatar className="d-none d-md-block" size={48} />
                 <div className="d-flex flex-column p-2">
                     <span className="font-weight-bold">+{store.boardId}</span>
                     <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
                 </div>
             </div>
             <div className="d-none d-md-flex flex-row">
+                <DropdownEnum
+                    title="Layout"
+                    labels={["Cards", "Compact", "Gallery"]}
+                    values={EnumToArray(ThreadSelectFilters.Method)}
+                    value={store.filters.sortDirection!}
+                    onSelect={(t: number) => {
+                        store.filters.sortDirection = t;
+                        history.push({
+                            search: store.getQueryParams(),
+                        });
+                    }} />
                 <DropdownEnum
                     title="Ranking"
                     labels={["Hot", "Top", "Controversial"]}
@@ -261,14 +266,24 @@ const BoardNavbar: React.FC = observer(() => {
                     }} />
             </div>
             <BoardTextSearch boardId={store.boardId} />
-            <Button className="ml-2" variant="outline-primary" onClick={() => store.request()}>
+            <Button className="mr-2" variant="outline-primary" onClick={() => store.request()}>
                 <FontAwesomeIcon icon={faSync} />
             </Button>
-            {!store.info?.isMember && <NetworkedButton
-                message="Join"
-                successMessage="Unsubscribe"
-                onClick={() => store.subscribe()} />}
-            {store.info?.isMember && <Button onClick={() => store.unsubscribe()}>Unsubscribe</Button>}
+            <LinkButton to={`+${store.boardId}/create`}>
+                <FontAwesomeIcon icon={faPlus} />
+            </LinkButton>
+            {
+
+                /*!store.info?.isMember && <NetworkedButton
+                    message="Join"
+                    successMessage="Unsubscribe"
+                    onClick={() => store.subscribe()} />
+                    */
+                //store.info?.isMember && <Button onClick={() => store.unsubscribe()}>Unsubscribe</Button>
+                store.info && <PromiseButton variant={(store.info.isMember ? "primary" : "danger")} onClick={() => store.info!.isMember ? store.unsubscribe() : store.subscribe()}>
+                    <FontAwesomeIcon icon={store.info.isMember ? faUsersSlash : faUsers} />
+                </PromiseButton>
+            }
         </Navbar>
     )
 })
@@ -284,7 +299,9 @@ export const BoardView: React.FC = observer(() => {
                     <p>Length: {store.data.length}</p>
                     <p>fetching: {store.isFetching} {store.requests} </p>
                 </div>}
-                <ThreadsView layout="masonry" data={store.data} />
+                <ThreadsView 
+                    layout={store.UIdatalayout}
+                    data={store.data} />
             </NetworkGateway>
         </>
     )

@@ -27,6 +27,8 @@ const hydrateAppStore = (): AppStore => {
 
 export class AppStore {
     protected _api: NetworkService = new NetworkService();
+
+    @observable UIconstrainContainer: boolean = true;
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;
     @observable isBottomOfPage: boolean = false;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, action, IObservableArray, autorun, IReactionDisposer } from 'mobx';
+import { observable, computed, action, IObservableArray, autorun, IReactionDisposer } from 'mobx';
 import { observer, useLocalStore, useAsObservableSource, Provider } from "mobx-react";
 import { AppStore, useAppStore } from "stores/app";
 import { ObservableRequestState, Response, APIError } from "service/api";
@@ -12,8 +12,11 @@ export class BoardStore extends ObservableRequestState {
     token?: string
     boardId: string
 
-    innerFluid: boolean = false;
-    @observable containerFluid: boolean = true;
+    //"_masonry" 
+    UIdatalayout: string = "";
+    //innerFluid: boolean = false;
+
+    @observable UIcontainerFluid: boolean = true;
     @observable backgroundImage?: string; //= `url("https://ourspace.dev/res/bg-2.png")`;
     headerImage?: string; //"url('http://app.prestigiousaddresses.com/res/bg-1.png')"
     iconImage?: string;
@@ -33,6 +36,10 @@ export class BoardStore extends ObservableRequestState {
         //createdStart: 0,
         //createdEnd: 0,
         //token: ""
+    }
+
+    isConstrained() {
+        return this.app.UIconstrainContainer || !this.UIcontainerFluid;
     }
 
     filtersPrev?: IThreadSelectFilters
@@ -76,18 +83,28 @@ export class BoardStore extends ObservableRequestState {
 
     @action
     unsubscribe(): Promise<void> {
+        if (!this.info) {
+            return Promise.reject();
+        }
         return this.app.api.endpointPostEx("board/subscription", null, {
-            action: "subscribe",
+            action: "unsubscribe",
             boardId: this.boardId,
-        }, 200);
+        }, 200).then(t => {
+            this.info!.isMember = false;
+        })
     }
 
     @action
     subscribe(): Promise<void> {
+        if (!this.info) {
+            return Promise.reject();
+        }
         return this.app.api.endpointPostEx("board/subscription", null, {
-            action: "unsubscribe",
+            action: "subscribes",
             boardId: this.boardId,
-        }, 200);
+        }, 200).then(t => {
+            this.info!.isMember = true;
+        });
     }
 
     @action
@@ -121,7 +138,7 @@ export class BoardStore extends ObservableRequestState {
     requestMore() {
         this.ignore = true;
         this.filters!.page!++;
-        return this.wrap(() => this.app.api.endpointGet(this.boardId == '_' ? 'all' : "board/threads", {
+        return this.wrap(() => this.app.api.endpointGet(this.boardId == 'all' ? 'all' : "board/threads", {
             ...{
                 'boardId': this.boardId,
                 'sort': this.filters,
@@ -152,7 +169,11 @@ export class BoardStore extends ObservableRequestState {
             entityId: threadId,
             vote: v,
         }
-        return this.app.api.endpointPost("thread/vote", vote, 200);
+        return this.app.api.endpointPost("thread/board/vote", vote, 200);
+    }
+
+    createThread(): Promise<any> {
+        return Promise.reject();
     }
 }
 
