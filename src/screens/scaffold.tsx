@@ -45,24 +45,30 @@ const Scaffold: React.FC = observer(({ children }) => {
   return (
     <>
       <SiteNavbar />
-      <Container fluid className="_header-spacer no-gutters _h-100" >
-        <Row className={"justify-content-around flex-xl-nowrap " + (app.UIconstrainContainer && "_container m-auto p-0")}
+      <Container fluid id="screen-wrapper" className="_header-spacer _no-gutters _p-0" style={{
+        maxWidth: app.UIconstrainContainer ? 1400 : undefined
+      }}>
+        <Row id="screen-row" className={"justify-content-around flex-xl-nowrap " +
+          (app.UIconstrainContainer && "_m-auto")}
           style={{
-            maxWidth: app.UIconstrainContainer ? 1400 : undefined
+            //maxWidth: app.UIconstrainContainer ? 1400 : undefined
           }}>
-          <Col id="wrapper-screen-left" className="d-none d-md-block border-right bg-white col-12 col-md-2 col-xl-1" style={{
-            maxWidth: "80px",
-            minWidth: "64px"
-          }}>
+          <Col id="wrapper-screen-left"
+            className={classNames("d-none d-md-block border-right bg-white",
+              app.UIconstrainContainer ? "col-md-4" : "col-12 col-md-2 col-xl-1")} style={{
+                maxWidth: "80px",
+                minWidth: "64px"
+              }}>
             <div id="screen-left" className="sticky">
               <SubscriptionListWithSearch />
-
             </div>
           </Col>
           <Col className="_h-100 main-content p-0 _p-md-3">
             {children}
           </Col>
-          <Col id="wrapper-screen-right" className="d-none d-lg-block border-left _p-0 bg-white col-12 col-md-2 col-xl-2">
+          <Col id="wrapper-screen-right"
+            className={classNames("d-none d-lg-block border-left _p-0 bg-white",
+              app.UIconstrainContainer ? "col-md-2" : "col-12 col-md-2 col-xl-2")}>
             <div id="screen-right" className="sticky">
               <SidebarSettings />
               <SystemMessages />
@@ -85,6 +91,7 @@ export const BoardRouterWrapper: React.FC = () => {
       <Switch>
         <Route path="/+:boardId" component={RouterBoard} />
         <Route path="/post/:threadId/:title" component={() => null} />
+        <Route path="/@:userId" component={() => null} />
       </Switch>
     </Scaffold>
   )

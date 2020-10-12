@@ -10,7 +10,7 @@ export const Jumbosheet: React.FC<{ url?: Array<string> }> = ({ children }) => {
                     backgroundSize: 'cover',
                     backgroundImage: "url('https://source.unsplash.com/collection/541345/800x1000')" //416021
                 }} />
-                <Col className="col-11 col-md-8 p-0 bg-light">
+                <Col className="col-11 col-md-8 p-0 bg-white">
                     {children}
                 </Col>
             </Row>

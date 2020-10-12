@@ -1,6 +1,8 @@
 import React from 'react';
 
 export const SystemMessages: React.FC = () => {
+    return null;
+    
     return (
         <div>
             <small>

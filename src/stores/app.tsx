@@ -211,7 +211,7 @@ export class AppStore {
             //this.communitySearch = join(this.communitySearch ?? { data: [], token: "" }, t);
         });
 
-        return Promise.reject();
+        return Promise.resolve();
     }
 
     @action

@@ -12,7 +12,7 @@ export const NetworkGateway: React.FC<{ retry: () => any, state: () => Observabl
                     minHeight: '50vh'
                 }}>
                     {state().error ? <div>
-                        <h1>Failed to load something</h1>
+                    <h1>Failed to load something: {state().error}</h1>
                         <Button onClick={() => retry()}>Retry</Button>
                     </div>
                         : <Spinner animation="border" />}

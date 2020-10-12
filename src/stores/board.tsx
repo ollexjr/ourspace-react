@@ -13,14 +13,12 @@ export class BoardStore extends ObservableRequestState {
     boardId: string
 
     //"_masonry" 
-    UIdatalayout: string = "";
-    //innerFluid: boolean = false;
-
+    UIdatalayout: string = "masonry";
     @observable UIcontainerFluid: boolean = true;
     @observable backgroundImage?: string; //= `url("https://ourspace.dev/res/bg-2.png")`;
     headerImage?: string; //"url('http://app.prestigiousaddresses.com/res/bg-1.png')"
     iconImage?: string;
-    
+
     //`url("https://source.unsplash.com/collection/wallpapers/1280x800")`;
     backgroundRepeat: string = "repeat";
     backgroundSize: string = 'unset'; //"cover";
@@ -146,8 +144,8 @@ export class BoardStore extends ObservableRequestState {
             }, ...this.filters
         }, 200).then((res: Response) => {
             this.token = res.token;
-            this.data.push(...res.data);
-            return
+            if (res.data?.length > 0)
+                this.data.push(...res.data);
         })).finally(() => this.ignore = false)
     }
 

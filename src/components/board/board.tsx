@@ -61,7 +61,7 @@ const ThreadCard: React.FC<{
             <div
                 onClick={onClick}
                 id="thread-card"
-                className="card border-none d-flex flex-column rounded-iframe-container shadow-sm page-link">
+                className="card border-none d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
                 <div className="d-flex mb-1">
                     <div>
                         <InlineVoter
@@ -93,11 +93,10 @@ const ThreadCard: React.FC<{
                                 </CommunityLinkPopover>
                             </span>
                             <span className="mr-2">
+                                <small>
+                                    {moment.unix(data.createdAt).fromNow()} by </small>
                                 <UserLink user={data.user}>
-                                    <small>
-                                        {moment.unix(data.createdAt).fromNow()} by
                                     <strong>@{data.user.username}</strong>
-                                    </small>
                                 </UserLink>
                             </span>
                             <a
@@ -143,7 +142,7 @@ export const ThreadsView: React.FC<{
     return (
         <ScrollEventProvider
             listener={document}
-            target={document.body}
+            target={document.getElementById("screen-row")}
             onScrollBottom={() => store.requestMore()}
         >
             {store.error && <div className="d-flex flex-column justify-content-center p-4 rounded border m-5">
@@ -162,8 +161,8 @@ export const ThreadsView: React.FC<{
                             className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12"
                             showContext={false} key={t.uId} data={t} />)}
                 </Masonry>
-                : data.map((t) => t.uId && 
-                    <ThreadCard 
+                : data.map((t) => t.uId &&
+                    <ThreadCard
                         showContext={false} key={t.uId} data={t} />)
             }
         </ScrollEventProvider>
@@ -299,7 +298,7 @@ export const BoardView: React.FC = observer(() => {
                     <p>Length: {store.data.length}</p>
                     <p>fetching: {store.isFetching} {store.requests} </p>
                 </div>}
-                <ThreadsView 
+                <ThreadsView
                     layout={store.UIdatalayout}
                     data={store.data} />
             </NetworkGateway>

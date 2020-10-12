@@ -84,6 +84,17 @@ body {
   height: 100vh;
 }
 
+#screen-wrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: stretch;
+  flex-direction: column;
+}
+
+#screen-row {
+  flex-grow:1;
+}
+
 .navbar-brand {
   font-weight: 900;
 }

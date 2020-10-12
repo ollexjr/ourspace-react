@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpand, faExternalLinkAlt, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { NetworkGateway } from 'components/network/gateway';
 import { CircleAvatar } from 'components/user/avatar';
+import { MediaSource } from 'components/media';
 
 const CommentPadding: React.FC<{ depth: number }> = ({ depth }) => {
     let e = [];
@@ -143,7 +144,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
     return (
         <NetworkGateway retry={() => store.load()} state={() => store}>
             <ThreadNavbar />
-            <Container className="p-0 card h-100">
+            <Container className="p-0 _card h-100">
                 <Modal size="xl" className="iframe-container" show={showModal} onHide={() => setModal(false)}>
                     <Modal.Header closeButton>
                         <div>
@@ -154,7 +155,8 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                     <ExternalFrame
                         src={store.thread?.link ?? ""} />
                 </Modal>
-                <div className="p-2">
+
+                <div className="p-2 p-md-4">
                     <div className="user-info mb-2">
                         <span>Posted by</span>
                         <span><strong>@<span>{store.thread?.user?.username}</span></strong></span>
@@ -167,24 +169,25 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                                 target="_blank"
                                 href={store.thread.link}>
                                 <small>({(new URL(store.thread!.link)).hostname})</small>
-                            </a>}
-                        {//store.thread?.link && <a href={store.thread!.link!}>{store.thread!.link!.trimMax(100)}</a>
+                            </a>
                         }
                     </div>
-                    {canShowMedia && <div className="d-flex justify-content-center rounded-iframe-container mb-2">
-                        <ReactPlayer
-                            light
-                            controls
-                            onPlay={() => store.event("link/playing")}
-                            onPause={() => store.event("link/pause")}
-                            url={store.thread?.link ?? ""} />
-                    </div>}
+            
+                    <MediaSource
+                        onOpen={() => setModal(true)}
+                        preview
+                        network="save"
+                        src={store.thread?.link ?? ""} />
+                </div>
+
+                <div>
                     <div className="d-flex flex-row button-row">
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faRandom} /></Button>
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faExpand} /></Button>
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faShare} /></Button>
                     </div>
                 </div>
+
                 <InlineVoter
                     simple
                     size="sm"

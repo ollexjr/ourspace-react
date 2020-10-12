@@ -96,7 +96,6 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                 backgroundAttachment: 'fixed',
             }}
         >
-
             <Container
                 className="border-none border-y p-0 rounded"
                 fluid={store.UIcontainerFluid}
@@ -104,7 +103,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     minHeight: 'calc(100vh - 20px);'
                 }}
             >
-                <Jumbotron fluid className="d-block _d-md-none p-4 m-0 contrast-background" style={{
+                <Jumbotron fluid className="d-block _d-md-none p-4 m-0 contrast-background bg-white" style={{
                     backgroundImage: store.headerImage,
                     backgroundSize: 'unset',
                 }}>
@@ -115,6 +114,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                 <Switch>
                     <Route exact path={`/+${boardId}/create`} component={ScreenCreate} />
                     <Route exact path={`/+${boardId}/edit`} component={ScreenEdit} />
+                    <Route path={`/+${boardId}/:threadId/(/@:commentId)`} component={RouterThread} />
                     <Route path={`/+${boardId}/:threadId/`} component={RouterThread} />
                     <Route exact path={`/+${boardId}`} component={BoardView} />
                 </Switch>
