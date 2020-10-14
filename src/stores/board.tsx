@@ -15,8 +15,8 @@ export class BoardStore extends ObservableRequestState {
     //"_masonry" 
     UIdatalayout: string = "masonry";
     @observable UIcontainerFluid: boolean = true;
-    @observable backgroundImage?: string; //= `url("https://ourspace.dev/res/bg-2.png")`;
-    headerImage?: string; //"url('http://app.prestigiousaddresses.com/res/bg-1.png')"
+    @observable backgroundImage?: string;// = `url("https://dev.ourspace.dev/res/bg-2.png")`;
+    headerImage?: string = "url(https://source.unsplash.com/collection/street-photography/1280x200)"; //"url('https://dev.ourspace.dev/res/bg-1.png')"
     iconImage?: string;
 
     //`url("https://source.unsplash.com/collection/wallpapers/1280x800")`;
@@ -151,7 +151,7 @@ export class BoardStore extends ObservableRequestState {
 
     @action
     event(event: string) {
-        this.app.api.endpointPost(`board/event/${event}`, undefined, 200);
+        this.app.api.endpointPost(`board/event`, { entityId: this.boardId, action: event, }, 200);
     }
 
     @action

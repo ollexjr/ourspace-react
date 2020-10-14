@@ -53,7 +53,7 @@ export class ThreadStore extends ObservableRequestState {
             comment: comment,
         }
         return this.wrap(() => this.app.api.endpointPost("board/thread/comment", wrapper, 200)
-            .then(t => this._insertCommentList(comment)).finally(() => this.loadComments()))
+            .then(t => this._insertCommentList(comment)));//.finally(() => this.loadComments()))
     }
 
     _insertCommentList(comment: IComment) {
@@ -140,7 +140,7 @@ export const ThreadStoreProvider: React.FC<{ threadId: string, initData?: Thread
 export const useThreadStore = () => {
     const store = React.useContext(threadStoreContext)
     if (!store) {
-        throw new Error('appStoreContext must be used within a StoreProvider.')
+        throw new Error('threadStoreContext must be used within a ThreadStoreProvider')
     }
     return store
 }

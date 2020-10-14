@@ -2063,6 +2063,9 @@ export interface IThread {
     /** Thread content */
     content?: (string|null);
 
+    /** Thread thumb */
+    thumb?: (string|null);
+
     /** Thread user */
     user?: (IUserRef|null);
 
@@ -2144,6 +2147,9 @@ export class Thread implements IThread {
 
     /** Thread content. */
     public content: string;
+
+    /** Thread thumb. */
+    public thumb: string;
 
     /** Thread user. */
     public user?: (IUserRef|null);

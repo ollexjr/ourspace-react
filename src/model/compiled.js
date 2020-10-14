@@ -5324,6 +5324,7 @@ $root.Thread = (function() {
      * @property {string|null} [link] Thread link
      * @property {string|null} [linkType] Thread linkType
      * @property {string|null} [content] Thread content
+     * @property {string|null} [thumb] Thread thumb
      * @property {IUserRef|null} [user] Thread user
      * @property {number|null} [createdAt] Thread createdAt
      * @property {string|null} [boardId] Thread boardId
@@ -5417,6 +5418,14 @@ $root.Thread = (function() {
      * @instance
      */
     Thread.prototype.content = "";
+
+    /**
+     * Thread thumb.
+     * @member {string} thumb
+     * @memberof Thread
+     * @instance
+     */
+    Thread.prototype.thumb = "";
 
     /**
      * Thread user.
@@ -5630,6 +5639,8 @@ $root.Thread = (function() {
             writer.uint32(/* id 24, wireType 0 =*/192).int32(message.unhandledReports);
         if (message.reports != null && Object.hasOwnProperty.call(message, "reports"))
             writer.uint32(/* id 25, wireType 0 =*/200).int32(message.reports);
+        if (message.thumb != null && Object.hasOwnProperty.call(message, "thumb"))
+            writer.uint32(/* id 30, wireType 2 =*/242).string(message.thumb);
         return writer;
     };
 
@@ -5684,6 +5695,9 @@ $root.Thread = (function() {
                 break;
             case 7:
                 message.content = reader.string();
+                break;
+            case 30:
+                message.thumb = reader.string();
                 break;
             case 8:
                 message.user = $root.UserRef.decode(reader, reader.uint32());
@@ -5817,6 +5831,9 @@ $root.Thread = (function() {
         if (message.content != null && message.hasOwnProperty("content"))
             if (!$util.isString(message.content))
                 return "content: string expected";
+        if (message.thumb != null && message.hasOwnProperty("thumb"))
+            if (!$util.isString(message.thumb))
+                return "thumb: string expected";
         if (message.user != null && message.hasOwnProperty("user")) {
             var error = $root.UserRef.verify(message.user);
             if (error)
@@ -5920,6 +5937,8 @@ $root.Thread = (function() {
             message.linkType = String(object.linkType);
         if (object.content != null)
             message.content = String(object.content);
+        if (object.thumb != null)
+            message.thumb = String(object.thumb);
         if (object.user != null) {
             if (typeof object.user !== "object")
                 throw TypeError(".Thread.user: object expected");
@@ -6060,6 +6079,7 @@ $root.Thread = (function() {
             object.me = null;
             object.unhandledReports = 0;
             object.reports = 0;
+            object.thumb = "";
         }
         if (message.uId != null && message.hasOwnProperty("uId"))
             object.uId = message.uId;
@@ -6131,6 +6151,8 @@ $root.Thread = (function() {
             object.unhandledReports = message.unhandledReports;
         if (message.reports != null && message.hasOwnProperty("reports"))
             object.reports = message.reports;
+        if (message.thumb != null && message.hasOwnProperty("thumb"))
+            object.thumb = message.thumb;
         return object;
     };
 

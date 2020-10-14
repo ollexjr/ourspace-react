@@ -12,7 +12,7 @@ import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
 import ReactPlayer from 'react-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpand, faExternalLinkAlt, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { faExpand, faExternalLinkAlt, faReply, faPen, faEdit, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { NetworkGateway } from 'components/network/gateway';
 import { CircleAvatar } from 'components/user/avatar';
 import { MediaSource } from 'components/media';
@@ -50,21 +50,27 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
                     source={data.content ?? "error, editing with no content"} onAccept={(t) => store.addComment(t, data?.uId ?? "")} /> :
                     <ReactMarkdown source={data.content ?? "# no content, ask a developer"} />
                 }
-                <div className="d-flex justify-content-between align-items-center mb-1">
+                <div className="d-flex justify-content-between align-items-center mb-2">
                     <InlineVoter
                         table={store.thread?.acceptedCommentVotes ?? []}
                         votes={data?.votes ?? undefined}
                         onClick={(v) => store.voteComment(data?.uId ?? "undefined", v)} value={data?.me?.vote ?? ""} />
                     <div className="rounded button-row">
-                        {canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>{!edit ? "Edit" : "Cancel"}</Button>}
-                        {canReply && !edit && <Button size="sm" variant="outline-dark" onClick={() => setReply(!reply)}>{!reply ? "Reply" : "Cancel"}</Button>}
+                        {canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>
+                            {!edit ? <FontAwesomeIcon icon={faEdit} /> : "Cancel Edit"}
+                        </Button>}
+                        {canReply && !edit && <Button size="sm" variant="outline-dark" onClick={() => setReply(!reply)}>
+                            {!reply ? <FontAwesomeIcon icon={faReply} /> : "Cancel"}
+                        </Button>}
                     </div>
                 </div>
-                {reply && <TextEditor
-                    acceptText="Submit" cancelText="cancel"
-                    onAccept={(t) => edit ?
-                        store.editComment(t, data?.uId ?? "").then(t => setEditing(false)) :
-                        store.addComment(t, data?.uId ?? "").then(t => setReply(false))} />}
+                {reply && <div className="mb-2">
+                    <small>Replying... </small>
+                    <TextEditor
+                        acceptText="Submit" cancelText="cancel"
+                        onAccept={(t) => edit ?
+                            store.editComment(t, data?.uId ?? "").then(t => setEditing(false)) :
+                            store.addComment(t, data?.uId ?? "").then(t => setReply(false))} /></div>}
             </div>
         </li>
     )
@@ -125,7 +131,12 @@ const ThreadNavbar = () => {
     const store = useBoardStore();
     return (
         <Navbar bg="white" variant="dark"
-            className="shadow-sm justify-content-between border-y no-gutters mb-1 px-4 p-0">
+            className="shadow-sm justify-content-between border-y no-gutters mb-1 px-4 p-0"
+            style={{
+                zIndex: 4,
+                position: 'sticky',
+                top: 0,
+            }}>
             <div className="d-flex flex-row align-items-center board-header mr-2">
                 <CircleAvatar size={48} />
                 <div className="d-flex flex-column p-2">
@@ -144,7 +155,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
     return (
         <NetworkGateway retry={() => store.load()} state={() => store}>
             <ThreadNavbar />
-            <Container className="p-0 _card h-100">
+            <Container className="p-0 pt-2 h-100">
                 <Modal size="xl" className="iframe-container" show={showModal} onHide={() => setModal(false)}>
                     <Modal.Header closeButton>
                         <div>
@@ -156,7 +167,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         src={store.thread?.link ?? ""} />
                 </Modal>
 
-                <div className="p-2 p-md-4">
+                <div className="px-2 px-md-4 mb-4">
                     <div className="user-info mb-2">
                         <span>Posted by</span>
                         <span><strong>@<span>{store.thread?.user?.username}</span></strong></span>
@@ -172,7 +183,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                             </a>
                         }
                     </div>
-            
+
                     <MediaSource
                         onOpen={() => setModal(true)}
                         preview
@@ -180,30 +191,32 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         src={store.thread?.link ?? ""} />
                 </div>
 
-                <div>
-                    <div className="d-flex flex-row button-row">
+                <div className="px-2 px-md-4 mb-4 _border-bottom mb-1">
+                    <div className="d-flex flex-row button-row mb-1">
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faRandom} /></Button>
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faExpand} /></Button>
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faShare} /></Button>
                     </div>
+
+                    <InlineVoter
+                        simple
+                        size="sm"
+                        className="d-flex flex-row"
+                        table={store.thread?.acceptedVotes ?? []}
+                        votes={store.thread?.votes ?? undefined}
+                        onClick={(v) => Promise.reject()}
+                        //onClick={(v) =>
+                        //    store.voteThread(store.thread?.uId ?? "undefined", v)
+                        //        .then(
+                        //            t => store.thread!.me!.vote = t)} 
+                        value={store.thread?.me?.vote ?? "unset"} />
                 </div>
 
-                <InlineVoter
-                    simple
-                    size="sm"
-                    className="d-flex flex-row"
-                    table={store.thread?.acceptedVotes ?? []}
-                    votes={store.thread?.votes ?? undefined}
-                    onClick={(v) => Promise.reject()}
-                    //onClick={(v) =>
-                    //    store.voteThread(store.thread?.uId ?? "undefined", v)
-                    //        .then(
-                    //            t => store.thread!.me!.vote = t)} 
-                    value={store.thread?.me?.vote ?? "unset"} />
-                <div className="p-2">
+                <div className="px-2 px-md-4 pb-4 border-bottom">
                     <small>Comment as @system</small>
                     <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />
                 </div>
+
                 <ThreadCommentView />
             </Container>
         </NetworkGateway>

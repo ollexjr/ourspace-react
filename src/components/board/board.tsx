@@ -13,7 +13,7 @@ import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { EnumToArray, DropdownEnum, ButtonDropdown } from 'components/dropdown';
 import { ScrollEventProvider } from 'components/scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply, faPlus, faCompress, faSync, faExternalLinkAlt, faUsers, faUsersSlash } from '@fortawesome/free-solid-svg-icons';
+import { faReply, faBookmark, faShare, faSave, faLink, faPlus, faCompress, faSync, faExternalLinkAlt, faUsers, faUsersSlash } from '@fortawesome/free-solid-svg-icons';
 import Masonry from 'react-masonry-component';
 import ReactPlayer from 'react-player';
 import { NetworkGateway } from 'components/network/gateway';
@@ -23,6 +23,28 @@ import LazyLoad from 'react-lazyload';
 import { UserLink, CircleAvatar } from 'components/user/avatar';
 
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
+
+const CardButtons: React.FC<{ buttonClass: string }> = ({ buttonClass }) => {
+    return (
+        <>
+            <ButtonDropdown
+                items={[
+                    { label: "Bookmark/Save", icon: "" },
+                    { label: "CrossPost", icon: "" },
+                    { label: "Share", icon: "" },
+                    { label: "Put in clipboard", icon: "" },
+                    { label: "Open in new tab", icon: "" },
+                    { label: "Moderate [M]", icon: "" }
+                ]}
+            />
+            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faCompress} /></Button>
+            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faBookmark} /></Button>
+            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faShare} /></Button>
+            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faLink} /></Button>
+        </>
+    )
+}
+
 
 const ThreadCard: React.FC<{
     className?: string,
@@ -36,10 +58,10 @@ const ThreadCard: React.FC<{
         return null;
     }
 
-    const canShowImage = isImage.test(data.link ?? "");
-    const canShowMedia = data.link &&
-        data.link != null &&
-        ReactPlayer.canPlay(data.link);
+    const src = data.thumb;
+
+    const canShowImage = isImage.test(src ?? "");
+    const canShowMedia = src && ReactPlayer.canPlay(data.link);
 
     let url: URL
     try {
@@ -51,11 +73,12 @@ const ThreadCard: React.FC<{
     }
 
     const onClick = (e: any) => { //React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (e.target.id == 'thread-card' || e.target.id == 'thread-card-inner')
+        if (e.target.id == 'thread-card' || e.target.id == 'thread-card-inner' || e.target.id == 'thread-card-title')
             history.push(data.url!);
     }
 
     //<Link to={data.url!}>
+    // _className="d-flex flex-column justify-content-center align-items-center"
     return (
         <div className={cls}>
             <div
@@ -63,27 +86,20 @@ const ThreadCard: React.FC<{
                 id="thread-card"
                 className="card border-none d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
                 <div className="d-flex mb-1">
-                    <div>
+                    <div className="mr-1 mr-md-2">
                         <InlineVoter
                             simple
                             size="sm"
-                            className="d-flex flex-column mr-1"
+                            className="d-flex flex-column"
                             table={data?.acceptedVotes ?? []}
                             votes={data?.votes ?? undefined}
                             onClick={(v) =>
                                 store.voteThread(data?.uId ?? "undefined", v)
                                     .then(
                                         t => data!.me!.vote = t.typeCode)} value={data?.me?.vote ?? "unset"} />
-                        <ButtonDropdown
-                            items={[
-                                { label: "Bookmark/Save", icon: "" },
-                                { label: "Crosspost", icon: "" },
-                                { label: "Share", icon: "" },
-                                { label: "Tab it", icon: "" },
-                                { label: "Moderate (M)", icon: "" }
-                            ]}
-                        />
-                        <Button variant="outline"><FontAwesomeIcon icon={faCompress} /></Button>
+                        <div className="_d-flex flex-row flex-md-column justify-content-center align-items-center d-none">
+                            <CardButtons buttonClass="d-none d-md-none" />
+                        </div>
                     </div>
                     <div id="thread-card-inner" className="card-block text-left w-100">
                         <div className="post-meta text-left">
@@ -100,19 +116,24 @@ const ThreadCard: React.FC<{
                                 </UserLink>
                             </span>
                             <a
+                                onClick={() => store.event("link/open")}
                                 target="_blank"
                                 href={data.link}>
                                 <small className="mr-1">{`${url.host}`}</small>
                                 <FontAwesomeIcon size="xs" icon={faExternalLinkAlt} />
                             </a>
                         </div>
-                        <Card.Title className="post-title text-left w-lg-75 mb-0 mb-md-2">{data.title}</Card.Title>
+                        <Card.Title
+                            id="thread-card-title"
+                            className="post-title text-left w-lg-75 mb-0 mb-md-2">
+                            {data.title}
+                        </Card.Title>
                     </div>
                 </div>
                 {(canShowImage || canShowMedia) &&
                     <LazyLoad debounce once>
                         {console.log("[thread-card] => lazy loaded link")}
-                        {canShowImage && <img className="card-img-top rounded" src={data.link}></img>}
+                        {canShowImage && <img className="card-img-top rounded" src={src ?? "failed.png"}></img>}
                         {canShowMedia && <ReactPlayer
                             light
                             width="100%"
@@ -121,6 +142,9 @@ const ThreadCard: React.FC<{
                             onPause={() => store.event("link/pause")}
                             url={data.link!} />}
                     </LazyLoad>}
+                <div className="d-flex flex-row justify-content-left">
+                    <CardButtons buttonClass="d-block" />
+                </div>
             </div>
         </div>
     )

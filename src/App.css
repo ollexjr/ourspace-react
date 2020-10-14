@@ -75,6 +75,7 @@ body, #root, #screen-left, #screen-right {
 body {
   font-family: 'Roboto' !important;
   height: 100vh;
+  overflow-y: scroll;
 }
 
 #root {
@@ -258,3 +259,19 @@ iframe.external-link {
 #screen-left {
   overflow-y: auto;
 }
+
+.ProseMirror, .ProseMirror p {
+  background: none !important;
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+} 

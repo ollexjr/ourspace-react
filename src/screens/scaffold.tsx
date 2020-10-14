@@ -41,7 +41,7 @@ const info = "";
 const Scaffold: React.FC = observer(({ children }) => {
   const app = useAppStore()
   const ref = React.useRef();
-
+  document.body.className = "fadeIn"
   return (
     <>
       <SiteNavbar />
@@ -118,6 +118,8 @@ export const RouterRoot: React.FC = observer(({ }) => {
           <Route exact path="/create" component={ScreenCreate} />
           <Route exact path="/explore/graph" component={ScreenExploreGraph} />
           <Route exact path="/account" component={ScreenAccount} />
+          <Route exact path="/@:userId" component={ScreenAccount} />
+
           <Route exact path="/all" component={ScreenFrontpage} />
           <Route exact path="/" component={ScreenFrontpage} />
         </Scaffold>

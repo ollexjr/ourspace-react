@@ -1,7 +1,7 @@
 import React from 'react';
 import { observable, action, autorun, IObservableArray } from 'mobx';
 import { useLocalStore } from 'mobx-react';
-import { UserStore, UserRef } from './user';
+import { AccountStore, UserRef } from './user';
 import { NetworkService, TokenPair, AccessJwt, Jwt } from '../service/api';
 import JwtDecode from 'jwt-decode';
 import { IEvent, join } from 'model/net';
@@ -86,7 +86,7 @@ export class AppStore {
         return this._api;
     }
 
-    @observable active?: UserStore | null;
+    @observable active?: AccountStore | null;
     get loggedIn(): boolean {
         return this.active != null;
     }
@@ -162,7 +162,7 @@ export class AppStore {
 
         this.api.closeWebSocket();
         this.openSocket();
-        this.active = new UserStore(this, this._access.token.uid);
+        this.active = new AccountStore(this, this._access.token.uid);
     }
 
     protected getTokenCallback = (): Promise<Jwt> => {

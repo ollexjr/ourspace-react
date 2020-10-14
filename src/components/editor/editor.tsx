@@ -37,7 +37,7 @@ export const TextEditor: React.FC<{
     const target = React.useRef(null);
 
     return (
-        <div className="border rounded pl-3 pr-3 py-3 bg-light d-flex flex-row" /*style={{ position: 'relative' }}*/ ref={target}>
+        <div className="border rounded px-2 py-2 d-flex flex-row" /*style={{ position: 'relative' }}*/ ref={target}>
             <div style={{
                 visibility: isWaiting ? "visible" : "hidden",
                 position: 'fixed',
@@ -51,7 +51,7 @@ export const TextEditor: React.FC<{
             }}>
                 <Spinner animation="border" variant="primary" />
             </div>
-            <div className="flex-grow-1" style={{ marginLeft: "25px", marginBottom: "1em" }}>
+            <div className="flex-grow-1 pl-3 mx-2">
                 <Editor
                     defaultValue={source}
                     onChange={(v) => setState({ ...state, value: v() })}

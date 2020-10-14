@@ -30,6 +30,8 @@ export const MediaSource: React.FC<{
                 <ReactPlayer
                     light
                     controls
+                    className="border rounded"
+                    width='100%'
                     onPlay={() => onEvent && onEvent("link/playing")}
                     onPause={() => onEvent && onEvent("link/pause")}
                     url={src} />

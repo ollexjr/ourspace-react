@@ -70,7 +70,7 @@ export const SiteNavbar: React.FC = observer(() => {
                         {!store.loggedIn ?
                             ([
                                 <Link to="/login">
-                                    <Button variant="light" className="mr-2 px-md-4" style={{ borderRadius: '1em' }}>Sign In</Button>
+                                    <Button variant="primary" className="mr-2 px-md-4" style={{ borderRadius: '1em' }}>Sign In</Button>
                                 </Link>,
                                 <Link to="/signup">
                                     <Button variant="outline-dark" className="px-md-4" style={{ borderRadius: '1em' }}>Sign Up</Button>
