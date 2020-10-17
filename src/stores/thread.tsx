@@ -36,9 +36,6 @@ export class ThreadStore extends ObservableRequestState {
         this.board = board;
         this.app = app;
         this.threadId = threadId;
-
-        //this.thread = init;
-        //this.comments = null;
         console.log("[thread-store] => construct");
         this.load();
     }
@@ -52,14 +49,16 @@ export class ThreadStore extends ObservableRequestState {
             threadId: this.threadId,
             comment: comment,
         }
-        return this.wrap(() => this.app.api.endpointPost("board/thread/comment", wrapper, 200)
-            .then(t => this._insertCommentList(comment)));//.finally(() => this.loadComments()))
-    }
 
-    _insertCommentList(comment: IComment) {
-        //if (this.comments && this.comments.data) {
-        //    this.comments.data.splice(1, 0, comment);
-        //}
+        // this is a bit silly
+        this.ignore = true;
+        return this.wrap(() => this.app.api.endpointPost("board/thread/comment", wrapper, 200)
+            .then(t => this.insertComment(comment))
+            .finally(() => this.ignore = false));
+    }
+    
+    insertComment(s: IComment) {
+
     }
 
     editComment(content: string, commentId: string): Promise<void> {
@@ -72,12 +71,12 @@ export class ThreadStore extends ObservableRequestState {
             finally(() => this.isFetching = false);
     }
 
-    voteThread(): Promise<void> {
-        return Promise.reject();
+    voteThread(action: string): Promise<any> {
+        return this.board?.voteThread(this.threadId, action) ?? Promise.reject();
     }
 
     event(event: string) {
-
+        this.app.api.endpointPost(`board/event/thread`, { threadId: this.threadId, action: event }, 200);
     }
 
     loadComments(more: boolean = false) {
@@ -99,6 +98,7 @@ export class ThreadStore extends ObservableRequestState {
 
     load(): Promise<void> {
         const withContext: boolean = (this.thread == undefined);
+        this.event("open");
         return this.wrap(() => this.app.api.endpointGet("board/thread", {
             'threadId': this.threadId,
             'withContext': withContext,

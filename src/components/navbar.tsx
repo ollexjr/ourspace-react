@@ -20,11 +20,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  * diskus.dev
  * 
  */
-export const NavbarBase: React.FC = ({ children }) => {
-    const url = "https://source.unsplash.com/collection/416021/1280x800";
 
+const Brand: React.FC<{ className: string }> = ({ className }) => {
     return (
-        <Navbar
+        <Link to="/">
+            <Navbar.Brand href="/" className={"rounded _px-2 " + className} style={{
+                fontWeight: 900,
+            }}>
+                <FontAwesomeIcon className="rounded mr-1" icon={faPlus} />
+            our.space<span>.dev</span></Navbar.Brand>
+        </Link>
+    )
+}
+
+export const NavbarBase: React.FC = ({ children }) => {
+    const store = useAppStore();
+    const url = "https://source.unsplash.com/collection/416021/1280x800";
+    const wrap = (child: any) => {
+        if (store.isDarkTheme() && !store.UIanimatedHeader) {
+            return child;
+        }
+        return (
+            <div>
+                <div className="bar gradient-horizontal"></div>
+                {child}
+            </div>
+        )
+    }
+    return (
+        wrap(<Navbar
             expand="md"
             bg="white"
             //variant="dark"
@@ -35,36 +59,32 @@ export const NavbarBase: React.FC = ({ children }) => {
             }}
         >
             <Container fluid={true}>
-                <Nav className="flex-grow-1">
-                    <Link to="/">
-                        <Navbar.Brand href="/" className="rounded _px-2" style={{
-                            fontWeight: 900,
-                        }}>
-                        <FontAwesomeIcon className="rounded mr-1" icon={faPlus} />
-                        our.space<span>.dev</span></Navbar.Brand>
-                    </Link>
-                    <Nav.Link href="/+all">+All</Nav.Link>
-                    <Nav.Link href="/about-and-faq">Help</Nav.Link>
-                    <Nav.Link href="/blog">~Blogs</Nav.Link>
-                </Nav>
+                <Brand className="d-block" />
                 {children}
             </Container>
-        </Navbar>
+        </Navbar>)
     )
 }
 
 export const SiteNavbar: React.FC = observer(() => {
     const store = useAppStore();
     return (
-        <div>
-            <NavbarBase>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav" style={{
-                    flexGrow: 2,
-                }}>
-                    <Nav.Item id="nav-center" className="flex-grow-1 py-4 p-md-0">
-                        {<Form.Control type="text" placeholder="Search" />}
-                    </Nav.Item>
+        <NavbarBase>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav" style={{
+                //flexGrow: 2,
+            }}>
+                <Nav className="d-flex flex-grow-1 align-items-center">
+                    {false && <Nav.Item id="nav-center" className="_flex-grow-1 py-4 p-md-0">
+                        <Form.Control type="text" placeholder="Search" />
+                    </Nav.Item>}
+                    {false && <Form inline>
+                        <Form.Control type="text" placeholder="Search" className="mr-sm-2" />
+                    </Form>}
+                    <Brand className="d-block d-sm-none" />
+                    <Nav.Link href="/+all">+All</Nav.Link>
+                    <Nav.Link href="/about-and-faq">Help</Nav.Link>
+                    <Nav.Link href="/blog">~Blogs</Nav.Link>
                     <Nav.Item className="flex-grow-1 flex-row text-right py-2 p-md-0 d-flex d-md-flex _d-md-block justify-content-end">
                         {store.loggedIn && <InlineNavCard />}
                         {!store.loggedIn ?
@@ -78,8 +98,8 @@ export const SiteNavbar: React.FC = observer(() => {
                             ]) : null}
                         {/*store.loggedIn && <LinkButton to="/logout">Log out</LinkButton>*/}
                     </Nav.Item>
-                </Navbar.Collapse>
-            </NavbarBase>
-        </div>
+                </Nav>
+            </Navbar.Collapse>
+        </NavbarBase>
     )
 })

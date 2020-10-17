@@ -41,7 +41,8 @@ const info = "";
 const Scaffold: React.FC = observer(({ children }) => {
   const app = useAppStore()
   const ref = React.useRef();
-  document.body.className = "fadeIn"
+  document.body.className = "fadeIn " + app.themeName;
+
   return (
     <>
       <SiteNavbar />
@@ -74,8 +75,8 @@ const Scaffold: React.FC = observer(({ children }) => {
               <SystemMessages />
               <NotificationListObserver />
               <div className="footer">
-                <small><strong>Copyright</strong> ourspace 2020</small>
-                <small>Version: {info ?? "not defined"}</small>
+                <p>Copyright <strong>our</strong>space {new Date().getFullYear()}</p>
+                <p>Version: {info ?? "not defined"}</p>
               </div>
             </div>
           </Col>
@@ -90,8 +91,10 @@ export const BoardRouterWrapper: React.FC = () => {
     <Scaffold>
       <Switch>
         <Route path="/+:boardId" component={RouterBoard} />
+        <Route path="/c/:boardId" component={RouterBoard} />
         <Route path="/post/:threadId/:title" component={() => null} />
         <Route path="/@:userId" component={() => null} />
+        <Route path="/u/:userId" component={() => null} />
       </Switch>
     </Scaffold>
   )
@@ -114,6 +117,7 @@ export const RouterRoot: React.FC = observer(({ }) => {
         <Route exact path="/login" component={ScreenLogin} />
         <Route exact path="/signup" component={ScreenSignup} />
         <Route path="/+:pathId" component={BoardRouterWrapper} />
+        <Route path="/c/:pathId" component={BoardRouterWrapper} />
         <Scaffold>
           <Route exact path="/create" component={ScreenCreate} />
           <Route exact path="/explore/graph" component={ScreenExploreGraph} />

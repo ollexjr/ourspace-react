@@ -8,6 +8,7 @@ import { IEvent, join } from 'model/net';
 import {
     ILoginResponse,
     ILoginRequest,
+    IBoardCreate,
     IComment,
     ICommunitySelectRequest,
     ICommunitySelectResponse,
@@ -28,6 +29,7 @@ const hydrateAppStore = (): AppStore => {
 export class AppStore {
     protected _api: NetworkService = new NetworkService();
 
+    @observable UIanimatedHeader: boolean = false;
     @observable UIconstrainContainer: boolean = true;
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;
@@ -35,6 +37,12 @@ export class AppStore {
     @observable displayableEvent: IObservableArray<IEvent> = observable.array([])
     @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([])
     //@observable threadCrosspost: IObservableArray<I
+
+    themeName: string = "light";
+
+    isDarkTheme(): boolean {
+        return this.themeName == 'dark';
+    }
 
     async openSocket() {
         Notification.requestPermission();
@@ -44,7 +52,7 @@ export class AppStore {
             this.addEvent(event);
         }))
     }
-
+    
     addEvent(data: IEvent) {
         //debugger;
         let nop: NotificationOptions = {}
@@ -71,6 +79,8 @@ export class AppStore {
         refreshToken: string | undefined) {
         console.log("[app store] constructed with tokens =>", accessToken, refreshToken)
 
+        document.title = "ourspace";
+        
         this.openSocket();
 
         if (accessToken == undefined || refreshToken == undefined) {
@@ -217,6 +227,15 @@ export class AppStore {
     @action
     showSpotlight() {
         this.UIShowSpotlight = true;
+    }
+
+    @action
+    createCommunity(o: IBoardCreate): Promise<any> {
+        return this.api.endpointPost("createcommunity", o, 200);
+    }
+
+    getCommunityLink(boardId: string) {
+        return `/+${boardId}/`
     }
 }
 

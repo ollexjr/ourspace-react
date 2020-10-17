@@ -1,11 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { useAppStore } from '../../stores/app';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
 import { OverlayTrigger, Tooltip, Form, Button } from 'react-bootstrap';
 import { CircleAvatar } from "components/user/avatar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 /*
 const CircleAvatar: React.FC<{ url: string }> = ({ url }) => {
     return (
@@ -50,11 +50,16 @@ const SubscriptionList: React.FC<{ data: Array<any> }> = observer(({ data }) => 
 export const SubscriptionListWithSearch: React.FC = observer(() => {
     const store = useAppStore();
     const [state, setFilter] = React.useState("");
+    const history = useHistory();
 
+    const subscriptions = store.active?.subscriptions ?? []
     return (
         <div className="subscription-list pt-2">
-            <div className="d-flex flex-row justify-content-center mb-2">
+            <div className="d-flex flex-column align-items-center mb-2 button-column">
                 <Button onClick={() => store.showSpotlight()} >
+                    <FontAwesomeIcon icon={faSearch} />
+                </Button>
+                <Button onClick={() => history.push("/create")} >
                     <FontAwesomeIcon icon={faPlus} />
                 </Button>
             </div>
@@ -65,9 +70,14 @@ export const SubscriptionListWithSearch: React.FC = observer(() => {
             <div /*style={{ maxHeight: "800px", overflowY: "scroll", overflowX: "hidden" }}*/ >
                 <SubscriptionList
                     data={
-                        (state.length == 0) ? store.active?.subscriptions ?? [] :
-                            store.active?.subscriptions.filter((v, i) => (v.boardId.startsWith(state) && i < 10) ? v : null) ?? []} />
+                        (state.length == 0) ? subscriptions :
+                            subscriptions.filter((v, i) => (v.boardId.startsWith(state) && i < 10) ? v : null) ?? []} />
             </div>
+            {subscriptions.length > 0 && <div className="d-flex flex-column align-items-center button-column">
+                <Button onClick={() => history.push("/create")} >
+                    <FontAwesomeIcon icon={faArrowRight} />
+                </Button>
+            </div>}
         </div>
     )
 })

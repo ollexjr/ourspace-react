@@ -29,7 +29,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
-
+import { ImageHeader } from 'components/header';
 
 const ScreenBoard: React.FC = () => {
     return (
@@ -103,14 +103,11 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     minHeight: 'calc(100vh - 20px);'
                 }}
             >
-                <Jumbotron fluid className="d-block _d-md-none p-4 m-0 contrast-background bg-white" style={{
-                    backgroundImage: store.headerImage,
-                    backgroundSize: 'unset',
-                }}>
+                <ImageHeader src={store.headerImage ?? ""}>
                     <h1>{store.info?.title ?? boardId}</h1>
                     <h4>{store.info?.description ?? ""}</h4>
                     <h6>+/{boardId}</h6>
-                </Jumbotron>
+                </ImageHeader>
                 <Switch>
                     <Route exact path={`/+${boardId}/create`} component={ScreenCreate} />
                     <Route exact path={`/+${boardId}/edit`} component={ScreenEdit} />

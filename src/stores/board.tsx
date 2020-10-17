@@ -3,10 +3,23 @@ import { observable, computed, action, IObservableArray, autorun, IReactionDispo
 import { observer, useLocalStore, useAsObservableSource, Provider } from "mobx-react";
 import { AppStore, useAppStore } from "stores/app";
 import { ObservableRequestState, Response, APIError } from "service/api";
-import { IThread, IBoard, IThreadSelectFilters, ThreadSelectFilters, IThreadsSelectResponse, IThreadsSelectResponseWithBoardContext, Thread, IEntityVoteRequest, IVote } from 'model/compiled';
-import { useHistory } from 'react-router';
-export type { IThread as Thread, IUser as User, IBoard as Board } from 'model/compiled';
+import { 
+    IThread, 
+    IBoard, 
+    IThreadSelectFilters, 
+    ThreadSelectFilters,
+    IThreadCreateRequest, 
+    IThreadsSelectResponse, 
+    IThreadsSelectResponseWithBoardContext, 
+    IEntityVoteRequest, 
+    IVote } from 'model/compiled';
 
+import { useHistory } from 'react-router';
+export type { 
+    IThread as Thread, 
+    IUser as User, 
+    IBoard as Board 
+} from 'model/compiled';
 export class BoardStore extends ObservableRequestState {
     app: AppStore
     token?: string
@@ -16,7 +29,8 @@ export class BoardStore extends ObservableRequestState {
     UIdatalayout: string = "masonry";
     @observable UIcontainerFluid: boolean = true;
     @observable backgroundImage?: string;// = `url("https://dev.ourspace.dev/res/bg-2.png")`;
-    headerImage?: string = "url(https://source.unsplash.com/collection/street-photography/1280x200)"; //"url('https://dev.ourspace.dev/res/bg-1.png')"
+    headerImage?: string = `url(https://source.unsplash.com/pCcGpVsOHoo/1090x130)`;
+    //"url(https://source.unsplash.com/collection/street-photography/1280x200)"; //"url('https://dev.ourspace.dev/res/bg-1.png')"
     iconImage?: string;
 
     //`url("https://source.unsplash.com/collection/wallpapers/1280x800")`;
@@ -98,11 +112,22 @@ export class BoardStore extends ObservableRequestState {
             return Promise.reject();
         }
         return this.app.api.endpointPostEx("board/subscription", null, {
-            action: "subscribes",
+            action: "subscribe",
             boardId: this.boardId,
         }, 200).then(t => {
             this.info!.isMember = true;
         });
+    }
+
+    getCollection(s: string): string {
+        switch (s) {
+            case "all":
+                return "all"
+            case "popular":
+                return "collections/all"
+            default:
+                return "board/threads"
+        } 
     }
 
     @action
@@ -114,7 +139,7 @@ export class BoardStore extends ObservableRequestState {
 
         const withContext = this.info == null && this.boardId != 'all';
         return this.wrap(() => this.app.api.endpointGet(
-            (this.boardId == 'all' ? 'all' : "board/threads"), {
+            this.getCollection(this.boardId), {
             ...{
                 'withContext': withContext,
                 'boardId': this.boardId,
@@ -136,7 +161,7 @@ export class BoardStore extends ObservableRequestState {
     requestMore() {
         this.ignore = true;
         this.filters!.page!++;
-        return this.wrap(() => this.app.api.endpointGet(this.boardId == 'all' ? 'all' : "board/threads", {
+        return this.wrap(() => this.app.api.endpointGet(this.getCollection(this.boardId), {
             ...{
                 'boardId': this.boardId,
                 'sort': this.filters,
@@ -151,7 +176,7 @@ export class BoardStore extends ObservableRequestState {
 
     @action
     event(event: string) {
-        this.app.api.endpointPost(`board/event`, { entityId: this.boardId, action: event, }, 200);
+        this.app.api.endpointPost(`board/event`, { boardId: this.boardId, action: event, }, 200);
     }
 
     @action
@@ -167,12 +192,18 @@ export class BoardStore extends ObservableRequestState {
             entityId: threadId,
             vote: v,
         }
-        return this.app.api.endpointPost("thread/board/vote", vote, 200);
+        return this.app.api.endpointPost("board/thread/vote", vote, 200);
     }
 
-    createThread(): Promise<any> {
-        return Promise.reject();
+    createThread(s: IThreadCreateRequest): Promise<any> {
+        return this.app.api.endpointPost("board/newthread?boardId="+ s.boardId, s, 200);
     }
+
+        
+    getThreadLink(threadId: string) {
+        return `/+${this.boardId}/${threadId}`;
+    }
+
 }
 
 export const boardStoreContext = React.createContext<BoardStore | null>(null);

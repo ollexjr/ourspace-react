@@ -46,7 +46,9 @@ export const PromiseButton: React.FC<{ onClick: () => Promise<any> } & ButtonPro
     </Button>
 }
 
-export const TooltipButton: React.FC<{ variant: string, tooltip: string, text: string }> = ({ children, variant, tooltip, text }) => {
+export const TooltipButton: React.FC<{ 
+    onClick: () => Promise<any>, tooltip: string, text: string 
+} & ButtonProps> = ({ onClick, children, tooltip }, props) => {
     return (
         <OverlayTrigger
             placement="right"
@@ -58,7 +60,7 @@ export const TooltipButton: React.FC<{ variant: string, tooltip: string, text: s
                     </Tooltip>
                 )}
         >
-            <Button variant={variant}>{children}{tooltip}</Button>
+            <PromiseButton {...props}>{children}{tooltip}</PromiseButton>
         </OverlayTrigger>
     )
 }

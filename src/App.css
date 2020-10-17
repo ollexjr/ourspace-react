@@ -137,7 +137,7 @@ iframe.external-link {
   border-right: 1px solid rgba(0,0,0,.125);
 }
 
-.button-row-vertical button {
+.button-column button {
   margin-bottom: 1em;
 }
 
@@ -169,16 +169,6 @@ iframe.external-link {
 .masonry-container {
   width: 50%;
 }
-
-/*
-#screen-left-wrapper {
-  max-width: 9% !important;
-}
-
-#screen-left-wrapper:hover {
-  max-width: 16%;
-}
-*/
 
 .page-link {
   cursor: pointer;
@@ -244,16 +234,6 @@ iframe.external-link {
 .parallax-image {
   background-size: cover;
   background-position: center;
-/*
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  */
-}
-.wrapper-screen-left {
-  
 }
 
 #screen-left {
@@ -274,4 +254,33 @@ iframe.external-link {
 @keyframes fadeIn {
   0% {opacity: 0;}
   100% {opacity: 1;}
-} 
+}
+
+.bar {
+  height: 2px;
+  width: 100%;
+}
+
+.gradient-horizontal {
+  background: linear-gradient(-270deg, #191c36, #7960ff);
+  background-size: 400% 400%;
+  -webkit-animation: grad-horizontal 30s ease infinite;
+  -moz-animation: grad-horizontal 30s ease infinite;
+  animation: grad-horizontal 30s ease infinite;
+}
+
+@-webkit-keyframes grad-horizontal {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes grad-horizontal {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes grad-horizontal {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, OverlayTrigger, Tooltip, Popover } from 'react-bootstrap';
+import { Image, OverlayTrigger, Tooltip, Popover, Badge } from 'react-bootstrap';
 import { IUserRef } from 'model/compiled';
 import { Link } from 'react-router-dom';
 
@@ -40,6 +40,7 @@ export const CircleAvatar: React.FC<{
         </OverlayTrigger>
     )
 }
+
 
 export const UserLink: React.FC<{ user: IUserRef }> = ({ user, children }) => {
     const debug = false;

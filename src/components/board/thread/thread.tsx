@@ -16,6 +16,7 @@ import { faExpand, faExternalLinkAlt, faReply, faPen, faEdit, faRandom, faShare,
 import { NetworkGateway } from 'components/network/gateway';
 import { CircleAvatar } from 'components/user/avatar';
 import { MediaSource } from 'components/media';
+import { CommunityUserInline } from 'components/board/user';
 
 const CommentPadding: React.FC<{ depth: number }> = ({ depth }) => {
     let e = [];
@@ -39,7 +40,7 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
             <CommentPadding depth={depth} />
             <div className="flex-grow-1">
                 <div className="poster-info d-flex justify-content-between">
-                    <span className="username">@{data?.user?.username ?? ""}</span>
+                    <CommunityUserInline user={data?.user ?? undefined} />
                     <span>{moment.unix(data?.createdAt ?? 0).fromNow()}</span>
                 </div>
                 {debug && <pre>
@@ -168,9 +169,9 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                 </Modal>
 
                 <div className="px-2 px-md-4 mb-4">
-                    <div className="user-info mb-2">
+                    <div className="user-info mb-2 d-flex flex-row">
                         <span>Posted by</span>
-                        <span><strong>@<span>{store.thread?.user?.username}</span></strong></span>
+                        <CommunityUserInline user={store.thread?.user ?? undefined} />
                         <span>{moment.unix(store.thread?.createdAt ?? 0).fromNow()}</span>
                     </div>
                     <div className="mb-2">
@@ -183,28 +184,27 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                             </a>
                         }
                     </div>
-
+                    <div className="d-flex justify-content-center"></div>
                     <MediaSource
-                        onOpen={() => setModal(true)}
-                        preview
-                        network="save"
-                        src={store.thread?.link ?? ""} />
+                            onOpen={() => setModal(true)}
+                            preview
+                            network="save"
+                            src={store.thread?.link ?? ""} />
                 </div>
 
                 <div className="px-2 px-md-4 mb-4 _border-bottom mb-1">
-                    <div className="d-flex flex-row button-row mb-1">
+                    <div className="d-flex flex-row button-row mb-2">
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faRandom} /></Button>
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faExpand} /></Button>
                         <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faShare} /></Button>
                     </div>
-
                     <InlineVoter
                         simple
                         size="sm"
                         className="d-flex flex-row"
                         table={store.thread?.acceptedVotes ?? []}
                         votes={store.thread?.votes ?? undefined}
-                        onClick={(v) => Promise.reject()}
+                        onClick={(v) => store.voteThread(v)}
                         //onClick={(v) =>
                         //    store.voteThread(store.thread?.uId ?? "undefined", v)
                         //        .then(

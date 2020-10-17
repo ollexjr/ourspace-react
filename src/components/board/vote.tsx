@@ -32,14 +32,18 @@ export const InlineVoter: React.FC<{
     const [pop, setPop] = React.useState<boolean>(false);
 
     const fire = (v: string) => {
+        const nv = (valueState == v) ? "unset" : v;
         setLoading(true);
-        onClick((valueState == v ? "unset" : v)).then((t: IVote) => setValue(t.typeCode ?? "")).catch(t => setLoading(false)).finally(() => setLoading(false));
+        onClick(nv)
+            .then((t: IVote) => setValue(nv))
+            .catch(t => setLoading(false))
+            .finally(() => setLoading(false));
     }
     const def = " rounded border";
     const cls = className ? className + def : def;
     return (
         <OverlayTrigger
-            trigger={["hover","focus"]}
+            trigger={["hover", "focus"]}
             overlay={
                 <Popover id={`popover${state}`}>
                     <Popover.Title as="h3">Vote</Popover.Title>
@@ -56,17 +60,28 @@ export const InlineVoter: React.FC<{
                 onMouseEnter={(e) => {
 
                 }} >
-                {table.map((v, i) =>
-                    <button
-                        key={v}
-                        style={{ padding: size }}
-                        type="button" className={
-                            classNames("btn",
-                                "btn-sm",
-                                { "btn-outline": v != valueState },
-                                { "btn-outline-primary": v == valueState },
-                                { "selected": v == valueState })}
-                        onClick={() => fire(v)}>{codeMap[v] ?? ""} <span>{(votes && votes[v])}</span></button>)}
+                {table.map((v, i) => {
+                    const isThis = (v == valueState);
+                    let count = (votes && votes[v]) ?? 0;
+                    //if (!isThis && count > 0) {
+                    //    count--;
+                    //}
+                    return (
+                        <button
+                            key={v}
+                            style={{ padding: size }}
+                            type="button" className={
+                                classNames("btn",
+                                    "btn-sm",
+                                    { "btn-outline": !isThis },
+                                    { "btn-outline-primary": isThis },
+                                    { "selected": isThis })}
+                            onClick={() => fire(v)}>
+                            {codeMap[v] ?? ""}
+                            <span>{count}</span>
+                        </button>
+                    )
+                })}
                 {state && <Spinner animation="border" role="status" size="sm" />}
             </div>
         </OverlayTrigger>

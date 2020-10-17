@@ -19,8 +19,9 @@ import ReactPlayer from 'react-player';
 import { NetworkGateway } from 'components/network/gateway';
 import { PromiseButton, LinkButton } from 'components/button';
 import _ from 'lodash';
-import LazyLoad from 'react-lazyload';
-import { UserLink, CircleAvatar } from 'components/user/avatar';
+import { CircleAvatar } from 'components/user/avatar';
+import { CommunityUserInline } from 'components/board/user';
+import { MediaSource } from 'components/media';
 
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
 
@@ -61,7 +62,7 @@ const ThreadCard: React.FC<{
     const src = data.thumb;
 
     const canShowImage = isImage.test(src ?? "");
-    const canShowMedia = src && ReactPlayer.canPlay(data.link);
+    const canShowMedia = ReactPlayer.canPlay(data.link);
 
     let url: URL
     try {
@@ -102,19 +103,14 @@ const ThreadCard: React.FC<{
                         </div>
                     </div>
                     <div id="thread-card-inner" className="card-block text-left w-100">
-                        <div className="post-meta text-left">
+                        <div className="post-meta text-left d-flex flex-row flex-wrap justify-content-left">
                             <span className="mr-2">
                                 <CommunityLinkPopover boardId={data.boardId!}>
                                     +{data.boardId}
                                 </CommunityLinkPopover>
                             </span>
-                            <span className="mr-2">
-                                <small>
-                                    {moment.unix(data.createdAt).fromNow()} by </small>
-                                <UserLink user={data.user}>
-                                    <strong>@{data.user.username}</strong>
-                                </UserLink>
-                            </span>
+                            <span className="mr-2">{moment.unix(data.createdAt).fromNow()} by </span>
+                            <CommunityUserInline user={data.user} />
                             <a
                                 onClick={() => store.event("link/open")}
                                 target="_blank"
@@ -130,18 +126,12 @@ const ThreadCard: React.FC<{
                         </Card.Title>
                     </div>
                 </div>
-                {(canShowImage || canShowMedia) &&
-                    <LazyLoad debounce once>
-                        {console.log("[thread-card] => lazy loaded link")}
-                        {canShowImage && <img className="card-img-top rounded" src={src ?? "failed.png"}></img>}
-                        {canShowMedia && <ReactPlayer
-                            light
-                            width="100%"
-                            controls
-                            onPlay={() => store.event("link/playing")}
-                            onPause={() => store.event("link/pause")}
-                            url={data.link!} />}
-                    </LazyLoad>}
+                <MediaSource
+                    preview
+                    network="save"
+                    aspectRatio={data.thumbAspectRatio ?? undefined}
+                    thumb={data.thumb ?? undefined}
+                    src={data.link ?? undefined} />
                 <div className="d-flex flex-row justify-content-left">
                     <CardButtons buttonClass="d-block" />
                 </div>

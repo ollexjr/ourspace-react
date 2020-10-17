@@ -59,7 +59,7 @@ export const TextEditor: React.FC<{
                     template={true}
                 />
             </div>
-            <div className="d-flex flex-column justify-content-end button-row-vertical">
+            <div className="d-flex flex-column justify-content-end button-column">
                 <Button variant="outline-dark" onClick={() => onCancel && onCancel()} >
                     <FontAwesomeIcon icon={faTimes} />
                 </Button>
