@@ -33,6 +33,8 @@ import { SpotlightModal } from 'components/spotlight';
 import classNames from 'classnames';
 import { SidebarSettings } from 'components/uisettings';
 import { SystemMessages } from 'components/app/messages';
+import { ParallaxProvider } from 'react-scroll-parallax';
+
 //import info from './gitinfo.js';
 
 const info = "";
@@ -136,7 +138,9 @@ export const RouterRoot: React.FC = observer(({ }) => {
 export const RouterScaffold: React.FC = () => {
   return (
     <AppStoreProvider>
-      <RouterRoot />
+      <ParallaxProvider>
+        <RouterRoot />
+      </ParallaxProvider>
     </AppStoreProvider>
   )
 }

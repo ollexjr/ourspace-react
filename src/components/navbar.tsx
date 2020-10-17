@@ -27,8 +27,8 @@ const Brand: React.FC<{ className: string }> = ({ className }) => {
             <Navbar.Brand href="/" className={"rounded _px-2 " + className} style={{
                 fontWeight: 900,
             }}>
-                <FontAwesomeIcon className="rounded mr-1" icon={faPlus} />
-            our.space<span>.dev</span></Navbar.Brand>
+                <FontAwesomeIcon className="d-none rounded mr-1" icon={faPlus} />
+            our+space<span></span></Navbar.Brand>
         </Link>
     )
 }

@@ -104,9 +104,14 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                 }}
             >
                 <ImageHeader src={store.headerImage ?? ""}>
-                    <h1>{store.info?.title ?? boardId}</h1>
-                    <h4>{store.info?.description ?? ""}</h4>
-                    <h6>+/{boardId}</h6>
+                    <div className="d-flex flex-row align-items-center">
+                        <CircleAvatar src="" className="border" />
+                        <div className="ml-4">
+                            <h1>{store.info?.title ?? boardId}</h1>
+                            <h4>{store.info?.description ?? ""}</h4>
+                            <h6>+/{boardId}</h6>
+                        </div>
+                    </div>
                 </ImageHeader>
                 <Switch>
                     <Route exact path={`/+${boardId}/create`} component={ScreenCreate} />

@@ -28,14 +28,14 @@ export const MediaSource: React.FC<{
         return child;
     }
     const isVideo = src && ReactPlayer.canPlay(src);
-    
+
     let height: number = 0;
 
     if (isVideo) {
         // from inspecting the DOM, youtube placeholders render with a height of 358
         height = 358;
     }
-    
+
     if (thumb && aspectRatio) {
         height = (320 * aspectRatio);
         if (preview && height > 350) {
@@ -49,7 +49,11 @@ export const MediaSource: React.FC<{
 
     const loader = (child: any) => {
         return (
-            <LazyLoad debounce once height={height}>
+            <LazyLoad
+                debounce
+                once
+                height={height}
+                offset={window.innerHeight}>
                 {overflowWrapper(child)}
             </LazyLoad>
         )
