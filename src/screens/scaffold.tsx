@@ -72,10 +72,12 @@ const Scaffold: React.FC = observer(({ children }) => {
           <Col id="wrapper-screen-right"
             className={classNames("d-none d-lg-block border-left _p-0 bg-white",
               app.UIconstrainContainer ? "col-md-2" : "col-12 col-md-2 col-xl-2")}>
-            <div id="screen-right" className="sticky">
-              <SidebarSettings />
-              <SystemMessages />
+            <div className="sticky">
+              <div id="screen-right" className="mt-1">
+                <SystemMessages />
+              </div>
               <NotificationListObserver />
+              <SidebarSettings />
               <div className="footer">
                 <p>Copyright <strong>our</strong>space {new Date().getFullYear()}</p>
                 <p>Version: {info ?? "not defined"}</p>

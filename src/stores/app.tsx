@@ -52,7 +52,7 @@ export class AppStore {
             this.addEvent(event);
         }))
     }
-    
+
     addEvent(data: IEvent) {
         //debugger;
         let nop: NotificationOptions = {}
@@ -64,9 +64,20 @@ export class AppStore {
                 new Notification(
                     `@${commentReply.comment?.user?.username ?? "%unknown%"} replied to your comment\n"${commentReply.comment?.content ?? ""}"\n`, {});
                 break;
+            case "comment.moderate":
+                break
+            case "board.subscribe":
+            case "board.unsubscribe":
+                new Notification(
+                    `Something happened`, {});
+                break
             case "comment.vote":
+                new Notification(
+                    `Comment vote`, {});
                 this.displayableEvent.push(data);
             case "thread.vote":
+                new Notification(
+                    `Thread vote`, {});
                 this.displayableEvent.push(data);
             case "thread.crosspost":
                 this.displayableEvent.push(data);
@@ -80,7 +91,7 @@ export class AppStore {
         console.log("[app store] constructed with tokens =>", accessToken, refreshToken)
 
         document.title = "ourspace";
-        
+
         this.openSocket();
 
         if (accessToken == undefined || refreshToken == undefined) {

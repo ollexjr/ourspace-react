@@ -205,6 +205,15 @@ export class NetworkService {
             body: JSON.stringify(json)
         }, expects));
     }
+    endpointPostFile(path: string, file: File, expects: number): Promise<any> {
+        let formData = new FormData();
+        formData.append("file", file);
+        return this.getHeaders().then(h => http(API + path, {
+            headers: h,
+            method: "POST",
+            body: formData,
+        }, expects));
+    }
     endpointPostEx(path: string, json: any, args: any, expects: number): Promise<any> {
         const encodedArgs = args ? serialize(args) : undefined;
         path = encodedArgs ? (path + "?" + encodedArgs) : path;

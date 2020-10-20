@@ -26,7 +26,7 @@ export const ImageHeaderParallax: React.FC<{ src: string }> = ({ src, children }
     return (
         <ParallaxBanner
             style={{ height: "auto" }}
-            className="jumbotron mb-0 p-4"
+            className="jumbotron mb-0 p-4 _text-stroke-children"
             layers={[
                 {
                     //image: "https://source.unsplash.com/random",

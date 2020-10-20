@@ -11,6 +11,7 @@ import { observer } from 'mobx-react';
 import { InlineNavCard } from "components/user/card"
 import { faAt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CommunityAvatar } from 'components/board/avatar';
 
 /**
  * favatar
@@ -24,9 +25,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Brand: React.FC<{ className: string }> = ({ className }) => {
     return (
         <Link to="/">
-            <Navbar.Brand href="/" className={"rounded _px-2 " + className} style={{
+            <Navbar.Brand href="/" className={className} style={{
                 fontWeight: 900,
             }}>
+                <CommunityAvatar className="d-inline mr-1" size={36} />
                 <FontAwesomeIcon className="d-none rounded mr-1" icon={faPlus} />
             our+space<span></span></Navbar.Brand>
         </Link>
@@ -37,7 +39,7 @@ export const NavbarBase: React.FC = ({ children }) => {
     const store = useAppStore();
     const url = "https://source.unsplash.com/collection/416021/1280x800";
     const wrap = (child: any) => {
-        if (store.isDarkTheme() && !store.UIanimatedHeader) {
+        if (store.isDarkTheme() && store.UIanimatedHeader) {
             return child;
         }
         return (
@@ -59,7 +61,7 @@ export const NavbarBase: React.FC = ({ children }) => {
             }}
         >
             <Container fluid={true}>
-                <Brand className="d-block" />
+                <Brand className="d-inline-block" />
                 {children}
             </Container>
         </Navbar>)
@@ -82,9 +84,9 @@ export const SiteNavbar: React.FC = observer(() => {
                         <Form.Control type="text" placeholder="Search" className="mr-sm-2" />
                     </Form>}
                     <Brand className="d-block d-sm-none" />
-                    <Nav.Link href="/+all">+All</Nav.Link>
+                    <Nav.Link href="/+all">Big Spaces</Nav.Link>
                     <Nav.Link href="/about-and-faq">Help</Nav.Link>
-                    <Nav.Link href="/blog">~Blogs</Nav.Link>
+                    <Nav.Link href="/blog">Blogs</Nav.Link>
                     <Nav.Item className="flex-grow-1 flex-row text-right py-2 p-md-0 d-flex d-md-flex _d-md-block justify-content-end">
                         {store.loggedIn && <InlineNavCard />}
                         {!store.loggedIn ?

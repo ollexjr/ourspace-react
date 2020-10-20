@@ -207,7 +207,7 @@ export class UserRef implements IUserRef {
 export interface IAccountState {
 
     /** AccountState subscriptions */
-    subscriptions?: (IUserSubscription[]|null);
+    subscriptions?: (IBoardSubscription[]|null);
 
     /** AccountState karma */
     karma?: (number|null);
@@ -229,7 +229,7 @@ export class AccountState implements IAccountState {
     constructor(properties?: IAccountState);
 
     /** AccountState subscriptions. */
-    public subscriptions: IUserSubscription[];
+    public subscriptions: IBoardSubscription[];
 
     /** AccountState karma. */
     public karma: number;
@@ -2788,13 +2788,19 @@ export interface IBoardSubscription {
     boardId?: (string|null);
 
     /** BoardSubscription isMod */
-    isMod?: (string|null);
+    isMod?: (boolean|null);
+
+    /** BoardSubscription isOwner */
+    isOwner?: (boolean|null);
 
     /** BoardSubscription isBanned */
     isBanned?: (string|null);
 
-    /** BoardSubscription users */
-    users?: (number|null);
+    /** BoardSubscription members */
+    members?: (number|null);
+
+    /** BoardSubscription icon */
+    icon?: (string|null);
 
     /** BoardSubscription createdAt */
     createdAt?: (number|null);
@@ -2813,13 +2819,19 @@ export class BoardSubscription implements IBoardSubscription {
     public boardId: string;
 
     /** BoardSubscription isMod. */
-    public isMod: string;
+    public isMod: boolean;
+
+    /** BoardSubscription isOwner. */
+    public isOwner: boolean;
 
     /** BoardSubscription isBanned. */
     public isBanned: string;
 
-    /** BoardSubscription users. */
-    public users: number;
+    /** BoardSubscription members. */
+    public members: number;
+
+    /** BoardSubscription icon. */
+    public icon: string;
 
     /** BoardSubscription createdAt. */
     public createdAt: number;
@@ -2907,6 +2919,12 @@ export interface IBoard {
     /** Board description */
     description?: (string|null);
 
+    /** Board icon */
+    icon?: (string|null);
+
+    /** Board banner */
+    banner?: (string|null);
+
     /** Board members */
     members?: (number|null);
 
@@ -2955,6 +2973,12 @@ export class Board implements IBoard {
 
     /** Board description. */
     public description: string;
+
+    /** Board icon. */
+    public icon: string;
+
+    /** Board banner. */
+    public banner: string;
 
     /** Board members. */
     public members: number;
@@ -4179,109 +4203,85 @@ export class UserSubscribedRequest implements IUserSubscribedRequest {
     public toJSON(): { [k: string]: any };
 }
 
-/** Properties of a UserSubscription. */
-export interface IUserSubscription {
-
-    /** UserSubscription boardId */
-    boardId?: (string|null);
-
-    /** UserSubscription createdAt */
-    createdAt?: (number|null);
-
-    /** UserSubscription isMod */
-    isMod?: (boolean|null);
-
-    /** UserSubscription isOwner */
-    isOwner?: (boolean|null);
+/** Properties of a BlogSubscription. */
+export interface IBlogSubscription {
 }
 
-/** Represents a UserSubscription. */
-export class UserSubscription implements IUserSubscription {
+/** Represents a BlogSubscription. */
+export class BlogSubscription implements IBlogSubscription {
 
     /**
-     * Constructs a new UserSubscription.
+     * Constructs a new BlogSubscription.
      * @param [properties] Properties to set
      */
-    constructor(properties?: IUserSubscription);
-
-    /** UserSubscription boardId. */
-    public boardId: string;
-
-    /** UserSubscription createdAt. */
-    public createdAt: number;
-
-    /** UserSubscription isMod. */
-    public isMod: boolean;
-
-    /** UserSubscription isOwner. */
-    public isOwner: boolean;
+    constructor(properties?: IBlogSubscription);
 
     /**
-     * Creates a new UserSubscription instance using the specified properties.
+     * Creates a new BlogSubscription instance using the specified properties.
      * @param [properties] Properties to set
-     * @returns UserSubscription instance
+     * @returns BlogSubscription instance
      */
-    public static create(properties?: IUserSubscription): UserSubscription;
+    public static create(properties?: IBlogSubscription): BlogSubscription;
 
     /**
-     * Encodes the specified UserSubscription message. Does not implicitly {@link UserSubscription.verify|verify} messages.
-     * @param message UserSubscription message or plain object to encode
+     * Encodes the specified BlogSubscription message. Does not implicitly {@link BlogSubscription.verify|verify} messages.
+     * @param message BlogSubscription message or plain object to encode
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: IUserSubscription, writer?: $protobuf.Writer): $protobuf.Writer;
+    public static encode(message: IBlogSubscription, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified UserSubscription message, length delimited. Does not implicitly {@link UserSubscription.verify|verify} messages.
-     * @param message UserSubscription message or plain object to encode
+     * Encodes the specified BlogSubscription message, length delimited. Does not implicitly {@link BlogSubscription.verify|verify} messages.
+     * @param message BlogSubscription message or plain object to encode
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: IUserSubscription, writer?: $protobuf.Writer): $protobuf.Writer;
+    public static encodeDelimited(message: IBlogSubscription, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Decodes a UserSubscription message from the specified reader or buffer.
+     * Decodes a BlogSubscription message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
-     * @returns UserSubscription
+     * @returns BlogSubscription
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): UserSubscription;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): BlogSubscription;
 
     /**
-     * Decodes a UserSubscription message from the specified reader or buffer, length delimited.
+     * Decodes a BlogSubscription message from the specified reader or buffer, length delimited.
      * @param reader Reader or buffer to decode from
-     * @returns UserSubscription
+     * @returns BlogSubscription
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): UserSubscription;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): BlogSubscription;
 
     /**
-     * Verifies a UserSubscription message.
+     * Verifies a BlogSubscription message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
     public static verify(message: { [k: string]: any }): (string|null);
 
     /**
-     * Creates a UserSubscription message from a plain object. Also converts values to their respective internal types.
+     * Creates a BlogSubscription message from a plain object. Also converts values to their respective internal types.
      * @param object Plain object
-     * @returns UserSubscription
+     * @returns BlogSubscription
      */
-    public static fromObject(object: { [k: string]: any }): UserSubscription;
+    public static fromObject(object: { [k: string]: any }): BlogSubscription;
 
     /**
-     * Creates a plain object from a UserSubscription message. Also converts values to other types if specified.
-     * @param message UserSubscription
+     * Creates a plain object from a BlogSubscription message. Also converts values to other types if specified.
+     * @param message BlogSubscription
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: UserSubscription, options?: $protobuf.IConversionOptions): { [k: string]: any };
+    public static toObject(message: BlogSubscription, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
     /**
-     * Converts this UserSubscription to JSON.
+     * Converts this BlogSubscription to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
@@ -5296,6 +5296,108 @@ export class Image implements IImage {
 
     /**
      * Converts this Image to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of an ImageModifyRequest. */
+export interface IImageModifyRequest {
+
+    /** ImageModifyRequest item */
+    item?: (string|null);
+
+    /** ImageModifyRequest action */
+    action?: (string|null);
+
+    /** ImageModifyRequest file */
+    file?: (string|null);
+}
+
+/** Represents an ImageModifyRequest. */
+export class ImageModifyRequest implements IImageModifyRequest {
+
+    /**
+     * Constructs a new ImageModifyRequest.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IImageModifyRequest);
+
+    /** ImageModifyRequest item. */
+    public item: string;
+
+    /** ImageModifyRequest action. */
+    public action: string;
+
+    /** ImageModifyRequest file. */
+    public file: string;
+
+    /**
+     * Creates a new ImageModifyRequest instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns ImageModifyRequest instance
+     */
+    public static create(properties?: IImageModifyRequest): ImageModifyRequest;
+
+    /**
+     * Encodes the specified ImageModifyRequest message. Does not implicitly {@link ImageModifyRequest.verify|verify} messages.
+     * @param message ImageModifyRequest message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IImageModifyRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified ImageModifyRequest message, length delimited. Does not implicitly {@link ImageModifyRequest.verify|verify} messages.
+     * @param message ImageModifyRequest message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IImageModifyRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes an ImageModifyRequest message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns ImageModifyRequest
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ImageModifyRequest;
+
+    /**
+     * Decodes an ImageModifyRequest message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns ImageModifyRequest
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ImageModifyRequest;
+
+    /**
+     * Verifies an ImageModifyRequest message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates an ImageModifyRequest message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns ImageModifyRequest
+     */
+    public static fromObject(object: { [k: string]: any }): ImageModifyRequest;
+
+    /**
+     * Creates a plain object from an ImageModifyRequest message. Also converts values to other types if specified.
+     * @param message ImageModifyRequest
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: ImageModifyRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this ImageModifyRequest to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };

@@ -13,7 +13,7 @@ import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { EnumToArray, DropdownEnum, ButtonDropdown } from 'components/dropdown';
 import { ScrollEventProvider } from 'components/scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply, faBookmark, faShare, faSave, faLink, faPlus, faCompress, faSync, faExternalLinkAlt, faUsers, faUsersSlash } from '@fortawesome/free-solid-svg-icons';
+import { faReply, faBookmark, faCommentAlt, faShare, faSave, faLink, faPlus, faCompress, faSync, faExternalLinkAlt, faUsers, faUsersSlash } from '@fortawesome/free-solid-svg-icons';
 import Masonry from 'react-masonry-component';
 import ReactPlayer from 'react-player';
 import { NetworkGateway } from 'components/network/gateway';
@@ -25,7 +25,7 @@ import { MediaSource } from 'components/media';
 
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
 
-const CardButtons: React.FC<{ buttonClass: string }> = ({ buttonClass }) => {
+const CardButtons: React.FC<{ buttonClass: string, commentNum: number }> = ({ buttonClass, commentNum }) => {
     return (
         <>
             <ButtonDropdown
@@ -38,9 +38,10 @@ const CardButtons: React.FC<{ buttonClass: string }> = ({ buttonClass }) => {
                     { label: "Moderate [M]", icon: "" }
                 ]}
             />
-            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faCompress} /></Button>
-            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faBookmark} /></Button>
+            {false && <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faCompress} /></Button>}
+            {false && <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faBookmark} /></Button>}
             <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faShare} /></Button>
+            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faCommentAlt} /> {commentNum} </Button>
             <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faLink} /></Button>
         </>
     )
@@ -98,24 +99,23 @@ const ThreadCard: React.FC<{
                                 store.voteThread(data?.uId ?? "undefined", v)
                                     .then(
                                         t => data!.me!.vote = t.typeCode)} value={data?.me?.vote ?? "unset"} />
-                        <div className="_d-flex flex-row flex-md-column justify-content-center align-items-center d-none">
-                            <CardButtons buttonClass="d-none d-md-none" />
-                        </div>
+                        {false && <div className="_d-flex flex-row flex-md-column justify-content-center align-items-center d-none">
+                            <CardButtons commentNum={data.numComments ?? 0} buttonClass="d-none d-md-none" />
+                        </div>}
                     </div>
                     <div id="thread-card-inner" className="card-block text-left w-100">
                         <div className="post-meta text-left d-flex flex-row flex-wrap justify-content-left">
-                            <span className="mr-2">
-                                <CommunityLinkPopover boardId={data.boardId!}>
-                                    +{data.boardId}
-                                </CommunityLinkPopover>
-                            </span>
-                            <span className="mr-2">{moment.unix(data.createdAt).fromNow()} by </span>
-                            <CommunityUserInline user={data.user} />
+                            <CommunityLinkPopover boardId={data.boardId!}>
+                                <span className="mr-2">+{data.boardId}</span>
+                            </CommunityLinkPopover>
+                            <span className="mr-1">{moment.unix(data.createdAt).fromNow()} by </span>
+                            <CommunityUserInline className="mr-1" user={data.user} />
                             <a
+                                className="small"
                                 onClick={() => store.event("link/open")}
                                 target="_blank"
                                 href={data.link}>
-                                <small className="mr-1">{`${url.host}`}</small>
+                                {url.host}
                                 <FontAwesomeIcon size="xs" icon={faExternalLinkAlt} />
                             </a>
                         </div>
@@ -133,7 +133,7 @@ const ThreadCard: React.FC<{
                     thumb={data.thumb ?? undefined}
                     src={data.link ?? undefined} />
                 <div className="d-flex flex-row justify-content-left">
-                    <CardButtons buttonClass="d-block" />
+                    <CardButtons commentNum={data.numComments ?? 0} buttonClass="d-block" />
                 </div>
             </div>
         </div>
@@ -149,10 +149,41 @@ const ThreadCardWrapper: React.FC = ({ children }) => {
 }
 
 export const ThreadsView: React.FC<{
-    layout: string,
+    layout: number,
     data: Array<Thread>
 }> = observer(({ layout, data }) => {
     const store = useBoardStore();
+
+    const getCardClass = () => {
+        if (store.isConstrained()) {
+            return "col-12 col-md-6 col-lg-4";
+            //return "col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12";
+        }
+        return "col-xl-3 col-lg-6 col-md-6 col-sm-12 col-xs-12";
+    }
+
+    const getLayout = () => {
+        if (layout == 0) {
+            return (
+                <Masonry
+                    elementType="div"
+                    className={
+                        "_list-group _list-group-flush p-0 "
+                        //    + store.isConstrained() && "container"
+                    }
+                >
+                    {data.map((t) => t.uId &&
+                        <ThreadCard
+                            className={getCardClass()}
+                            showContext={false} key={t.uId} data={t} />)}
+                </Masonry>
+            )
+        }
+
+        return data.map((t) => t.uId && <ThreadCard showContext={false} key={t.uId} data={t} />)
+
+    }
+
     return (
         <ScrollEventProvider
             listener={document}
@@ -161,24 +192,11 @@ export const ThreadsView: React.FC<{
         >
             {store.error && <div className="d-flex flex-column justify-content-center p-4 rounded border m-5">
                 <h2>Uh Oh</h2>
-                <h5>Something went wrong while loading +{store.boardId}</h5>
+                <h5>Something went wrong while loading the board +{store.boardId}</h5>
                 <p>{store.error.message}" ({store.error.response.statusText})</p>
                 <Button onClick={() => store.request()} >Try again</Button>
             </div>}
-            {layout == "masonry" ?
-                <Masonry
-                    elementType="div"
-                    className="_list-group _list-group-flush p-0 container"
-                >
-                    {data.map((t) => t.uId &&
-                        <ThreadCard
-                            className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12"
-                            showContext={false} key={t.uId} data={t} />)}
-                </Masonry>
-                : data.map((t) => t.uId &&
-                    <ThreadCard
-                        showContext={false} key={t.uId} data={t} />)
-            }
+            {getLayout()}
         </ScrollEventProvider>
     )
 })
@@ -237,7 +255,7 @@ const BoardNavbar: React.FC = observer(() => {
                 top: 0,
             }}>
             <div className="d-flex flex-row align-items-center board-header mr-2">
-                <CircleAvatar className="d-none d-md-block" size={48} />
+                <CircleAvatar className="d-block d-md-block" src={store.info?.icon ?? undefined} size={48} />
                 <div className="d-flex flex-column p-2">
                     <span className="font-weight-bold">+{store.boardId}</span>
                     <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
@@ -246,15 +264,10 @@ const BoardNavbar: React.FC = observer(() => {
             <div className="d-none d-md-flex flex-row">
                 <DropdownEnum
                     title="Layout"
-                    labels={["Cards", "Compact", "Gallery"]}
-                    values={EnumToArray(ThreadSelectFilters.Method)}
-                    value={store.filters.sortDirection!}
-                    onSelect={(t: number) => {
-                        store.filters.sortDirection = t;
-                        history.push({
-                            search: store.getQueryParams(),
-                        });
-                    }} />
+                    labels={["Compact", "Cards", "Gallery"]}
+                    values={[0, 1, 2]}
+                    value={store.UIdatalayout}
+                    onSelect={(t: number) => store.UIdatalayout = t} />
                 <DropdownEnum
                     title="Ranking"
                     labels={["Hot", "Top", "Controversial"]}

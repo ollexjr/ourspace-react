@@ -1,11 +1,7 @@
 import React from 'react';
 import { observable } from 'mobx';
 import { useAppStore, AppStore } from './app';
-
-interface BoardSubscription {
-    boardId: string
-    createdAt: number
-}
+import { IBoardSubscription } from 'model/compiled';
 
 export interface UserRef {
     username: string
@@ -13,7 +9,7 @@ export interface UserRef {
 
 //subscriptions: Array<BoardSubscription>
 interface AcccountState {
-    subscriptions: Array<BoardSubscription>;
+    subscriptions: Array<IBoardSubscription>;
     karma: number
     authorityLevel: number
 }
@@ -27,19 +23,23 @@ export class AccountStore {
     @observable
     invalidToken: boolean = false;
 
-    @observable subscriptions: Array<BoardSubscription> = [];
+    @observable subscriptions: Array<IBoardSubscription> = [];
 
-    defaults: Array<BoardSubscription> = [{ boardId: "all", createdAt: 0 }];
+    defaults: Array<IBoardSubscription> = [
+        { boardId: "all", createdAt: 0 }];
 
     constructor(app: AppStore, username: string) {
         this.app = app;
         this.username = username;
-        this.subscriptions.concat(this.defaults);
+        //this.subscriptions.concat(this.defaults);
         this.sync();
     }
 
     sync(): Promise<void> {
         return this.app.api.endpointGet("me/state", null, 200).then((json: AcccountState) => {
+            if (!json.subscriptions) {
+                return;
+            }
             this.subscriptions = this.defaults.concat(json.subscriptions);
             return;
         })

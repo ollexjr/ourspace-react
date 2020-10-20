@@ -23,12 +23,12 @@ export const UserBadge: React.FC<{ variant?: string, icon: any, label?: string }
     )
 }
 
-export const CommunityUserInline: React.FC<{ user?: ICommunityUserRef }> = ({ user }) => {
+export const CommunityUserInline: React.FC<{ className?:string, user?: ICommunityUserRef }> = ({ className, user }) => {
     if (!user) {
         return <span>"user undefined"</span>;
     }
     return (
-        <span className="d-flex flex-row button-row">
+        <span className={`${className} d-flex flex-row button-row`}>
             <Link to={""}>
                 <span className="username font-weight-bold">
                     @{user.username}
@@ -36,7 +36,6 @@ export const CommunityUserInline: React.FC<{ user?: ICommunityUserRef }> = ({ us
             </Link>
             {user.isAdmin && <UserBadge label="Admin" variant="danger" icon={faHammer} />}
             {user.isMod && <UserBadge label="Moderator" icon={faUserShield} />}
-            {}
         </span>
     )
 }

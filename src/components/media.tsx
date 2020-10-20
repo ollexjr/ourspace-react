@@ -76,6 +76,39 @@ export const MediaSource: React.FC<{
         )
     }
 
+    
+    const u = src && new URL(src);
+    u && console.log(u.hostname, u);
+    if (u && u.hostname == "twitter.com") {}
+
+    if (u && u.hostname == "imgur.com") {
+        return loader(
+            <>
+                <blockquote
+                    className="imgur-embed-pub"
+                    lang="en"
+                    data-id="a/Ugbg1ZM">
+                    <a href={src}>No More Free Lunch</a>
+                </blockquote>
+                <script async src="//s.imgur.com/min/embed.js"></script>
+            </>
+        )
+    }
+
+    if (u && u.hostname == "giphy.com") {
+        return loader(
+            <div style={{ width: "100%", height: 0, paddingBottom: "178%", position: 'relative' }}>
+                <iframe src="https://giphy.com/embed/XbVE8H818ckOWuHTEU"
+                    width="100%"
+                    height="100%"
+                    style={{ position: "absolute" }}
+                    frameBorder="0"
+                    className="giphy-embed" allowFullScreen>
+                </iframe>
+            </div>
+        )
+    }
+
     return (
         loader(<img className="card-img rounded border" src={thumb} />)
     )

@@ -3,30 +3,32 @@ import { observable, computed, action, IObservableArray, autorun, IReactionDispo
 import { observer, useLocalStore, useAsObservableSource, Provider } from "mobx-react";
 import { AppStore, useAppStore } from "stores/app";
 import { ObservableRequestState, Response, APIError } from "service/api";
-import { 
-    IThread, 
-    IBoard, 
-    IThreadSelectFilters, 
+import {
+    IThread,
+    IBoard,
+    IThreadSelectFilters,
     ThreadSelectFilters,
-    IThreadCreateRequest, 
-    IThreadsSelectResponse, 
-    IThreadsSelectResponseWithBoardContext, 
-    IEntityVoteRequest, 
-    IVote } from 'model/compiled';
+    IThreadCreateRequest,
+    IThreadsSelectResponse,
+    IThreadsSelectResponseWithBoardContext,
+    IEntityVoteRequest,
+    IVote
+} from 'model/compiled';
 
 import { useHistory } from 'react-router';
-export type { 
-    IThread as Thread, 
-    IUser as User, 
-    IBoard as Board 
+export type {
+    IThread as Thread,
+    IUser as User,
+    IBoard as Board
 } from 'model/compiled';
+
 export class BoardStore extends ObservableRequestState {
     app: AppStore
     token?: string
     boardId: string
 
     //"_masonry" 
-    UIdatalayout: string = "masonry";
+    @observable UIdatalayout: number = 0;
     @observable UIcontainerFluid: boolean = true;
     @observable backgroundImage?: string;// = `url("https://dev.ourspace.dev/res/bg-2.png")`;
     headerImage?: string = `url(https://source.unsplash.com/pCcGpVsOHoo/1090x130)`;
@@ -51,7 +53,7 @@ export class BoardStore extends ObservableRequestState {
     }
 
     isConstrained() {
-        return this.app.UIconstrainContainer || !this.UIcontainerFluid;
+        return this.app.UIconstrainContainer;// || !this.UIcontainerFluid;
     }
 
     filtersPrev?: IThreadSelectFilters
@@ -127,7 +129,7 @@ export class BoardStore extends ObservableRequestState {
                 return "collections/all"
             default:
                 return "board/threads"
-        } 
+        }
     }
 
     @action
@@ -196,14 +198,23 @@ export class BoardStore extends ObservableRequestState {
     }
 
     createThread(s: IThreadCreateRequest): Promise<any> {
-        return this.app.api.endpointPost("board/newthread?boardId="+ s.boardId, s, 200);
+        return this.app.api.endpointPost("board/newthread?boardId=" + s.boardId, s, 200);
     }
 
-        
+
     getThreadLink(threadId: string) {
         return `/+${this.boardId}/${threadId}`;
     }
 
+    @action
+    uploadIcon(file: File): Promise<any> {
+        return this.app.api.endpointPostFile(`board/media?area=icon&boardId=${this.boardId}`, file, 200);
+    }
+
+    @action
+    uploadBanner(file: File): Promise<any> {
+        return this.app.api.endpointPostFile("board/media?item=icon", file, 200);
+    }
 }
 
 export const boardStoreContext = React.createContext<BoardStore | null>(null);

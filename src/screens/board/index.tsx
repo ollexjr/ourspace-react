@@ -10,7 +10,19 @@ import moment from 'moment';
 import _ from 'lodash';
 
 import { observer, useAsObservableSource } from "mobx-react";
-import { Button, Col, Row, Form, Container, Navbar, Jumbotron, Modal } from 'react-bootstrap';
+import {
+    Button,
+    Col,
+    Row,
+    Form,
+    Container,
+    Navbar,
+    Card,
+    Jumbotron,
+    ListGroup,
+    ListGroupItem,
+    Modal
+} from 'react-bootstrap';
 
 import { NetworkedButton } from 'components/button'
 import { BoardStoreProvider, useBoardStore } from "../../stores/board";
@@ -105,17 +117,17 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
             >
                 <ImageHeader src={store.headerImage ?? ""}>
                     <div className="d-flex flex-row align-items-center">
-                        <CircleAvatar src="" className="border" />
+                        <CircleAvatar src={store.info?.icon ?? undefined} className="border" />
                         <div className="ml-4">
-                            <h1>{store.info?.title ?? boardId}</h1>
-                            <h4>{store.info?.description ?? ""}</h4>
+                            <h1 className="display-5">{store.info?.title ?? boardId}</h1>
+                            <h4 className="lead">{store.info?.description ?? ""}</h4>
                             <h6>+/{boardId}</h6>
                         </div>
                     </div>
                 </ImageHeader>
                 <Switch>
                     <Route exact path={`/+${boardId}/create`} component={ScreenCreate} />
-                    <Route exact path={`/+${boardId}/edit`} component={ScreenEdit} />
+                    <Route exact path={`/+${boardId}/settings`} component={ScreenEdit} />
                     <Route path={`/+${boardId}/:threadId/(/@:commentId)`} component={RouterThread} />
                     <Route path={`/+${boardId}/:threadId/`} component={RouterThread} />
                     <Route exact path={`/+${boardId}`} component={BoardView} />
@@ -123,13 +135,26 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
             </Container>
             <BoardThreadOverlay />
             <Portal target="screen-right">
-                <h6>
-                    {store.boardId}
-                </h6>
-                <p>
-                    <small>Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</small>
-                </p>
-                <BoardModPreview users={store.info?.preview ?? []} />
+                <Card className="mb-3">
+                    <Card.Header>
+                        +{store.boardId}
+                    </Card.Header>
+                    <Card.Title>{store.info?.title}</Card.Title>
+                    <Card.Subtitle>{store.info?.description}</Card.Subtitle>
+                    <ListGroup className="list-group-flush mb-2">
+                        <ListGroupItem>Created - {moment.unix(store.info?.createdAt ?? 0).fromNow()}</ListGroupItem>
+                        <ListGroupItem>{store.info?.members} Members</ListGroupItem>
+                        <ListGroupItem>{store.info?.posts} Posts</ListGroupItem>
+                    </ListGroup>
+                </Card>
+                <Card>
+                    <Card.Header>
+                        Moderators ({store.info?.moderators})
+                    </Card.Header>
+                    <ListGroup className="list-group-flush mb-2">
+                        {store.info?.preview?.map((e) => <ListGroupItem>{e.username}</ListGroupItem>)}
+                    </ListGroup>
+                </Card>
             </Portal>
         </Container>
     )

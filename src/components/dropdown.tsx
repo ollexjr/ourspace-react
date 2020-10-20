@@ -35,7 +35,11 @@ export interface DropDownItem {
     key: string,
 }
 
-export const DropDown: React.FC<{ items: Array<DropDownItem>, onSelected: (key: number) => void, value: number }> = ({ items }) => {
+export const Dropdown2: React.FC<{
+    items: Array<DropDownItem>,
+    onSelected: (key: number) => void,
+    value: number
+}> = ({ items }) => {
     const set = (t: string | null, e: any): void => {
         //store.filters.sortTime = t!
     }

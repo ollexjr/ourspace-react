@@ -46,8 +46,18 @@ export const PromiseButton: React.FC<{ onClick: () => Promise<any> } & ButtonPro
     </Button>
 }
 
-export const TooltipButton: React.FC<{ 
-    onClick: () => Promise<any>, tooltip: string, text: string 
+export const IconButton: React.FC<{ 
+    onClick: () => Promise<any> } & ButtonProps> = ({ children, onClick }, props) => {
+    const [loading, setState] = React.useState<boolean>(false);
+    return (
+        <Button {...props}>
+            <FontAwesomeIcon icon={faTimes} />
+        </Button>
+    )
+}
+
+export const TooltipButton: React.FC<{
+    onClick: () => Promise<any>, tooltip: string, text: string
 } & ButtonProps> = ({ onClick, children, tooltip }, props) => {
     return (
         <OverlayTrigger
@@ -62,5 +72,20 @@ export const TooltipButton: React.FC<{
         >
             <PromiseButton {...props}>{children}{tooltip}</PromiseButton>
         </OverlayTrigger>
+    )
+}
+
+export const Fab = () => {
+
+}
+
+export const FabContainer: React.FC = ({ children }) => {
+    return (
+        <div style={{
+            position: 'fixed',
+            bottom: '1em',
+        }}>
+            {children}
+        </div>
     )
 }

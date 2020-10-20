@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 export const SidebarCard: React.FC = ({ children }) => {
     return (
-        <div className="border-bottom mb-2">
+        <div className="mb-2">
             {children}
         </div>
     )
