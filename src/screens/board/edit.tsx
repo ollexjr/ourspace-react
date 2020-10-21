@@ -60,6 +60,7 @@ const ScreenEdit: React.FC = () => {
         <ScreenScaffold title="Settings">
             <h3>Set community icon</h3>
             <FileInput onSubmit={(e) => store.uploadIcon(e)} />
+            <FileInput onSubmit={(e) => store.uploadBanner(e)} />
         </ScreenScaffold>
     )
 }

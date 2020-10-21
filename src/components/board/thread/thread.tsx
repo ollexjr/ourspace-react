@@ -49,7 +49,9 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
                 {edit ? <TextEditor
                     acceptText="Submit" cancelText="cancel"
                     source={data.content ?? "error, editing with no content"} onAccept={(t) => store.addComment(t, data?.uId ?? "")} /> :
-                    <ReactMarkdown source={data.content ?? "# no content, ask a developer"} />
+                    <ReactMarkdown
+                        className="wrap-all"
+                        source={data.content ?? "%undefined%"} />
                 }
                 <div className="d-flex justify-content-between align-items-center mb-2">
                     <InlineVoter
@@ -168,7 +170,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         src={store.thread?.link ?? ""} />
                 </Modal>
 
-                <div className="px-2 px-md-4 mb-4">
+                <div className="px-2 px-md-4 mb-2">
                     <div className="user-info mb-2 d-flex flex-row">
                         <span>Posted by</span>
                         <CommunityUserInline user={store.thread?.user ?? undefined} />
@@ -184,12 +186,14 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                             </a>
                         }
                     </div>
-                    <div className="d-flex justify-content-center"></div>
+                </div>
+
+                <div className="container px-0 px-sm-2">
                     <MediaSource
-                            onOpen={() => setModal(true)}
-                            preview
-                            network="save"
-                            src={store.thread?.link ?? ""} />
+                        //onOpen={() => setModal(true)}
+                        preview
+                        network="save"
+                        src={store.thread?.link ?? ""} />
                 </div>
 
                 <div className="px-2 px-md-4 mb-4 _border-bottom mb-1">
@@ -212,7 +216,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         value={store.thread?.me?.vote ?? "unset"} />
                 </div>
 
-                <div className="px-2 px-md-4 pb-4 border-bottom">
+                <div id="reply" className="px-2 px-md-4 pb-4 border-bottom">
                     <small>Comment as @system</small>
                     <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />
                 </div>

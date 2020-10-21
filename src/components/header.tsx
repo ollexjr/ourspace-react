@@ -3,9 +3,10 @@ import { Jumbotron } from 'react-bootstrap';
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 export const ImageHeader: React.FC<{ animated?: boolean, src: string }> = ({ animated, src, children }) => {
-    if (!animated)
+    if (animated)
+        // "https://source.unsplash.com/pCcGpVsOHoo/1090x400"
         return (
-            <ImageHeaderParallax src={"https://source.unsplash.com/pCcGpVsOHoo/1090x400"}>
+            <ImageHeaderParallax src={src} >
                 {children}
             </ImageHeaderParallax>
         )
@@ -39,7 +40,7 @@ export const ImageHeaderParallax: React.FC<{ src: string }> = ({ src, children }
                     }
                 }]}
         >
-            {/* fix child being hidden by parallax layers*/ }
+            {/* fix child being hidden by parallax layers*/}
             <div style={{ position: 'relative' }}>
                 {children}
             </div>

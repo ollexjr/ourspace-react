@@ -213,7 +213,7 @@ export class BoardStore extends ObservableRequestState {
 
     @action
     uploadBanner(file: File): Promise<any> {
-        return this.app.api.endpointPostFile("board/media?item=icon", file, 200);
+        return this.app.api.endpointPostFile(`board/media?area=banner&boardId=${this.boardId}`, file, 200);
     }
 }
 
