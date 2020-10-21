@@ -46,12 +46,13 @@ export const PromiseButton: React.FC<{ onClick: () => Promise<any> } & ButtonPro
     </Button>
 }
 
-export const IconButton: React.FC<{ 
-    onClick: () => Promise<any> } & ButtonProps> = ({ children, onClick }, props) => {
-    const [loading, setState] = React.useState<boolean>(false);
+export const IconButton: React.FC<{
+    icon?:any,
+    //onClick: () => Promise<any>
+} & ButtonProps> = ({ icon, children, onClick }, props) => {
     return (
         <Button {...props}>
-            <FontAwesomeIcon icon={faTimes} />
+            <FontAwesomeIcon icon={icon} />
         </Button>
     )
 }

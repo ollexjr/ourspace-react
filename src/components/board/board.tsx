@@ -86,7 +86,7 @@ const ThreadCard: React.FC<{
             <div
                 onClick={onClick}
                 id="thread-card"
-                className="card border-none d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
+                className="card border-none border-md-x border-md-y d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
                 <div className="d-flex mb-1">
                     <div className="mr-1 mr-md-2">
                         <InlineVoter

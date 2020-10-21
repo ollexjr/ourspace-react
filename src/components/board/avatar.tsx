@@ -37,15 +37,16 @@ export const CommunityAvatar: React.FC<{
     )
 }
 
-export const CommunityLinkPopover: React.FC<{ boardId: string }> = ({ boardId, children }) => {
+export const CommunityLinkPopover: React.FC<{ icon?: string, boardId: string }> = ({ icon, boardId, children }) => {
     const debug = false;
     return (
         <OverlayTrigger
             trigger={["hover", "focus"]}
             overlay={
                 <Popover id={`popopover-${boardId}`}>
-                    <Popover.Content>
-                        <h6>
+                    <Popover.Content className="d-flex flex-row align-items-center">
+                        <CommunityAvatar size={48} src={`https://www.ourspace.dev/img/communityicon/${boardId}.apng`} />
+                        <h6 className="ml-2">
                             +{boardId}
                         </h6>
                     </Popover.Content>

@@ -53,7 +53,7 @@ export const MediaSource: React.FC<{
                 debounce
                 once
                 height={height}
-                offset={window.innerHeight}>
+                offset={window.innerHeight*2}>
                 {overflowWrapper(child)}
             </LazyLoad>
         )
@@ -78,7 +78,7 @@ export const MediaSource: React.FC<{
 
     
     const u = src && new URL(src);
-    u && console.log(u.hostname, u);
+    //u && console.log(u.hostname, u);
     if (u && u.hostname == "twitter.com") {}
 
     if (u && u.hostname == "imgur.com") {
