@@ -32,7 +32,7 @@ export const ImageHeaderParallax: React.FC<{ src: string }> = ({ src, children }
                 {
                     //image: "https://source.unsplash.com/random",
                     image: src,
-                    amount: 0.8,
+                    amount: .8,
                     props: {
                         style: {
                             zIndex: 0,

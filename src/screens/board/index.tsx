@@ -115,7 +115,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     minHeight: 'calc(100vh - 20px);'
                 }}
             >
-                <ImageHeader src={store.info?.banner ?? ""}>
+                <ImageHeader animated src={store.info?.banner ?? ""}>
                     <div className="d-flex flex-row align-items-center">
                         <CircleAvatar size={84} src={store.info?.icon ?? undefined} className="border" />
                         <div className="ml-4">

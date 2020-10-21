@@ -11,7 +11,7 @@ export const CircleAvatar: React.FC<{
     label?: string
 }> = ({ className, onClick, src, size, label }) => {
     if (!src) {
-        src = "https://dev.ourspace.dev/img/static/bg-128.png"; 
+        src = "https://www.ourspace.dev/img/static/bg-128.png"; 
         //src = "https://source.unsplash.com/pCcGpVsOHoo/64x64"
         //src = "https://source.unsplash.com/random"
     }
