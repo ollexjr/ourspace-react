@@ -61,19 +61,28 @@ export class AppStore {
                 let commentReply: ICommentReplyEvent = data.data;
                 this.commentReplyEvent.push();
                 this.displayableEvent.push(data);
+                if (this.loggedIn && this.active?.username == commentReply.comment?.user?.username)
+                    break;
                 new Notification(
-                    `@${commentReply.comment?.user?.username ?? "%unknown%"} replied to your comment\n"${commentReply.comment?.content ?? ""}"\n`, {});
+                    `@${commentReply.comment?.user?.username ?? "unknown"} replied to your comment with: "${commentReply.comment?.content ?? ""}"\n`, {});
                 break;
             case "comment.moderate":
                 break
+            case "comment.user.mention":
+                new Notification(
+                    `@someone mentioned you in a thread`); 
+                break
             case "board.subscribe":
+                new Notification(
+                    `You subscribed to a community`, {});
+                break
             case "board.unsubscribe":
                 new Notification(
-                    `Something happened`, {});
+                    `You unsubscribed to a community`, {});
                 break
             case "comment.vote":
                 new Notification(
-                    `Comment vote`, {});
+                    `You voted on a comment`, {});
                 this.displayableEvent.push(data);
             case "thread.vote":
                 new Notification(
@@ -81,6 +90,10 @@ export class AppStore {
                 this.displayableEvent.push(data);
             case "thread.crosspost":
                 this.displayableEvent.push(data);
+                break;
+            case "thread.reply.crosspost":
+                new Notification(
+                    `Your thread was crossposted`, {});
                 break;
         }
     }

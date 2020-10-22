@@ -26,7 +26,10 @@ export class AccountStore {
     @observable subscriptions: Array<IBoardSubscription> = [];
 
     defaults: Array<IBoardSubscription> = [
-        { boardId: "all", createdAt: 0 }];
+        { boardId: "all", createdAt: 0 },
+        //{ boardId: "listentothis", createdAt: 0 },
+        //{ boardId: "news", createdAt: 0 }
+    ];
 
     constructor(app: AppStore, username: string) {
         this.app = app;

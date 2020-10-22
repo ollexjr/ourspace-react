@@ -60,9 +60,9 @@ export const TextEditor: React.FC<{
                 />
             </div>
             <div className="d-flex flex-column justify-content-end button-column">
-                <Button variant="outline-dark" onClick={() => onCancel && onCancel()} >
+                {onCancel && <Button variant="outline-dark" onClick={() => onCancel()} >
                     <FontAwesomeIcon icon={faTimes} />
-                </Button>
+                </Button>}
                 <Button className="" variant="primary" onClick={() => {
                     setWaiting(true);
                     onAccept(state.value).finally(() => setWaiting(false))

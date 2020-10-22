@@ -59,7 +59,7 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
                         votes={data?.votes ?? undefined}
                         onClick={(v) => store.voteComment(data?.uId ?? "undefined", v)} value={data?.me?.vote ?? ""} />
                     <div className="rounded button-row">
-                        {canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>
+                        {false || canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>
                             {!edit ? <FontAwesomeIcon icon={faEdit} /> : "Cancel Edit"}
                         </Button>}
                         {canReply && !edit && <Button size="sm" variant="outline-dark" onClick={() => setReply(!reply)}>
@@ -71,6 +71,7 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
                     <small>Replying... </small>
                     <TextEditor
                         acceptText="Submit" cancelText="cancel"
+                        onCancel={() => setReply(false)}
                         onAccept={(t) => edit ?
                             store.editComment(t, data?.uId ?? "").then(t => setEditing(false)) :
                             store.addComment(t, data?.uId ?? "").then(t => setReply(false))} /></div>}

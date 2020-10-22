@@ -56,20 +56,21 @@ const ThreadCard: React.FC<{
     const history = useHistory();
     const cls = "_list-group-item _border-none p-0 p-sm-1 p-md-2 post-container " + className ?? className;
 
-    if (!data || !data.link || !data.title || !data.createdAt || !data.user) {
+    if (!data || !data.title || !data.createdAt || !data.user) {
         return null;
     }
 
     const src = data.thumb;
 
     const canShowImage = isImage.test(src ?? "");
-    const canShowMedia = ReactPlayer.canPlay(data.link);
+    const canShowMedia = data.link && ReactPlayer.canPlay(data.link);
 
     let url: URL
     try {
-        // TODO: handle weird urls on the server
-        // amend self urls to point to the hostname
-        url = new URL(data.link)
+        if (data.link)
+            // TODO: handle weird urls on the server
+            // amend self urls to point to the hostname
+            url = new URL(data.link)
     } catch {
         return null;
     }
@@ -110,14 +111,14 @@ const ThreadCard: React.FC<{
                             </CommunityLinkPopover>
                             <span className="mr-1">{moment.unix(data.createdAt).fromNow()} by </span>
                             <CommunityUserInline className="mr-1" user={data.user} />
-                            <a
+                            {data.link && <a
                                 className="small"
                                 onClick={() => store.event("link/open")}
                                 target="_blank"
                                 href={data.link}>
-                                {url.host}
+                                {url!.host}
                                 <FontAwesomeIcon size="xs" icon={faExternalLinkAlt} />
-                            </a>
+                            </a>}
                         </div>
                         <Card.Title
                             id="thread-card-title"
