@@ -100,7 +100,7 @@ body {
   font-weight: 900;
 }
 
-.navbar-brand span {
+.navbar-brand .sub {
   font-weight: 200;
 }
 

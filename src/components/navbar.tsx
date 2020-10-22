@@ -28,9 +28,12 @@ const Brand: React.FC<{ className: string }> = ({ className }) => {
             <Navbar.Brand href="/" className={className} style={{
                 fontWeight: 900,
             }}>
-                <CommunityAvatar className="d-inline mr-1" size={36} />
-                <FontAwesomeIcon className="d-none rounded mr-1" icon={faPlus} />
-            our+space<span></span></Navbar.Brand>
+                <CommunityAvatar className="d-inline" size={36} />
+                <FontAwesomeIcon className="d-none rounded ml-1 mr-1" icon={faPlus} />
+                <span className="ml-2">
+                    our+space
+                </span>
+            </Navbar.Brand>
         </Link>
     )
 }
