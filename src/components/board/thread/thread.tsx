@@ -67,7 +67,7 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
                         </Button>}
                     </div>
                 </div>
-                {reply && <div className="mb-2">
+                {reply && <div className="comment-reply mb-2">
                     <small>Replying... </small>
                     <TextEditor
                         acceptText="Submit" cancelText="cancel"

@@ -309,3 +309,8 @@ div.post-title {
   word-wrap: break-word; /* Internet Explorer 5.5+ */
   word-break: break-all;
 }
+
+/* override react-markdown and force transparent editor */
+.bMqhgn {
+  background: none !important;
+}
