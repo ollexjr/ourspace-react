@@ -5,6 +5,9 @@ import { CircleAvatar } from './avatar';
 import { Dropdown } from "react-bootstrap";
 import { ModalSheetWrapper } from "components/modal";
 import { Link, useHistory } from 'react-router-dom';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { IconBadge } from 'components/badge';
+import { IconButton } from 'components/button';
 
 export const NavUserCard: React.FC = () => {
     const app = useAppStore();
@@ -43,5 +46,22 @@ export const InlineNavCard: React.FC = ({ }) => {
                 )]}
             </ModalSheetWrapper>}
         </>
+    )
+}
+
+export const UserNotifications = () => {
+    const store = useAppStore();
+    if (!store.loggedIn) {
+        return null;
+    }
+
+    return (
+        <div className="card">
+            <div className="card-body">
+                <IconButton icon={faEnvelope}>
+                    Messages
+                </IconButton>
+            </div>
+        </div>
     )
 }

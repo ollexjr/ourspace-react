@@ -31,9 +31,9 @@ import { NotificationListObserver } from 'components/user/notification';
 import { ScreenExploreGraph } from 'screens/home/explore';
 import { SpotlightModal } from 'components/spotlight';
 import classNames from 'classnames';
-import { SidebarSettings } from 'components/uisettings';
-import { SystemMessages } from 'components/app/messages';
 import { ParallaxProvider } from 'react-scroll-parallax';
+import Sticky from 'react-stickynode';
+import { SidebarDefault } from 'components/app/sidebar';
 
 //import info from './gitinfo.js';
 
@@ -72,16 +72,11 @@ const Scaffold: React.FC = observer(({ children }) => {
           <Col id="wrapper-screen-right"
             className={classNames("d-none d-lg-block border-left _p-0 bg-white",
               app.UIconstrainContainer ? "col-md-3" : "col-12 col-md-2 col-xl-2")}>
-            <div className="sticky">
-              <div id="screen-right" className="mt-1">
-                <SystemMessages />
-              </div>
-              <NotificationListObserver />
-              <SidebarSettings />
-              <div className="footer">
-                <p>Copyright <strong>our</strong>space {new Date().getFullYear()}</p>
-                <p>Version: {info ?? "not defined"}</p>
-              </div>
+            <div className="_sticky mt-2">
+              <Sticky>
+                <SidebarDefault />
+                <NotificationListObserver />
+              </Sticky>
             </div>
           </Col>
         </Row>

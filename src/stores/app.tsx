@@ -10,6 +10,7 @@ import {
     ILoginRequest,
     IBoardCreate,
     IComment,
+    IBoard,
     IBoardSubscription,
     ICommunitySelectRequest,
     ICommunitySelectResponse,
@@ -32,11 +33,21 @@ export class AppStore {
 
     @observable UIanimatedHeader: boolean = false;
     @observable UIconstrainContainer: boolean = true;
+    @observable UIshowEventDebug: boolean = false;
+
+
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;
     @observable isBottomOfPage: boolean = false;
     @observable displayableEvent: IObservableArray<IEvent> = observable.array([]);
     @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([]);
+    @observable trending: IObservableArray<IBoard> = observable.array([
+        { uId: 'news' },
+        { uId: 'pics' },
+        { uId: 'development' },
+        { uId: 'wiki' },
+    ]);
+
     @observable defaults: IObservableArray<IBoardSubscription> = observable.array([
         { boardId: 'news' },
         { boardId: 'pics' },
@@ -129,6 +140,11 @@ export class AppStore {
                         return o;
                     }));
             })
+        this.api.endpointGet("communities/trending", {}, 200)
+            .then((t: ICommunitySelectResponse) => {
+                if (t.data)
+                    this.trending = observable.array(t.data);
+            }).catch(e => { });
     }
 
     accounts: Array<UserRef> = []

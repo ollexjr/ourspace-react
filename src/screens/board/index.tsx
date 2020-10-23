@@ -109,7 +109,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
             }}
         >
             <Container
-                className="border-none border-y p-0 rounded"
+                className="border-none _border-y p-0 rounded"
                 fluid={store.UIcontainerFluid}
                 style={{
                     minHeight: 'calc(100vh - 20px);'
@@ -135,25 +135,34 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
             </Container>
             <BoardThreadOverlay />
             <Portal target="screen-right">
-                <Card className="mb-3">
+                <Card className="mb-2">
                     <Card.Header>
-                        +{store.boardId}
+                        About this Space
                     </Card.Header>
-                    <Card.Title>{store.info?.title}</Card.Title>
-                    <Card.Subtitle>{store.info?.description}</Card.Subtitle>
-                    <ListGroup className="list-group-flush mb-2">
-                        <ListGroupItem>Created - {moment.unix(store.info?.createdAt ?? 0).fromNow()}</ListGroupItem>
-                        <ListGroupItem>{store.info?.members} Members</ListGroupItem>
-                        <ListGroupItem>{store.info?.posts} Posts</ListGroupItem>
+
+                    <Card.Body>
+                        <Card.Title>{store.info?.title}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">{store.info?.description}</Card.Subtitle>
+                    </Card.Body>
+                    <ListGroup className="list-group-flush">
+                        <ListGroupItem>Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</ListGroupItem>
+                        <ListGroupItem>{store.info?.members} </ListGroupItem>
+                        <ListGroupItem>{store.info?.posts ?? 0} Posts</ListGroupItem>
                     </ListGroup>
                 </Card>
-                <Card>
+                <Card className="mb-2">
                     <Card.Header>
-                        Moderators ({store.info?.moderators})
+                        Moderators
                     </Card.Header>
-                    <ListGroup className="list-group-flush mb-2">
-                        {store.info?.preview?.map((e) => <ListGroupItem>{e.username}</ListGroupItem>)}
+                    <ListGroup className="list-group-flush">
+                        {store.info?.preview?.map((e) => <ListGroupItem>@{e.username}</ListGroupItem>)}
                     </ListGroup>
+                </Card>
+
+                <Card className="mb-2">
+                    <Card.Header>
+                        Community Rules
+                    </Card.Header>
                 </Card>
             </Portal>
         </Container>

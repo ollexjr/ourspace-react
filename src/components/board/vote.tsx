@@ -27,6 +27,7 @@ export const InlineVoter: React.FC<{
     votes?: { [k: string]: number },
     value: string
 }> = ({ onClick, value, votes, table, className, size }) => {
+
     const [state, setLoading] = React.useState(false);
     const [valueState, setValue] = React.useState<string>(value);
     const [pop, setPop] = React.useState<boolean>(false);
@@ -39,6 +40,7 @@ export const InlineVoter: React.FC<{
             .catch(t => setLoading(false))
             .finally(() => setLoading(false));
     }
+
     const def = " rounded border";
     const cls = className ? className + def : def;
     return (
@@ -54,15 +56,12 @@ export const InlineVoter: React.FC<{
             }
         >
             <div className={cls}
-                onMouseLeave={(e) => {
-
-                }}
-                onMouseEnter={(e) => {
-
-                }} >
+                onMouseLeave={(e) => {}}
+                onMouseEnter={(e) => {}} >
                 {table.map((v, i) => {
                     const isThis = (v == valueState);
                     let count = (votes && votes[v]) ?? 0;
+
                     //if (!isThis && count > 0) {
                     //    count--;
                     //}
@@ -71,8 +70,7 @@ export const InlineVoter: React.FC<{
                             key={v}
                             style={{ padding: size }}
                             type="button" className={
-                                classNames("btn",
-                                    "btn-sm",
+                                classNames("btn btn-sm",
                                     { "btn-outline": !isThis },
                                     { "btn-outline-primary": isThis },
                                     { "selected": isThis })}

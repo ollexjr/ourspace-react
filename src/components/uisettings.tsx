@@ -17,8 +17,8 @@ export const AppSettingsForm: React.FC = observer(() => {
             />
 
             <Form.Check
-                onChange={(v: any) => app.UIconstrainContainer = !app.UIconstrainContainer} // v.currentTarget.value}
-                checked={!app.UIconstrainContainer}
+                onChange={(v: any) => app.UIshowEventDebug = !app.UIshowEventDebug} // v.currentTarget.value}
+                checked={!app.UIshowEventDebug}
                 type="switch"
                 id="app-fullwidth"
                 label="Show event debug"
@@ -37,6 +37,10 @@ export const ThreadSettingsForm = () => {
 
 export const SidebarSettings: React.FC = () => {
     return (
-        <AppSettingsForm />
+        <div className="card mb-2">
+            <div className="card-body">
+                <AppSettingsForm />
+            </div>
+        </div>
     )
 }
