@@ -118,7 +118,7 @@ export class AppStore {
         accessToken: string | undefined,
         refreshToken: string | undefined) {
         console.log("[app store] constructed with tokens =>", accessToken, refreshToken)
-        document.title = "ourspace";
+        //document.title = "ourspace";
 
         this.loadOther();
         this.openSocket();
@@ -142,8 +142,9 @@ export class AppStore {
             })
         this.api.endpointGet("communities/trending", {}, 200)
             .then((t: ICommunitySelectResponse) => {
-                if (t.data)
-                    this.trending = observable.array(t.data);
+                if (!t.data)
+                    return;
+                this.trending = observable.array(t.data);
             }).catch(e => { });
     }
 

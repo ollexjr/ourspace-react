@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useParams } from 'react-router-dom';
-
+import { observer } from 'mobx-react';
 import { useAppStore } from 'stores/app';
 import { RequireSignInGateway } from 'components/user/gateway'
 import { Figure, Container, Row, Col, Image, Card, Navbar, Nav, Button, Jumbotron } from 'react-bootstrap';
@@ -19,7 +19,7 @@ const ProvideUserScaffold: React.FC = () => {
     )
 }
 
-const UserScaffold: React.FC = () => {
+const UserScaffold: React.FC = observer(() => {
     const store = useUserStore();
     const isSelf = store.isSelf();
     return (
@@ -46,7 +46,7 @@ const UserScaffold: React.FC = () => {
             </Container>
         </div>
     )
-}
+})
 
 const ScreenAccount: React.FC = ({ }) => {
     const appstore = useAppStore();

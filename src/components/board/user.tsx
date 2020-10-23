@@ -29,7 +29,7 @@ export const CommunityUserInline: React.FC<{ className?:string, user?: ICommunit
     }
     return (
         <span className={`${className} d-flex flex-row button-row`}>
-            <Link to={""}>
+            <Link to={"/@"+ user.username}>
                 <span className="username font-weight-bold">
                     @{user.username}
                 </span>

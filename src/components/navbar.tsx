@@ -88,8 +88,9 @@ export const SiteNavbar: React.FC = observer(() => {
                     </Form>}
                     <Brand className="d-block d-sm-none" />
                     <Nav.Link href="/+all">Big Spaces</Nav.Link>
+                    <Nav.Link href="/+all">Little Spaces</Nav.Link>
                     <Nav.Link href="/about-and-faq">Help</Nav.Link>
-                    <Nav.Link href="/blog">Blogs</Nav.Link>
+                    <Nav.Link href="/+all">Support Us</Nav.Link>
                     <Nav.Item className="flex-grow-1 flex-row text-right py-2 p-md-0 d-flex d-md-flex _d-md-block justify-content-end">
                         {store.loggedIn && <InlineNavCard />}
                         {!store.loggedIn ?

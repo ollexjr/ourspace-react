@@ -1,0 +1,5 @@
+/*!store.info?.isMember && <NetworkedButton
+                    message="Join"
+                    successMessage="Unsubscribe"
+                    onClick={() => store.subscribe()} />
+                    */

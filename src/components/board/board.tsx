@@ -101,9 +101,9 @@ const ThreadCard: React.FC<{
                                 //    .then(
                                 //        t => data!.me!.vote = t.typeCode)} 
                                 //value={data?.me?.vote ?? "unset"} 
-                                store.voteThread(data?.uId ?? "undefined", v)} 
-                                value={data?.me?.vote ?? "unset"} 
-                            />
+                                store.voteThread(data?.uId ?? "undefined", v)}
+                            value={data?.me?.vote ?? "unset"}
+                        />
                         {false && <div className="_d-flex flex-row flex-md-column justify-content-center align-items-center d-none">
                             <CardButtons commentNum={data.numComments ?? 0} buttonClass="d-none d-md-none" />
                         </div>}

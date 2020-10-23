@@ -21,7 +21,11 @@ export const SidebarCard: React.FC = ({ children }) => {
     )
 }
 
-export const TrendingCommunitiesList: React.FC<{ data: Array<IBoard> }> = ({ data }) => {
+export const TrendingCommunitiesList: React.FC<{}> = observer(({ }) => {
+    //data: Array<IBoard>
+
+    const app = useAppStore();
+
     return (
         <div className="card mb-2">
             <div className="card-body">
@@ -32,14 +36,14 @@ export const TrendingCommunitiesList: React.FC<{ data: Array<IBoard> }> = ({ dat
                 <p className="mb-0">Popular communities</p>
             </div>
             <ul className="list-group list-group-flush">
-                {data.map(e => <li className="list-group-item">
-                    <CommunityAvatar size={32} className="mr-2" />
+                {app.trending.map(e => <li className="list-group-item">
+                    <CommunityAvatar size={32} src={e.icon!} className="mr-2" />
                     <span>+{e.uId}</span>
                 </li>)}
             </ul>
         </div>
     )
-}
+})
 
 const SiteCard: React.FC<{}> =
     observer(() => {
@@ -78,7 +82,7 @@ export const SidebarDefault: React.FC = () => {
             <SystemMessages />
             <SiteCard />
             <SidebarSettings />
-            <TrendingCommunitiesList data={app.trending} />
+            <TrendingCommunitiesList />
             <UserNotifications />
             <div>
                 <small className="p-2">Copyright ourspace {new Date().getFullYear()}</small>
