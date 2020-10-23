@@ -107,7 +107,6 @@ export class AppStore {
         accessToken: string | undefined,
         refreshToken: string | undefined) {
         console.log("[app store] constructed with tokens =>", accessToken, refreshToken)
-
         document.title = "ourspace";
 
         this.loadOther();
