@@ -3,7 +3,12 @@ import { useLocalStore } from 'mobx-react';
 import { AppStore, useAppStore } from "./app";
 import { ObservableRequestState, APIError, Response } from "service/api"
 import { useBoardStore, useBoardStoreUnsafe, BoardStore, Board, Thread } from "./board";
-import { IThread, IThreadWithBoardContext, ICommentSelectGraphResponse, IComment, IVote, ICommentCreateRequest, IEntityVoteRequest, ICommentSelectResponse, IThreadsSelectResponse } from 'model/compiled'
+import {
+    IThread, IThreadWithBoardContext,
+    ICommentSelectGraphResponse, IComment, ICommentNode,
+    ICommentCreateRequest, ICommentSelectResponse,
+    IEntityVoteRequest, IVote, IThreadsSelectResponse
+} from 'model/compiled'
 import { observable } from 'mobx';
 
 interface ThreadResponse {
@@ -16,20 +21,16 @@ export class ThreadStore extends ObservableRequestState {
     app: AppStore
     board?: BoardStore
     threadId: string
-
     @observable
     requests: number = 0
     threadctx?: IThreadWithBoardContext
-
     @observable
     thread?: IThread
-
-    @observable
-    comments?: ICommentSelectResponse
-
+    //@observable
+    //comments?: ICommentSelectResponse
     @observable
     commentsGraph?: ICommentSelectGraphResponse
-
+    flatComments: Array<IComment> = [];
 
     constructor(app: AppStore, threadId: string, board?: BoardStore, init?: IThreadWithBoardContext) {
         super();
@@ -38,6 +39,10 @@ export class ThreadStore extends ObservableRequestState {
         this.threadId = threadId;
         console.log("[thread-store] => construct");
         this.load();
+    }
+
+    event(event: string) {
+        this.app.api.endpointPost(`board/event/thread`, { threadId: this.threadId, action: event }, 200);
     }
 
     addComment(content: string, parentId?: string): Promise<void> {
@@ -49,16 +54,19 @@ export class ThreadStore extends ObservableRequestState {
             threadId: this.threadId,
             comment: comment,
         }
-
         // this is a bit silly
-        this.ignore = true;
-        return this.wrap(() => this.app.api.endpointPost("board/thread/comment", wrapper, 200)
+        //this.ignore = true;
+        //return this.wrap(() => this.app.api.endpointPost("board/thread/comment", wrapper, 200)
+        //    .then(t => this.insertComment(comment))
+        //    .finally(() => this.ignore = false));
+        return this.app.api.endpointPost("board/thread/comment", wrapper, 200)
             .then(t => this.insertComment(comment))
-            .finally(() => this.ignore = false));
     }
-    
-    insertComment(s: IComment) {
 
+    insertComment(comment: IComment) {
+        if (!comment.parentId) {
+            this.flatComments.push(comment);
+        }
     }
 
     editComment(content: string, commentId: string): Promise<void> {
@@ -67,21 +75,16 @@ export class ThreadStore extends ObservableRequestState {
         }
         this.isFetching = true;
         return this.app.api.endpointPost("board/thread/comment", {}, 200).
-            then((t: IComment) => { }).
-            finally(() => this.isFetching = false);
+            then((t: IComment) => {
+                //inject into data
+            }).finally(() => this.isFetching = false);
     }
 
     voteThread(action: string): Promise<any> {
         return this.board?.voteThread(this.threadId, action) ?? Promise.reject();
     }
 
-    event(event: string) {
-        this.app.api.endpointPost(`board/event/thread`, { threadId: this.threadId, action: event }, 200);
-    }
-
-    loadComments(more: boolean = false) {
-
-    }
+    loadComments(more: boolean = false) { }
 
     voteComment(commentId: string, action: string): Promise<void> {
         let v: IVote = {
@@ -96,6 +99,23 @@ export class ThreadStore extends ObservableRequestState {
         return this.app.api.endpointPost("board/thread/comment/vote", vote, 200).finally(() => this.isFetching = false);
     }
 
+    _flattenComments = (
+        map: Array<IComment>,
+        v: {
+            [k: string]: ICommentNode
+        }) => {
+        for (let i in v) {
+            let n = v[i]
+            if (!n.comment) {
+                continue
+            }
+            map.push(n.comment)
+            if (n.children) {
+                this._flattenComments(map, n.children)
+            }
+        }
+    }
+
     load(): Promise<void> {
         const withContext: boolean = (this.thread == undefined);
         this.event("open");
@@ -104,9 +124,11 @@ export class ThreadStore extends ObservableRequestState {
             'withContext': withContext,
         }, 200).then((t: IThreadWithBoardContext) => {
             this.thread = t.thread ?? undefined;
-            this.comments = t.comments ?? undefined;
+            //this.comments = t.comments ?? undefined;
             this.commentsGraph = t.commentsGraph ?? undefined;
-            return
+            if (this.commentsGraph) {
+                this._flattenComments(this.flatComments, this.commentsGraph!.data!)
+            }
         }))
     }
 

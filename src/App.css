@@ -314,3 +314,7 @@ div.post-title {
 .bMqhgn {
   background: none !important;
 }
+
+div.list-group-item {
+  padding: .5em;
+}

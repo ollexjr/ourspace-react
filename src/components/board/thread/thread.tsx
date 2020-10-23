@@ -17,6 +17,7 @@ import { NetworkGateway } from 'components/network/gateway';
 import { CircleAvatar } from 'components/user/avatar';
 import { MediaSource } from 'components/media';
 import { CommunityUserInline } from 'components/board/user';
+import { IconButton } from 'components/button';
 
 const CommentPadding: React.FC<{ depth: number }> = ({ depth }) => {
     let e = [];
@@ -36,7 +37,7 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
     const canEdit = canReply && (data.user!.username == store.app.active?.username);
     let depth = (data?.depth ?? 0);
     return (
-        <li className="thread-link-card list-group-item comment-container p-0 px-2 d-flex flex-row">
+        <li id={data.uId!} className="thread-link-card list-group-item comment-container p-0 px-2 d-flex flex-row">
             <CommentPadding depth={depth} />
             <div className="flex-grow-1">
                 <div className="poster-info d-flex justify-content-between">
@@ -89,28 +90,9 @@ export const ThreadCommentView: React.FC = observer(() => {
             </div>
         )
     }
-
-    const map: Array<IComment> = [];
-    let recurse = (v: {
-        [k: string]: ICommentNode
-    }) => {
-        for (let i in v) {
-            let n = v[i]
-            if (!n.comment) {
-                continue
-            }
-            map.push(n.comment)
-            if (n.children) {
-                recurse(n.children)
-            }
-        }
-    }
-    if (store.commentsGraph?.data) {
-        recurse(store.commentsGraph?.data)
-    }
     return (
         <ul className="list-group list-group-flush">
-            {map.map(comment => <ThreadCommentCard key={comment.uId ?? ""} data={comment} />)}
+            {store.flatComments.map(comment => <ThreadCommentCard key={comment.uId ?? ""} data={comment} />)}
         </ul>
     )
 })
@@ -172,13 +154,13 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                 </Modal>
 
                 <div className="px-2 px-md-4 mb-2">
-                    <div className="user-info mb-2 d-flex flex-row">
-                        <span>Posted by</span>
+                    <div className="user-info mb-2 d-flex flex-row text-muted">
+                        <span className="mr-1">
+                            +{store.thread?.boardId}
+                        </span>
+                        <span className="mr-1">{moment.unix(store.thread?.createdAt ?? 0).fromNow()}</span>
+                        <span>by</span>
                         <CommunityUserInline user={store.thread?.user ?? undefined} />
-                        <span>{moment.unix(store.thread?.createdAt ?? 0).fromNow()}</span>
-                    </div>
-                    <div className="mb-2">
-                        <h4>{store.thread?.title ?? "%notset%"}</h4>
                         {store.thread?.link &&
                             <a
                                 target="_blank"
@@ -187,26 +169,26 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                             </a>
                         }
                     </div>
+                    <br></br>
+                    <div className="mb-2" style={{ minHeight: '300px' }}>
+                        <h4>{store.thread?.title ?? "%notset%"}</h4>
+                        {store.thread?.content && <ReactMarkdown source={store.thread!.content!} />}
+                    </div>
                 </div>
 
-                <div className="container px-0 px-sm-2">
+                {store.thread?.link && <div className="container mb-2 px-0 px-sm-2">
                     <MediaSource
                         //onOpen={() => setModal(true)}
                         preview
                         network="save"
-                        src={store.thread?.link ?? ""} />
-                </div>
+                        src={store.thread.link} />
+                </div>}
 
                 <div className="px-2 px-md-4 mb-4 _border-bottom mb-1">
-                    <div className="d-flex flex-row button-row mb-2">
-                        <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faRandom} /></Button>
-                        <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faExpand} /></Button>
-                        <Button size="sm" onClick={() => setModal(true)} ><FontAwesomeIcon icon={faShare} /></Button>
-                    </div>
                     <InlineVoter
                         simple
                         size="sm"
-                        className="d-flex flex-row"
+                        className="d-flex flex-row mb-4"
                         table={store.thread?.acceptedVotes ?? []}
                         votes={store.thread?.votes ?? undefined}
                         onClick={(v) => store.voteThread(v)}
@@ -215,10 +197,27 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         //        .then(
                         //            t => store.thread!.me!.vote = t)} 
                         value={store.thread?.me?.vote ?? "unset"} />
+                    <div className="d-flex flex-row button-row">
+                        <IconButton variant="outline-primary" size="sm" onClick={() => setModal(true)} icon={faRandom}>
+                            Crosspost
+                        </IconButton>
+                        <IconButton variant="outline-primary" size="sm" onClick={() => setModal(true)} icon={faExpand} >
+                            Open Link
+                        </IconButton>
+                        <IconButton size="sm" onClick={() => setModal(true)} icon={faShare}>
+                            Share
+                        </IconButton>
+                        <IconButton size="sm" onClick={() => setModal(true)} icon={faShare}>
+                            Save
+                        </IconButton>
+                    </div>
                 </div>
 
                 <div id="reply" className="px-2 px-md-4 pb-4 border-bottom">
-                    <small>Comment as @system</small>
+                    {store.app.loggedIn ?
+                        <small>Comment as @{store.app.active!.username} </small>
+                        : <small>You need to login to comment</small>
+                    }
                     <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />
                 </div>
 

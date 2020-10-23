@@ -64,7 +64,7 @@ export const SubscriptionListWithSearch: React.FC = observer(() => {
     const [state, setFilter] = React.useState("");
     const [showOverlay, setOverlay] = React.useState<boolean>(false);
     const history = useHistory();
-    const subscriptions = store.active?.subscriptions ?? []
+    const subscriptions = store.active?.subscriptions ?? store.defaults;
     return (
         <div className="subscription-list pt-2">
             <Modal
@@ -78,7 +78,6 @@ export const SubscriptionListWithSearch: React.FC = observer(() => {
                 </Modal.Header>
                 <Modal.Body className="p-0">
                     {subscriptions.map(data => data && (
-                        
                         <div className="p-1 mb-1 border-bottom d-flex justify-content-between align-content-center">
                             <div>
                                 <CommunityAvatar

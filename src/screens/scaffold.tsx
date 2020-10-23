@@ -49,7 +49,7 @@ const Scaffold: React.FC = observer(({ children }) => {
     <>
       <SiteNavbar />
       <Container fluid id="screen-wrapper" className="_header-spacer _no-gutters _p-0" style={{
-        maxWidth: app.UIconstrainContainer ? 1400 : undefined
+        maxWidth: app.UIconstrainContainer ? 1500 : undefined
       }}>
         <Row id="screen-row" className={"justify-content-around flex-xl-nowrap " +
           (app.UIconstrainContainer && "_m-auto")}
@@ -71,7 +71,7 @@ const Scaffold: React.FC = observer(({ children }) => {
           </Col>
           <Col id="wrapper-screen-right"
             className={classNames("d-none d-lg-block border-left _p-0 bg-white",
-              app.UIconstrainContainer ? "col-md-2" : "col-12 col-md-2 col-xl-2")}>
+              app.UIconstrainContainer ? "col-md-3" : "col-12 col-md-2 col-xl-2")}>
             <div className="sticky">
               <div id="screen-right" className="mt-1">
                 <SystemMessages />

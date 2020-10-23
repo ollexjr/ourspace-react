@@ -10,6 +10,7 @@ import {
     ILoginRequest,
     IBoardCreate,
     IComment,
+    IBoardSubscription,
     ICommunitySelectRequest,
     ICommunitySelectResponse,
     ICommentReplyEvent
@@ -34,11 +35,15 @@ export class AppStore {
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;
     @observable isBottomOfPage: boolean = false;
-    @observable displayableEvent: IObservableArray<IEvent> = observable.array([])
-    @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([])
-    //@observable threadCrosspost: IObservableArray<I
-
-    themeName: string = "light";
+    @observable displayableEvent: IObservableArray<IEvent> = observable.array([]);
+    @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([]);
+    @observable defaults: IObservableArray<IBoardSubscription> = observable.array([
+        { boardId: 'news' },
+        { boardId: 'pics' },
+        { boardId: 'development' },
+        { boardId: 'wiki' },
+    ]);
+    @observable themeName: string = "light";
 
     isDarkTheme(): boolean {
         return this.themeName == 'dark';
@@ -70,7 +75,7 @@ export class AppStore {
                 break
             case "comment.user.mention":
                 new Notification(
-                    `@someone mentioned you in a thread`); 
+                    `@someone mentioned you in a thread`);
                 break
             case "board.subscribe":
                 new Notification(
@@ -105,6 +110,7 @@ export class AppStore {
 
         document.title = "ourspace";
 
+        this.loadOther();
         this.openSocket();
 
         if (accessToken == undefined || refreshToken == undefined) {
@@ -112,6 +118,18 @@ export class AppStore {
         }
 
         this.setupLogin(accessToken, refreshToken);
+    }
+
+    loadOther() {
+        this.api.endpointGet("communities/default", {}, 200)
+            .then((t: ICommunitySelectResponse) => {
+                if (t.data)
+                    this.defaults = observable.array(t.data.map(t => {
+                        let o: IBoardSubscription = t;
+                        o.boardId = t.uId;
+                        return o;
+                    }));
+            })
     }
 
     accounts: Array<UserRef> = []

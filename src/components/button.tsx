@@ -32,7 +32,10 @@ export const NetworkedButton: React.FC<{ onClick: () => Promise<any>, message: s
     </Button>
 }
 
-export const PromiseButton: React.FC<{ onClick: () => Promise<any> } & ButtonProps> = ({ children, onClick }, props) => {
+export const PromiseButton: React.FC<{
+    onClick: () => Promise<any>,
+    icon?: any,
+} & ButtonProps> = ({ children, icon, onClick }, props) => {
     const [loading, setState] = React.useState<boolean>(false);
     return <Button {...props} variant={""} onClick={() => {
         if (loading)
@@ -42,17 +45,20 @@ export const PromiseButton: React.FC<{ onClick: () => Promise<any> } & ButtonPro
             setState(false);
         })
     }}>
+        {icon && <FontAwesomeIcon icon={icon} />}
         {loading ? <Spinner animation="border" /> : children}
     </Button>
 }
 
 export const IconButton: React.FC<{
-    icon?:any,
-    //onClick: () => Promise<any>
-} & ButtonProps> = ({ icon, children, onClick }, props) => {
+    icon?: any,
+} & ButtonProps> = ({ icon, children }, props) => {
     return (
-        <Button {...props}>
+        <Button variant="outline-primary"  {...props}>
             <FontAwesomeIcon icon={icon} />
+            <span className="ml-1 d-none d-sm-inline">
+                {children}
+            </span>
         </Button>
     )
 }

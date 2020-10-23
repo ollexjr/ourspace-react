@@ -307,8 +307,10 @@ const BoardNavbar: React.FC = observer(() => {
                     onClick={() => store.subscribe()} />
                     */
                 //store.info?.isMember && <Button onClick={() => store.unsubscribe()}>Unsubscribe</Button>
-                store.info && <PromiseButton variant={(store.info.isMember ? "primary" : "danger")} onClick={() => store.info!.isMember ? store.unsubscribe() : store.subscribe()}>
-                    <FontAwesomeIcon icon={store.info.isMember ? faUsersSlash : faUsers} />
+                store.info && <PromiseButton
+                    icon={store.info.isMember ? faUsersSlash : faUsers}
+                    variant={(store.info.isMember ? "primary" : "danger")}
+                    onClick={() => store.info!.isMember ? store.unsubscribe() : store.subscribe()}>
                 </PromiseButton>
             }
         </Navbar>

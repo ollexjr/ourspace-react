@@ -1,7 +1,8 @@
 import React from 'react';
 import { observable } from 'mobx';
 import { useAppStore, AppStore } from './app';
-import { IBoardSubscription } from 'model/compiled';
+import { IBoard, IBoardSubscription } from 'model/compiled';
+import _ from 'lodash';
 
 export interface UserRef {
     username: string
@@ -18,32 +19,66 @@ export class AccountStore {
     readonly app: AppStore
     username: string
 
-
-
     @observable
     invalidToken: boolean = false;
 
-    @observable subscriptions: Array<IBoardSubscription> = [];
+    defaults: Array<IBoardSubscription> = [];
 
-    defaults: Array<IBoardSubscription> = [
-        { boardId: "all", createdAt: 0 },
-        //{ boardId: "listentothis", createdAt: 0 },
-        //{ boardId: "news", createdAt: 0 }
-    ];
+    // display array with order
+    //@observable subscriptions: Array<IBoardSubscription> = [];
 
+    // reduced array
+    @observable mapSubscriptions: {
+        [k: string]: IBoardSubscription
+    } = {};
+
+    get subscriptions() {
+        return _.map(this.mapSubscriptions);
+    }
+
+    //{ boardId: "all", createdAt: 0 }, 
+    //{ boardId: "listentothis", createdAt: 0 },
+    //{ boardId: "news", createdAt: 0 }
     constructor(app: AppStore, username: string) {
         this.app = app;
         this.username = username;
         //this.subscriptions.concat(this.defaults);
+        this.addDefaults();
         this.sync();
     }
 
+    addDefaults() {
+        this.addSubscription({ boardId: 'news' });
+        this.addSubscription({ boardId: 'pics' });
+        this.addSubscription({ boardId: 'listentothis' });
+        this.addSubscription({ boardId: 'activities' });
+    }
+
+    addSubscriptionB(e: IBoard) {
+        if (this.mapSubscriptions[e.uId!]) {
+            return;
+        }
+        this.mapSubscriptions[e.uId!] = {
+            boardId: e.uId,
+        }
+    }
+
+    addSubscription(e: IBoardSubscription) {
+        //if (this.mapSubscriptions[e.boardId!]) {
+        //    return;
+        //}
+        this.mapSubscriptions[e.boardId!] = e
+        //this.subscriptions.push(e);
+    }
+
     sync(): Promise<void> {
-        return this.app.api.endpointGet("me/state", null, 200).then((json: AcccountState) => {
-            if (!json.subscriptions) {
+        return this.app.api.endpointGet("me/state", null, 200).then((r: AcccountState) => {
+            if (r.subscriptions) {
+                r.subscriptions.forEach(e => {
+                    this.addSubscription(e);
+                });
                 return;
             }
-            this.subscriptions = this.defaults.concat(json.subscriptions);
             return;
         })
     }

@@ -3,9 +3,10 @@ import React from 'react';
 import { Editor as DraftJSEditor, EditorState, convertFromHTML, convertToRaw } from 'draft-js';
 import { Navbar, Nav, Container, Button, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
 import Editor from 'rich-markdown-editor';
+import { dark } from './theme';
+
 import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 
 export const RichEditor: React.FC = () => {
     const [state, setState] = React.useState<EditorState>(() => EditorState.createEmpty())
@@ -53,6 +54,7 @@ export const TextEditor: React.FC<{
             </div>
             <div className="flex-grow-1 pl-3 mx-2">
                 <Editor
+                    theme={dark}
                     defaultValue={source}
                     onChange={(v) => setState({ ...state, value: v() })}
                     //onSave={(v) => v()}
