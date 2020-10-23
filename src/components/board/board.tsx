@@ -161,7 +161,8 @@ export const ThreadsView: React.FC<{
 
     const getCardClass = () => {
         if (store.isConstrained()) {
-            return "col-12 col-md-6 col-lg-4";
+            //return "col-12 col-md-6 col-lg-4";
+            return "col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4";
             //return "col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12";
         }
         return "col-xl-3 col-lg-6 col-md-6 col-sm-12 col-xs-12";
@@ -254,7 +255,7 @@ const BoardNavbar: React.FC = observer(() => {
     //const params: { boardId: string } = useParams();
     return (
         <Navbar bg="white" variant="dark"
-            className="shadow-sm justify-content-between border-y no-gutters mb-1 px-1 px-md-4 p-0" style={{
+            className="shadow-sm justify-content-between border-bottom no-gutters mb-1 px-1 px-md-4 p-0" style={{
                 zIndex: 4,
                 position: 'sticky',
                 top: 0,
