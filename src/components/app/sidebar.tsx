@@ -12,6 +12,7 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UserNotifications } from 'components/user/card';
 import { LinkButton } from 'components/button';
+import { Link } from 'react-router-dom';
 
 export const SidebarCard: React.FC = ({ children }) => {
     return (
@@ -37,8 +38,10 @@ export const TrendingCommunitiesList: React.FC<{}> = observer(({ }) => {
             </div>
             <ul className="list-group list-group-flush">
                 {app.trending.map(e => <li className="list-group-item">
-                    <CommunityAvatar size={32} src={e.icon!} className="mr-2" />
-                    <span>+{e.uId}</span>
+                    <Link to={`/+${e.uId}`}>
+                        <CommunityAvatar size={32} src={e.icon!} className="mr-2" />
+                        <span>+{e.uId}</span>
+                    </Link>
                 </li>)}
             </ul>
         </div>
