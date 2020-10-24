@@ -219,6 +219,10 @@ export class BoardStore extends ObservableRequestState {
     moderateThread() {
         this.app.moderate = this.info; 
     }
+
+    moderateComment(c: IComment) {
+        this.app.moderate = c; 
+    }
 }
 
 export const boardStoreContext = React.createContext<BoardStore | null>(null);

@@ -62,7 +62,7 @@ export const Dropdown2: React.FC<{
         //store.filters.sortTime = t!
     }
     return (
-        <DropdownButton variant="outline-muted" id="dropdown-basic-button" title={""}>
+        <DropdownButton variant="outline-white" id="dropdown-basic-button" title={""}>
             <Dropdown.Header>Time span</Dropdown.Header>
             {items.map((t) => <Dropdown.Item eventKey={t.key} onSelect={set}>{t.label}</Dropdown.Item>)}
         </DropdownButton>
@@ -90,17 +90,20 @@ export const ButtonDropdown: React.FC<{
     items: Array<ButtonDropdownItem>
 }> = ({ items }) => {
     return (
-        <DropdownButton
+        <Dropdown
             title=""
+        //variant="white"
         >
             <Dropdown.Toggle className="text-center" variant="white" as={CustomToggle} />
-            {items.map((e) => (
-                <Dropdown.Item eventKey={e.label} onSelect={e.onClick}>
-                    <FontAwesomeIcon icon={e.icon ?? undefined} />
-                    {e.label}
-                </Dropdown.Item>
-            ))}
-        </DropdownButton>
+            <Dropdown.Menu>
+                {items.map((e) => (
+                    <Dropdown.Item eventKey={e.label} onSelect={e.onClick}>
+                        <FontAwesomeIcon className="ml-2" icon={e.icon ?? undefined} />
+                        {e.label}
+                    </Dropdown.Item>
+                ))}
+            </Dropdown.Menu>
+        </Dropdown>
     )
 }
 

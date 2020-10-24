@@ -36,15 +36,20 @@ export class AppStore {
     @observable UIanimatedHeader: boolean = false;
     @observable UIconstrainContainer: boolean = true;
     @observable UIshowEventDebug: boolean = false;
+    @observable UIdarkTheme: boolean = false;
 
 
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;
+    
     @observable isBottomOfPage: boolean = false;
     @observable displayableEvent: IObservableArray<IEvent> = observable.array([]);
     @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([]);
 
     @observable moderate?: IComment | IBoard | IThread | ICommunityUserRef;
+    @observable loginOverlay: boolean = false;
+
+
 
     @observable trending: IObservableArray<IBoard> = observable.array([
         { uId: 'news' },

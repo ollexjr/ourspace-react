@@ -42,7 +42,7 @@ export const NavbarBase: React.FC = ({ children }) => {
     const store = useAppStore();
     const url = "https://source.unsplash.com/collection/416021/1280x800";
     const wrap = (child: any) => {
-        if (store.isDarkTheme() && store.UIanimatedHeader) {
+        if (!store.UIanimatedHeader) {
             return child;
         }
         return (

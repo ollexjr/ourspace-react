@@ -7,6 +7,7 @@ export const AppSettingsForm: React.FC = observer(() => {
     const app = useAppStore();
     return (
         <div>
+
             <Form.Check
                 //onChange={() => }
                 onChange={(v: any) => app.UIconstrainContainer = !app.UIconstrainContainer} // v.currentTarget.value}
@@ -16,24 +17,34 @@ export const AppSettingsForm: React.FC = observer(() => {
                 label="Full width"
             />
 
+            <small>Dev settings</small>
+
             <Form.Check
                 onChange={(v: any) => app.UIshowEventDebug = !app.UIshowEventDebug} // v.currentTarget.value}
-                checked={!app.UIshowEventDebug}
+                checked={app.UIshowEventDebug}
                 type="switch"
-                id="app-fullwidth"
+                id="app-event-debug"
                 label="Show event debug"
+            />
+
+            <Form.Check
+                onChange={(v: any) => app.UIanimatedHeader = !app.UIanimatedHeader} // v.currentTarget.value}
+                checked={app.UIanimatedHeader}
+                type="switch"
+                id="app-animated-header"
+                label="Animated header"
+            />
+
+            <Form.Check
+                onChange={(v: any) => app.UIdarkTheme = !app.UIdarkTheme} // v.currentTarget.value}
+                checked={app.UIdarkTheme}
+                type="switch"
+                id="app-theme"
+                label={app.UIdarkTheme ? "Dark" : "Light"}
             />
         </div>
     )
 })
-
-export const BoardSettingsForm = () => {
-
-}
-
-export const ThreadSettingsForm = () => {
-
-}
 
 export const SidebarSettings: React.FC = () => {
     return (

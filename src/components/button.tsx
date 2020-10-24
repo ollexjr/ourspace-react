@@ -52,9 +52,11 @@ export const PromiseButton: React.FC<{
 
 export const IconButton: React.FC<{
     icon?: any,
-} & ButtonProps> = ({ icon, children }, props) => {
+} & ButtonProps> = ({ icon, variant, children }, props) => {
     return (
-        <Button variant="outline-primary"  {...props}>
+        <Button //variant="outline-primary"  
+            variant={variant}
+            {...props}>
             <FontAwesomeIcon icon={icon} />
             <span className="ml-1 d-none d-sm-inline">
                 {children}

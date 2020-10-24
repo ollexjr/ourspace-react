@@ -17,7 +17,7 @@ import { faReply, faBookmark, faCommentAlt, faShare, faSave, faLink, faPlus, faC
 import Masonry from 'react-masonry-component';
 import ReactPlayer from 'react-player';
 import { NetworkGateway } from 'components/network/gateway';
-import { PromiseButton, LinkButton } from 'components/button';
+import { PromiseButton, LinkButton, IconButton } from 'components/button';
 import _ from 'lodash';
 import { CircleAvatar } from 'components/user/avatar';
 import { CommunityUserInline } from 'components/board/user';
@@ -49,17 +49,14 @@ const CardButtons: React.FC<{
             <ButtonDropdown
                 items={items}
             />
-            <Button variant="outline"
+            <IconButton variant="outline" icon={faShare}
                 className={buttonClass}>
-                <FontAwesomeIcon icon={faShare} />
-            </Button>
-            <Button variant="outline" className={buttonClass}>
-                <FontAwesomeIcon icon={faCommentAlt} />
+            </IconButton>
+            <IconButton variant="outline" className={buttonClass} icon={faCommentAlt} >
                 {commentNum}
-            </Button>
-            <Button variant="outline" className={buttonClass}>
-                <FontAwesomeIcon icon={faLink} />
-            </Button>
+            </IconButton>
+            <IconButton variant="outline" className={buttonClass} icon={faLink}>
+            </IconButton>
         </>
     )
 }

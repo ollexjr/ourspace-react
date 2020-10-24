@@ -2,19 +2,25 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { useAppStore } from 'stores/app';
 import { Form, Button, InputGroup, Modal } from 'react-bootstrap';
-import { IBoard, IThread, IComment } from 'model/compiled';
+import { IBoard, IThread, IComment, ICommunityUserRef } from 'model/compiled';
 
-export const ModerateForm: React.FC<{ b?: IBoard, t?: IThread, c?: IComment }> = ({ }) => {
+export const ModerateForm: React.FC<{ 
+    src?: IBoard | IThread | IComment | ICommunityUserRef ,
+    //b?: IBoard, 
+    //t?: IThread, 
+    //c?: IComment 
+}> = ({ src }) => {
     const store = useAppStore();
-    
+
     const [banLength, setBan] = React.useState(0);
     return (
         <div>
-            <h2>Moderation action</h2>
             <h5>For:</h5>
-            <div>
 
+            <div>
+                {JSON.stringify(src)}
             </div>
+
             <Form>
                 <Form.Group controlId="exampleForm.ControlSelect2">
                     <Form.Label>Reasons</Form.Label>
@@ -60,9 +66,12 @@ export const ModerateForm: React.FC<{ b?: IBoard, t?: IThread, c?: IComment }> =
 export const ModeratorActionsGlobal = observer(() => {
     const store = useAppStore();
     return (
-        <Modal show={store.moderate != undefined}>
+        <Modal show={store.moderate != undefined} onHide={() => store.moderate = undefined} >
+            <Modal.Header closeButton>
+                Moderation action
+            </Modal.Header>
             <Modal.Body>
-                <ModerateForm />
+                <ModerateForm src={store.moderate} />
             </Modal.Body>
         </Modal>
     )
