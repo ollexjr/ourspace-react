@@ -23,19 +23,33 @@ export const UserBadge: React.FC<{ variant?: string, icon: any, label?: string }
     )
 }
 
-export const CommunityUserInline: React.FC<{ className?:string, user?: ICommunityUserRef }> = ({ className, user }) => {
+export const CommunityUserInline: React.FC<{ className?: string, user?: ICommunityUserRef }> = ({ className, user }) => {
     if (!user) {
-        return <span>"user undefined"</span>;
+        return <span>user undefined</span>;
     }
     return (
-        <span className={`${className} d-flex flex-row button-row`}>
-            <Link to={"/@"+ user.username}>
-                <span className="username font-weight-bold">
-                    @{user.username}
-                </span>
-            </Link>
-            {user.isAdmin && <UserBadge label="Admin" variant="danger" icon={faHammer} />}
-            {user.isMod && <UserBadge label="Moderator" icon={faUserShield} />}
-        </span>
+        <OverlayTrigger
+            trigger={["hover", "focus"]}
+            overlay={
+                <Popover id="user-badge-label" className="p-2">
+                    <div>@{user.username}</div>
+                    <div className="card-title">Community Karma: ???</div>
+                    <div>
+                        {user.isAdmin && <UserBadge label="Admin" variant="danger" icon={faHammer} />}
+                        {user.isMod && <UserBadge label="Moderator" icon={faUserShield} />}
+                    </div>
+                </Popover>
+            }
+        >
+            <span className={`${className} d-flex flex-row button-row`}>
+                <Link to={"/@" + user.username}>
+                    <span className="username font-weight-bold">
+                        @{user.username}
+                    </span>
+                </Link>
+                {user.isAdmin && <UserBadge label="Admin" variant="danger" icon={faHammer} />}
+                {user.isMod && <UserBadge label="Moderator" icon={faUserShield} />}
+            </span>
+        </OverlayTrigger>
     )
 }

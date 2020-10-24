@@ -13,7 +13,12 @@ import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { EnumToArray, DropdownEnum, ButtonDropdown, ButtonDropdownItem } from 'components/dropdown';
 import { ScrollEventProvider } from 'components/scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply, faBookmark, faCommentAlt, faShare, faSave, faLink, faPlus, faCompress, faSync, faExternalLinkAlt, faUsers, faUsersSlash } from '@fortawesome/free-solid-svg-icons';
+import {
+    faReply, faBookmark, faCommentAlt, faShare,
+    faSave, faLink, faPlus, faCompress,
+    faSync, faExternalLinkAlt, faUsers, faUsersSlash,
+    faSortAmountDown, faSortAmountUp, faWindowMaximize, faStream, faPortrait
+} from '@fortawesome/free-solid-svg-icons';
 import Masonry from 'react-masonry-component';
 import ReactPlayer from 'react-player';
 import { NetworkGateway } from 'components/network/gateway';
@@ -137,7 +142,7 @@ const ThreadCard: React.FC<{
                                 target="_blank"
                                 href={data.link}>
                                 {url!.host}
-                                <FontAwesomeIcon size="xs" icon={faExternalLinkAlt} />
+                                <FontAwesomeIcon className="ml-1" size="xs" icon={faExternalLinkAlt} />
                             </a>}
                         </div>
                         <Card.Title
@@ -154,7 +159,9 @@ const ThreadCard: React.FC<{
                     thumb={data.thumb ?? undefined}
                     src={data.link ?? undefined} />
                 <div className="d-flex flex-row justify-content-left">
-                    <CardButtons commentNum={data.numComments ?? 0} buttonClass="d-block" />
+                    <CardButtons
+                        commentNum={data.numComments ?? 0}
+                        buttonClass="d-block" />
                 </div>
             </div>
         </div>
@@ -280,16 +287,16 @@ const BoardNavbar: React.FC = observer(() => {
                 <CircleAvatar className="d-block d-md-block" src={store.info?.icon ?? undefined} size={48} />
                 <div className="d-flex flex-column p-2">
                     <span className="font-weight-bold">+{store.boardId}</span>
-                    <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
+                    <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members ?? "?"} Members</span>
                 </div>
             </div>
-            <div className="d-none d-md-flex flex-row">
+            <div className="_d-none d-md-flex flex-row">
                 <DropdownEnum
                     title="Layout"
                     labels={[
-                        { label: "Compact", icon: faSave },
-                        { label: "Cards", icon: faSave },
-                        { label: "Gallery", icon: faSave }
+                        { label: "Cards", icon: faWindowMaximize },
+                        { label: "Compact", icon: faStream },
+                        { label: "Gallery", icon: faPortrait }
                     ]}
                     values={[0, 1, 2]}
                     value={store.UIdatalayout}
@@ -307,7 +314,10 @@ const BoardNavbar: React.FC = observer(() => {
                     }} />
                 <DropdownEnum
                     title="Direction"
-                    labels={[{ label: "Decending", icon: faSave }, { label: "Ascending", icon: faSave }]}
+                    labels={[
+                        { label: "Decending", icon: faSortAmountDown },
+                        { label: "Ascending", icon: faSortAmountUp }
+                    ]}
                     values={EnumToArray(ThreadSelectFilters.Method)}
                     value={store.filters.sortDirection!}
                     onSelect={(t: number) => {

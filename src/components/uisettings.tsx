@@ -40,7 +40,7 @@ export const AppSettingsForm: React.FC = observer(() => {
                 checked={app.UIdarkTheme}
                 type="switch"
                 id="app-theme"
-                label={app.UIdarkTheme ? "Dark" : "Light"}
+                label="Dark Mode"
             />
         </div>
     )

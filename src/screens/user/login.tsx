@@ -23,7 +23,8 @@ const ScreenLogin: React.FC = observer(({ }) => {
                         <Button onClick={() => store.logout()} >You need to sign out first.</Button>
                     </div>}
                     {!store.loggedIn && <UserLoginForm
-                        onSubmit={(name, key) => store.login(name, key).then(t => history.length > 2 ? history.goBack() : history.push("/"))} />}
+                        onSubmit={(name, key) => 
+                            store.login(name, key).then(t => history.length > 2 ? history.goBack() : history.push("/"))} />}
                 </Container>
             </div>
         </Jumbosheet>

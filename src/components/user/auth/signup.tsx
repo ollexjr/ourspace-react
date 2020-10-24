@@ -47,7 +47,8 @@ export const UserSignupForm:
                         placeholder="Enter email"
                         onChange={(v) => set({ ...state, email: v.target.value })} />
                     <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
+                        We'll never share your email with anyone else, 
+                            if you lose your password, we'll send a recovery email.
                     </Form.Text>
                     <Form.Control.Feedback type="invalid">
                         Please provide a email.

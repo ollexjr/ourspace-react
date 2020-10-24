@@ -6,6 +6,7 @@ import { ObservableRequestState, Response, APIError } from "service/api";
 import {
     IThread,
     IBoard,
+    IComment,
     IThreadSelectFilters,
     ThreadSelectFilters,
     IThreadCreateRequest,

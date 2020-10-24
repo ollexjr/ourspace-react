@@ -35,15 +35,25 @@ export const DropdownEnum: React.FC<{
             variant="outline-muted"
             //onSelect={(key, event) => onSelect(key)
             id="dropdown-basic-button"
-            title={labels[value].label}>
+            title={<>
+                {labels[value].icon && <FontAwesomeIcon icon={labels[value].icon} className="mr-1" />}
+                <span className="d-none d-md-inline">
+                    {labels[value].label}
+                </span>
+            </>
+            }>
             <Dropdown.Header>{title}</Dropdown.Header>
-            {values.map(t => labels[t] &&
-                <Dropdown.Item eventKey={labels[t].key} onClick={() => onSelect(t)}>
-                    {labels[t].icon && <FontAwesomeIcon icon={labels[t].icon} />}
-                    {labels[t].label ?? t}
-                </Dropdown.Item>
-            )}
-        </DropdownButton>
+            {
+                values.map(t => labels[t] &&
+                    <Dropdown.Item eventKey={labels[t].key} onClick={() => onSelect(t)}>
+                        {labels[t].icon && <FontAwesomeIcon icon={labels[t].icon} className="mr-1" />}
+                        <span className="d-none d-md-inline">
+                            {labels[t].label ?? t}
+                        </span>
+                    </Dropdown.Item>
+                )
+            }
+        </DropdownButton >
     )
 }
 

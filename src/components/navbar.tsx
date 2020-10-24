@@ -30,7 +30,7 @@ const Brand: React.FC<{ className: string }> = ({ className }) => {
             }}>
                 <CommunityAvatar className="d-inline" size={36} />
                 <FontAwesomeIcon className="d-none rounded ml-1 mr-1" icon={faPlus} />
-                <span className="ml-2">
+                <span className="d-none d-sm-inline ml-2">
                     our+space
                 </span>
             </Navbar.Brand>

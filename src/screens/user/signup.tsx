@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-
+import { useHistory } from 'react-router-dom';
 import { UserSignupForm } from "components/user/auth/signup"
 import { useAppStore } from 'stores/app';
 import { Container } from 'react-bootstrap';
@@ -10,6 +10,7 @@ import { Button } from 'react-bootstrap';
 
 const ScreenLogin: React.FC = observer(({ }) => {
     const store = useAppStore();
+    let history = useHistory();
 
     return (
         <Jumbosheet>
@@ -20,7 +21,10 @@ const ScreenLogin: React.FC = observer(({ }) => {
                     <h4>Signed in as @{store.active?.username}</h4>
                     <Button onClick={() => store.logout()} >You need to sign out first.</Button>
                 </div>}
-                {!store.loggedIn && <UserSignupForm onSubmit={(name, email, key) => store.signup(name, email, key)} />}
+                {!store.loggedIn && <UserSignupForm onSubmit={
+                    (name, email, key) => 
+                        store.signup(name, email, key)
+                        .then(t => history.length > 2 ? history.goBack() : history.replace("/")) } />}
             </Container>
         </Jumbosheet>
     )

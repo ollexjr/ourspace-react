@@ -116,6 +116,7 @@ export const RouterRoot: React.FC = observer(({ }) => {
       <SpotlightModal />
       <Switch>
         <Route exact path="/login" component={ScreenLogin} />
+        <Route exact path="/login/recover" component={ScreenLogin} />
         <Route exact path="/signup" component={ScreenSignup} />
         <Route path="/+:pathId" component={BoardRouterWrapper} />
         <Route path="/c/:pathId" component={BoardRouterWrapper} />

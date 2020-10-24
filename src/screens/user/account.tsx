@@ -9,6 +9,7 @@ import { CircleAvatar } from 'components/user/avatar';
 import { ScreenScaffold } from 'components/screen';
 import { UserStoreProvider, useUserStore } from 'stores/user';
 import { ImageHeader } from 'components/header';
+import { IconButton } from 'components/button';
 
 const ProvideUserScaffold: React.FC = () => {
     const { userId } = useParams();
@@ -25,15 +26,15 @@ const UserScaffold: React.FC = observer(() => {
     return (
         <div>
             <ImageHeader src="">
-
+        
             </ImageHeader>
             <Navbar className="sticky shadow-light border-bottom d-flex flex-row justify-content-between align-items-center">
                 <h5>@{store.userId}</h5>
                 <div className="button-row">
-                    <Button variant="outline-primary" className="rounded">Follow</Button>
-                    <Button variant="outline-primary" className="rounded">Blog</Button>
-                    <Button variant="outline-primary" className="rounded">Block</Button>
-                    <Button variant="outline-primary" className="rounded">Report</Button>
+                    <IconButton variant="light" className="rounded">Follow</IconButton>
+                    <IconButton variant="light" className="rounded">Blog</IconButton>
+                    <IconButton variant="light" className="rounded">Block</IconButton>
+                    <IconButton variant="light" className="rounded">Report</IconButton>
                 </div>
             </Navbar>
             <Container>
