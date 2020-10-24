@@ -215,6 +215,10 @@ export class BoardStore extends ObservableRequestState {
     uploadBanner(file: File): Promise<any> {
         return this.app.api.endpointPostFile(`board/media?area=banner&boardId=${this.boardId}`, file, 200);
     }
+
+    moderateThread() {
+        this.app.moderate = this.info; 
+    }
 }
 
 export const boardStoreContext = React.createContext<BoardStore | null>(null);

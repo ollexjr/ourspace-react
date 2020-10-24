@@ -11,6 +11,8 @@ import {
     IBoardCreate,
     IComment,
     IBoard,
+    IThread,
+    ICommunityUserRef,
     IBoardSubscription,
     ICommunitySelectRequest,
     ICommunitySelectResponse,
@@ -41,6 +43,9 @@ export class AppStore {
     @observable isBottomOfPage: boolean = false;
     @observable displayableEvent: IObservableArray<IEvent> = observable.array([]);
     @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([]);
+
+    @observable moderate?: IComment | IBoard | IThread | ICommunityUserRef;
+
     @observable trending: IObservableArray<IBoard> = observable.array([
         { uId: 'news' },
         { uId: 'pics' },

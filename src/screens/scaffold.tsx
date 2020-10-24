@@ -34,6 +34,7 @@ import classNames from 'classnames';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import Sticky from 'react-stickynode';
 import { SidebarDefault } from 'components/app/sidebar';
+import { ModeratorActionsGlobal } from 'components/board/moderator/actions';
 
 //import info from './gitinfo.js';
 
@@ -95,6 +96,7 @@ export const BoardRouterWrapper: React.FC = () => {
         <Route path="/@:userId" component={() => null} />
         <Route path="/u/:userId" component={() => null} />
       </Switch>
+      <ModeratorActionsGlobal/>
     </Scaffold>
   )
 }

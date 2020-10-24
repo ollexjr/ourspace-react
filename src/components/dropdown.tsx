@@ -12,19 +12,37 @@ export function EnumToArray(e: any) {
         .map(key => e[key]);
 }
 
+
+export interface ButtonDropdownItem {
+    label: string,
+    icon: any,
+    key?: string,
+    onClick?: () => any
+}
+
 export const DropdownEnum: React.FC<{
     icon?: any,
     title: string,
-    labels: Array<string>,
+    labels: Array<ButtonDropdownItem>,
+    //labels: Array<string>,
     values: Array<number>,
     value: number,
-    onSelect: (value: number) => void
+    onSelect: (key: number) => void
 }> = ({ title, values, value, labels, onSelect }) => {
     //const history = useHistory();
     return (
-        <DropdownButton variant="outline-muted" id="dropdown-basic-button" title={labels[value]}>
+        <DropdownButton
+            variant="outline-muted"
+            //onSelect={(key, event) => onSelect(key)
+            id="dropdown-basic-button"
+            title={labels[value].label}>
             <Dropdown.Header>{title}</Dropdown.Header>
-            {values.map(t => <Dropdown.Item onClick={() => onSelect(t)}>{labels[t] ?? t}</Dropdown.Item>)}
+            {values.map(t => labels[t] &&
+                <Dropdown.Item eventKey={labels[t].key} onClick={() => onSelect(t)}>
+                    {labels[t].icon && <FontAwesomeIcon icon={labels[t].icon} />}
+                    {labels[t].label ?? t}
+                </Dropdown.Item>
+            )}
         </DropdownButton>
     )
 }
@@ -66,28 +84,23 @@ const CustomToggle = React.forwardRef<{}, { onClick: (e: any /*React.MouseEvent<
     </Button>
 ));
 
-
-interface ButtonDropdownItem {
-    label: string,
-    icon: any
-}
-
 export const ButtonDropdown: React.FC<{
     //values: Array<any>,
+    //onSelect: (key: number) => any,
     items: Array<ButtonDropdownItem>
 }> = ({ items }) => {
     return (
-        <Dropdown>
+        <DropdownButton
+            title=""
+        >
             <Dropdown.Toggle className="text-center" variant="white" as={CustomToggle} />
-            <Dropdown.Menu>
-                {items.map((e) => (
-                    <Dropdown.Item eventKey="2">
-                        {e.label}
-                        <FontAwesomeIcon icon={faEllipsisH} />
-                    </Dropdown.Item>
-                ))}
-            </Dropdown.Menu>
-        </Dropdown>
+            {items.map((e) => (
+                <Dropdown.Item eventKey={e.label} onSelect={e.onClick}>
+                    <FontAwesomeIcon icon={e.icon ?? undefined} />
+                    {e.label}
+                </Dropdown.Item>
+            ))}
+        </DropdownButton>
     )
 }
 

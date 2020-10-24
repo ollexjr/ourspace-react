@@ -10,7 +10,7 @@ import { trace } from "mobx";
 import { InlineVoter } from 'components/board/vote';
 import { CommunityLinkPopover } from 'components/board/avatar';
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
-import { EnumToArray, DropdownEnum, ButtonDropdown } from 'components/dropdown';
+import { EnumToArray, DropdownEnum, ButtonDropdown, ButtonDropdownItem } from 'components/dropdown';
 import { ScrollEventProvider } from 'components/scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply, faBookmark, faCommentAlt, faShare, faSave, faLink, faPlus, faCompress, faSync, faExternalLinkAlt, faUsers, faUsersSlash } from '@fortawesome/free-solid-svg-icons';
@@ -25,24 +25,41 @@ import { MediaSource } from 'components/media';
 
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
 
-const CardButtons: React.FC<{ buttonClass: string, commentNum: number }> = ({ buttonClass, commentNum }) => {
+const CardButtons: React.FC<{
+    buttonClass: string,
+    commentNum: number,
+}> = ({ buttonClass, commentNum }) => {
+    const store = useBoardStore();
+
+    let items: Array<ButtonDropdownItem> = [
+        { label: "Hide", icon: "" },
+        { label: "Bookmark", icon: "" },
+        //{ label: "CrossPost", icon: "" },
+        //{ label: "Share", icon: "" },
+        { label: "Copy to clipboard", icon: "" },
+        { label: "Open in new tab", icon: "" },
+    ];
+
+    if (store.info?.isModerator) {
+        items.push({ key: "m", label: "Moderate [M]", icon: "", onClick: () => store.moderateThread() });
+    }
+
     return (
         <>
             <ButtonDropdown
-                items={[
-                    { label: "Bookmark/Save", icon: "" },
-                    { label: "CrossPost", icon: "" },
-                    { label: "Share", icon: "" },
-                    { label: "Put in clipboard", icon: "" },
-                    { label: "Open in new tab", icon: "" },
-                    { label: "Moderate [M]", icon: "" }
-                ]}
+                items={items}
             />
-            {false && <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faCompress} /></Button>}
-            {false && <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faBookmark} /></Button>}
-            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faShare} /></Button>
-            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faCommentAlt} /> {commentNum} </Button>
-            <Button variant="outline" className={buttonClass}><FontAwesomeIcon icon={faLink} /></Button>
+            <Button variant="outline"
+                className={buttonClass}>
+                <FontAwesomeIcon icon={faShare} />
+            </Button>
+            <Button variant="outline" className={buttonClass}>
+                <FontAwesomeIcon icon={faCommentAlt} />
+                {commentNum}
+            </Button>
+            <Button variant="outline" className={buttonClass}>
+                <FontAwesomeIcon icon={faLink} />
+            </Button>
         </>
     )
 }
@@ -105,7 +122,9 @@ const ThreadCard: React.FC<{
                             value={data?.me?.vote ?? "unset"}
                         />
                         {false && <div className="_d-flex flex-row flex-md-column justify-content-center align-items-center d-none">
-                            <CardButtons commentNum={data.numComments ?? 0} buttonClass="d-none d-md-none" />
+                            <CardButtons
+                                commentNum={data.numComments ?? 0}
+                                buttonClass="d-none d-md-none" />
                         </div>}
                     </div>
                     <div id="thread-card-inner" className="card-block text-left w-100">
@@ -270,13 +289,17 @@ const BoardNavbar: React.FC = observer(() => {
             <div className="d-none d-md-flex flex-row">
                 <DropdownEnum
                     title="Layout"
-                    labels={["Compact", "Cards", "Gallery"]}
+                    labels={[
+                        { label: "Compact", icon: faSave },
+                        { label: "Cards", icon: faSave },
+                        { label: "Gallery", icon: faSave }
+                    ]}
                     values={[0, 1, 2]}
                     value={store.UIdatalayout}
                     onSelect={(t: number) => store.UIdatalayout = t} />
                 <DropdownEnum
                     title="Ranking"
-                    labels={["Hot", "Top", "Controversial"]}
+                    labels={[{ label: "Hot", icon: faSave }, { label: "Top", icon: faSave }, { label: "Controversial", icon: faSave }]}
                     values={EnumToArray(ThreadSelectFilters.Method)}
                     value={store.filters.rankMethod!}
                     onSelect={(t: number) => {
@@ -287,7 +310,7 @@ const BoardNavbar: React.FC = observer(() => {
                     }} />
                 <DropdownEnum
                     title="Direction"
-                    labels={["Decending", "Ascending"]}
+                    labels={[{ label: "Decending", icon: faSave }, { label: "Ascending", icon: faSave }]}
                     values={EnumToArray(ThreadSelectFilters.Method)}
                     value={store.filters.sortDirection!}
                     onSelect={(t: number) => {

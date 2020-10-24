@@ -43,6 +43,8 @@ import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import { ImageHeader } from 'components/header';
 
+import { ModerateForm } from 'components/board/moderator/actions';
+
 const ScreenBoard: React.FC = () => {
     return (
         <BoardView />
