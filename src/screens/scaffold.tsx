@@ -36,6 +36,9 @@ import Sticky from 'react-stickynode';
 import { SidebarDefault } from 'components/app/sidebar';
 import { ModeratorActionsGlobal } from 'components/board/moderator/actions';
 
+import ScreenDonateRouter from 'screens/about/donate';
+import ScreenStaticRouter from 'screens/static/scaffold';
+
 //import info from './gitinfo.js';
 
 const info = "";

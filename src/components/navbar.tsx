@@ -26,12 +26,12 @@ const Brand: React.FC<{ className: string }> = ({ className }) => {
     return (
         <Link to="/">
             <Navbar.Brand href="/" className={className} style={{
-                fontWeight: 900,
+                //fontWeight: 900,
             }}>
-                <CommunityAvatar className="d-inline" size={36} />
+                <CommunityAvatar className="d-none d-inline" size={36} />
                 <FontAwesomeIcon className="d-none rounded ml-1 mr-1" icon={faPlus} />
                 <span className="d-none d-sm-inline ml-2">
-                    our+space
+                    our/space
                 </span>
             </Navbar.Brand>
         </Link>
