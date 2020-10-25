@@ -33,7 +33,7 @@ const hydrateAppStore = (): AppStore => {
 export class AppStore {
     protected _api: NetworkService = new NetworkService();
 
-    @observable UIanimatedHeader: boolean = false;
+    @observable UIanimatedHeader: boolean = true;
     @observable UIconstrainContainer: boolean = true;
     @observable UIshowEventDebug: boolean = false;
     @observable UIdarkTheme: boolean = false;

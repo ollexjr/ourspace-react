@@ -318,3 +318,7 @@ div.post-title {
 div.list-group-item {
   padding: .5em;
 }
+
+.modal.primary {
+  border: 1px solid #8a4fe9;
+}

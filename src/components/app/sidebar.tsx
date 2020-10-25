@@ -58,7 +58,7 @@ const SiteCard: React.FC<{}> =
         return (
             <div className="card mb-2">
                 <div className="card-body">
-                    <h5 className="card-title">Welcome to our+space</h5>
+                    <h5 className="card-title">Welcome to our/space</h5>
                     <div className="btn-group d-flex justify-content-between">
                         <LinkButton to="/login">Login</LinkButton>
                         <LinkButton to="/signup">Signup</LinkButton>

@@ -144,15 +144,14 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     <Card.Header>
                         About this Space
                     </Card.Header>
-
                     <Card.Body>
                         <Card.Title>{store.info?.title}</Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">{store.info?.description}</Card.Subtitle>
                     </Card.Body>
                     <ListGroup className="list-group-flush">
                         <ListGroupItem>Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</ListGroupItem>
-                        <ListGroupItem>{store.info?.members} </ListGroupItem>
-                        <ListGroupItem>{store.info?.posts ?? 0} Posts</ListGroupItem>
+                        <ListGroupItem>{store.info?.members ?? '?'} Members</ListGroupItem>
+                        <ListGroupItem>{store.info?.posts ?? '?'} Posts</ListGroupItem>
                     </ListGroup>
                     <Card.Body className="d-none d-md-block">
                         <LinkButton to={`/+${store.boardId}/create`}>Post</LinkButton>

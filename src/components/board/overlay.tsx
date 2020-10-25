@@ -12,6 +12,7 @@ const BoardSingleThreadOverlayObserver = observer(() => {
 
     return store.overlayThread ? (
         <Modal
+            className="primary"
             show={store.overlayThread != undefined}
             onHide={() => store.overlayThread = undefined}
             //backdrop="static"

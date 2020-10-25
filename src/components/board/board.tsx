@@ -292,7 +292,7 @@ const BoardNavbar: React.FC = observer(() => {
                     <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members ?? "?"} Members</span>
                 </div>
             </div>
-            <div className="_d-none d-md-flex flex-row">
+            <div className="d-none d-md-flex flex-row">
                 <DropdownEnum
                     title="Layout"
                     labels={[
