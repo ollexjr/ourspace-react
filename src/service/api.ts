@@ -97,7 +97,8 @@ export interface Response {
     token: string
 }
 
-const subdomain = "www.";
+const debug = true;
+const subdomain = debug ? "dev." : "www.";
 export const HOST = `https://${subdomain}ourspace.dev/`;
 export const API = `https://${subdomain}ourspace.dev/api/v1/`;
 export const WEBSOCKET_HOST = `wss://event.ourspace.dev/api/v1/socket`;

@@ -12,13 +12,26 @@ export const MediaSource: React.FC<{
     onOpen?: () => any,
     onEvent?: (ev: string) => any
 }> = ({ onOpen, aspectRatio, preview, src, thumb, onEvent }) => {
+
+    preview = false;
+
+    const maxHeight = preview ? '350px' : undefined;
+    let height: number = 0;
+    if (thumb && aspectRatio) {
+        height = (320 * aspectRatio);
+        if (preview && height > 350) {
+            height = 350;
+        }
+    }
+
     const overflowWrapper = (child: any) => {
         if (preview) {
             return (
                 <div onClick={onOpen}
                     className="rounded"
                     style={{
-                        maxHeight: preview ? '350px' : undefined,
+                        maxHeight: height,
+                        boxShadow: '1px 1px 1px 1px black',
                         overflowY: 'hidden',
                     }}>
                     {child}
@@ -29,19 +42,13 @@ export const MediaSource: React.FC<{
     }
     const isVideo = src && ReactPlayer.canPlay(src);
 
-    let height: number = 0;
+
 
     if (isVideo) {
         // from inspecting the DOM, youtube placeholders render with a height of 358
         height = 358;
     }
 
-    if (thumb && aspectRatio) {
-        height = (320 * aspectRatio);
-        if (preview && height > 350) {
-            height = 350;
-        }
-    }
 
     if (!thumb && !isVideo) {
         return null;
@@ -53,7 +60,7 @@ export const MediaSource: React.FC<{
                 debounce
                 once
                 height={height}
-                offset={window.innerHeight*2}>
+                offset={window.innerHeight * 2}>
                 {overflowWrapper(child)}
             </LazyLoad>
         )
@@ -76,10 +83,10 @@ export const MediaSource: React.FC<{
         )
     }
 
-    
+
     const u = src && new URL(src);
     //u && console.log(u.hostname, u);
-    if (u && u.hostname == "twitter.com") {}
+    if (u && u.hostname == "twitter.com") { }
 
     if (u && u.hostname == "imgur.com") {
         return loader(
@@ -98,7 +105,9 @@ export const MediaSource: React.FC<{
     if (u && u.hostname == "giphy.com") {
         return loader(
             <div style={{ width: "100%", height: 0, paddingBottom: "178%", position: 'relative' }}>
-                <iframe src="https://giphy.com/embed/XbVE8H818ckOWuHTEU"
+                <iframe
+                    onClick={() => onOpen && onOpen()}
+                    src="https://giphy.com/embed/XbVE8H818ckOWuHTEU"
                     width="100%"
                     height="100%"
                     style={{ position: "absolute" }}
@@ -110,6 +119,9 @@ export const MediaSource: React.FC<{
     }
 
     return (
-        loader(<img className="card-img rounded border" src={thumb} />)
+        loader(<img
+            onClick={() => onOpen && onOpen()}
+            className="card-img rounded border"
+            src={thumb} />)
     )
 }

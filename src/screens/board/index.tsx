@@ -24,7 +24,7 @@ import {
     Modal
 } from 'react-bootstrap';
 
-import { NetworkedButton } from 'components/button'
+import { NetworkedButton, LinkButton, IconButton } from 'components/button'
 import { BoardStoreProvider, useBoardStore } from "../../stores/board";
 import { ThreadStoreProvider } from '../../stores/thread';
 import { ThreadView } from "../../components/board/thread/thread";
@@ -42,8 +42,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import { ImageHeader } from 'components/header';
-
 import { ModerateForm } from 'components/board/moderator/actions';
+
+import BoardSingleThreadOverlayObserver from 'components/board/overlay';
 
 const ScreenBoard: React.FC = () => {
     return (
@@ -121,9 +122,9 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     <div className="d-flex flex-row align-items-center">
                         <CircleAvatar size={84} src={store.info?.icon ?? undefined} className="border" />
                         <div className="ml-4">
-                            <h1 className="display-5">{store.info?.title ?? boardId}</h1>
+                            <h2 className="_display-5">{store.info?.title ?? boardId}</h2>
                             <h4 className="lead">{store.info?.description ?? ""}</h4>
-                            <h6>+/{boardId}</h6>
+                            <h6>+{boardId}</h6>
                         </div>
                     </div>
                 </ImageHeader>
@@ -136,6 +137,8 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                 </Switch>
             </Container>
             <BoardThreadOverlay />
+            <BoardSingleThreadOverlayObserver />
+
             <Portal target="screen-right">
                 <Card className="mb-2">
                     <Card.Header>
@@ -151,6 +154,13 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                         <ListGroupItem>{store.info?.members} </ListGroupItem>
                         <ListGroupItem>{store.info?.posts ?? 0} Posts</ListGroupItem>
                     </ListGroup>
+                    <Card.Body className="d-none d-md-block">
+                        <LinkButton to={`/+${store.boardId}/create`}>Post</LinkButton>
+                        {!store.info?.isMember &&
+                            <IconButton icon={faSearch} onClick={() => store.subscribe()}>Subscribe</IconButton>}
+                        {store.info?.isMember &&
+                            <IconButton icon={faSearch} onClick={() => store.unsubscribe()}>Unsubscribe</IconButton>}
+                    </Card.Body>
                 </Card>
                 <Card className="mb-2">
                     <Card.Header>

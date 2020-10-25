@@ -95,8 +95,10 @@ const ThreadCard: React.FC<{
     }
 
     const onClick = (e: any) => { //React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (e.target.id == 'thread-card' || e.target.id == 'thread-card-inner' || e.target.id == 'thread-card-title')
-            history.push(data.url!);
+        if (e.target.id == 'thread-card' || e.target.id == 'thread-card-inner' || e.target.id == 'thread-card-title') {
+            store.overlayThread = data;
+            //history.push(data.url!);
+        }
     }
 
     //<Link to={data.url!}>

@@ -8,8 +8,12 @@ import { Button, ButtonProps, OverlayTrigger, Spinner, Tooltip } from 'react-boo
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const _LinkButton: React.FC<{ to: string } & RouteComponentProps & ButtonProps> = (props) => {
-    return <Button {...props} onClick={() => props.location.pathname == props.to || props.history.push(props.to)}>{props.children}</Button>
+const _LinkButton: React.FC<{ icon?: any, to: string } & RouteComponentProps & ButtonProps> = (props) => {
+    return <Button
+        {...props} onClick={() => props.location.pathname == props.to || props.history.push(props.to)}>
+            {props.icon && <FontAwesomeIcon icon={props.icon} />}
+            {props.children}
+    </Button>
 }
 
 export const LinkButton = withRouter(_LinkButton);

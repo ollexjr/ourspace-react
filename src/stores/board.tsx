@@ -28,6 +28,8 @@ export class BoardStore extends ObservableRequestState {
     token?: string
     boardId: string
 
+    @observable overlayThread?: IThread
+
     //"_masonry" 
     @observable UIdatalayout: number = 0;
     @observable UIcontainerFluid: boolean = true;

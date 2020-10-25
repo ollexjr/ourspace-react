@@ -173,16 +173,18 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                     <div className="mb-2" style={{ minHeight: '300px' }}>
                         <h4>{store.thread?.title ?? "%notset%"}</h4>
                         {store.thread?.content && <ReactMarkdown source={store.thread!.content!} />}
+
+                        {store.thread?.link && <div className="container mb-2 px-0 px-sm-2">
+                            <MediaSource
+                                //onOpen={() => setModal(true)}
+                                preview
+                                network="save"
+                                thumb={store.thread.thumb ?? undefined}
+                                src={store.thread.link} />
+                        </div>}
                     </div>
                 </div>
 
-                {store.thread?.link && <div className="container mb-2 px-0 px-sm-2">
-                    <MediaSource
-                        //onOpen={() => setModal(true)}
-                        preview
-                        network="save"
-                        src={store.thread.link} />
-                </div>}
 
                 <div className="px-2 px-md-4 mb-4 _border-bottom mb-1">
                     <InlineVoter
