@@ -228,6 +228,7 @@ export class BoardStore extends ObservableRequestState {
     }
 
     @action setOverlay(t: IThread) {
+        console.log("[store/setOverlay] => ", t)
         this.overlayThread = t;
     }
 }

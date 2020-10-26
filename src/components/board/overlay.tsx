@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Modal } from 'react-bootstrap';
 import { useBoardStore } from 'stores/board';
 import { ThreadStoreProvider } from 'stores/thread';
+import { BoardStoreProvider } from 'stores/board';
 
 import { ThreadView } from 'components/board/thread/thread';
 import { Switch, Route } from 'react-router-dom';
@@ -10,7 +11,9 @@ import { Switch, Route } from 'react-router-dom';
 const BoardSingleThreadOverlayObserver = observer(() => {
     const store = useBoardStore();
 
-    return store.overlayThread != undefined ? (
+    console.log("[BoardSingleThreadOverlayObserver]")
+    //return store.overlayThread != undefined ? 
+    return (
         <Modal
             //className="primary"
             show={store.overlayThread != undefined}
@@ -18,19 +21,21 @@ const BoardSingleThreadOverlayObserver = observer(() => {
             //backdrop="static"
             size="xl">
             <Modal.Header closeButton>
-                <Modal.Title>{store.overlayThread.title}</Modal.Title>
+                <Modal.Title>{store.overlayThread?.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body className="p-0">
                 {false && <Switch>
                     <Route path={`/+${store.boardId}/:threadId/`} component={undefined} />
                 </Switch>}
-                <ThreadStoreProvider threadId={store.overlayThread!.uId!}>
-                    {store.overlayThread &&
-                        <ThreadView threadId={store.overlayThread!.uId!} />}
-                </ThreadStoreProvider>
+                {store.overlayThread && <BoardStoreProvider boardId={store.overlayThread!.boardId!}>
+                    <ThreadStoreProvider threadId={store.overlayThread!.uId!}>
+                        {store.overlayThread &&
+                            <ThreadView threadId={store.overlayThread!.uId!} />}
+                    </ThreadStoreProvider>
+                </BoardStoreProvider>}
             </Modal.Body>
         </Modal >
-    ): null;
+    );
 });
 
 export default BoardSingleThreadOverlayObserver;

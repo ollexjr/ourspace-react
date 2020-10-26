@@ -28,6 +28,8 @@ import { CircleAvatar } from 'components/user/avatar';
 import { CommunityUserInline } from 'components/board/user';
 import { MediaSource } from 'components/media';
 import classNames from 'classnames';
+import BoardSingleThreadOverlayObserver from 'components/board/overlay';
+
 
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
 
@@ -106,10 +108,11 @@ const ThreadCard: React.FC<{
 
         const onClick = (e: any) => { //React.MouseEvent<HTMLDivElement, MouseEvent>) => {
             if (e.target.id == 'thread-card' || e.target.id == 'thread-card-inner' || e.target.id == 'thread-card-title') {
+                history.push(data.url!);
                 //store.overlayThread = data;
             }
-            //history.push(data.url!);
-            store.overlayThread = undefined;
+            //
+            //store.overlayThread = undefined;
         }
 
         const width = type == 1 ? 100 : undefined;
@@ -120,7 +123,7 @@ const ThreadCard: React.FC<{
                 <div
                     onClick={onClick}
                     id="thread-card"
-                    className="card border-none border-md-x border-md-y d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
+                    className="card border-y border-md-x border-md-y d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
                     <div className={
                         classNames("d-flex justify-content-between ",
                             { "flex-column": type == 0 },
@@ -386,6 +389,7 @@ export const BoardView: React.FC = observer(() => {
     return (
         <>
             <BoardNavbar />
+            <BoardSingleThreadOverlayObserver />
             <NetworkGateway retry={() => store.request()} state={() => store}>
                 {store.debug && <div>
                     <p>Id: {store.boardId}</p>

@@ -55,10 +55,12 @@ export const PromiseButton: React.FC<{
 }
 
 export const IconButton: React.FC<{
+    onClick?: () => any,
     icon?: any,
-} & ButtonProps> = ({ icon, variant, children }, props) => {
+} & ButtonProps> = ({ onClick, icon, variant, children }, props) => {
     return (
-        <Button //variant="outline-primary"  
+        <Button //variant="outline-primary"
+            onClick={onClick}  
             variant={variant}
             {...props}>
             <FontAwesomeIcon icon={icon} />

@@ -136,9 +136,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     <Route exact path={`/+${boardId}`} component={BoardView} />
                 </Switch>
             </Container>
-            <BoardThreadOverlay />
-            <BoardSingleThreadOverlayObserver />
-
+            
             <Portal target="screen-right">
                 <Card className="mb-2">
                     <Card.Header>
