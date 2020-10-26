@@ -60,10 +60,10 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
                         loggedIn={store.app.loggedIn}
                         table={store.thread?.acceptedCommentVotes ?? []}
                         votes={data?.votes ?? undefined}
-                        onClick={(v) => 
+                        onClick={(v) =>
                             store.assertInlineLogin()
-                                .then(t => 
-                                    store.voteComment(data?.uId ?? "undefined", v))} 
+                                .then(t =>
+                                    store.voteComment(data?.uId ?? "undefined", v))}
                         value={data?.me?.vote ?? ""} />
                     <div className="rounded button-row">
                         {false || canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>
@@ -134,7 +134,7 @@ const ThreadNavbar: React.FC<{}> = ({ }) => {
                 <CircleAvatar size={48} src={store.info?.icon ?? undefined} />
                 <div className="d-flex flex-column p-2">
                     <span className="font-weight-bold">+{store.boardId}</span>
-                    <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
+                    <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members ?? '?'} Members</span>
                 </div>
             </div>
             <div className="flex-grow-1">
@@ -144,6 +144,13 @@ const ThreadNavbar: React.FC<{}> = ({ }) => {
                     textOverflow: 'ellipsis'
                 }}>
                     {thread.thread?.title ?? "?"}
+                    {thread.thread?.link &&
+                        <a
+                            target="_blank"
+                            href={thread.thread.link}>
+                            <small>({(new URL(thread.thread!.link)).hostname})</small>
+                        </a>
+                    }
                 </h6>
                 <CommunityUserInline user={thread.thread?.user ?? undefined} />
             </div>
@@ -174,7 +181,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                 </Modal>
 
                 <div className="px-2 px-md-4 mb-2">
-                    <div className="user-info mb-2 d-flex flex-row text-muted">
+                    <div className="user-info mb-2 d-flex flex-row text-muted d-none">
                         <span className="mr-1">
                             +{store.thread?.boardId}
                         </span>
@@ -250,7 +257,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         </div>
                     }
 
-                    { store.app.loggedIn && <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} /> }
+                    {store.app.loggedIn && <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />}
                 </div>
 
                 <ThreadCommentView />
