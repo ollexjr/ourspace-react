@@ -188,7 +188,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
 
                 <div className="px-2 px-md-4 mb-4 _border-bottom mb-1">
                     <InlineVoter
-                        simple
+                        preview
                         size="sm"
                         className="d-flex flex-row mb-4"
                         table={store.thread?.acceptedVotes ?? []}

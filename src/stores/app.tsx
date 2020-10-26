@@ -49,8 +49,6 @@ export class AppStore {
     @observable moderate?: IComment | IBoard | IThread | ICommunityUserRef;
     @observable loginOverlay: boolean = false;
 
-
-
     @observable trending: IObservableArray<IBoard> = observable.array([
         { uId: 'news' },
         { uId: 'pics' },

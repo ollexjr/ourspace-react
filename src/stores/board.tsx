@@ -226,6 +226,10 @@ export class BoardStore extends ObservableRequestState {
     moderateComment(c: IComment) {
         this.app.moderate = c; 
     }
+
+    @action setOverlay(t: IThread) {
+        this.overlayThread = t;
+    }
 }
 
 export const boardStoreContext = React.createContext<BoardStore | null>(null);

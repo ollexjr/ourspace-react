@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from "classnames";
 import { Spinner, OverlayTrigger, Popover } from 'react-bootstrap';
 import { IVote } from 'model/compiled';
@@ -21,47 +22,82 @@ const codeMap: { [k: string]: string } = {
 export const InlineVoter: React.FC<{
     className?: string
     size?: string
-    simple?: boolean
+    preview?: boolean
     onClick: (a: string) => Promise<any>,
     table: Array<string>,
     votes?: { [k: string]: number },
     value: string
-}> = ({ onClick, value, votes, table, className, size }) => {
+}> = ({ onClick, preview, value, votes, table, className, size }) => {
 
     const [state, setLoading] = React.useState(false);
     const [valueState, setValue] = React.useState<string>(value);
     const [pop, setPop] = React.useState<boolean>(false);
 
-    const fire = (v: string) => {
+    const fire = (v: string): Promise<any> => {
         const nv = (valueState == v) ? "unset" : v;
         setLoading(true);
-        onClick(nv)
+        return onClick(nv)
             .then((t: IVote) => setValue(nv))
             .catch(t => setLoading(false))
             .finally(() => setLoading(false));
     }
+    let overlay = React.useRef(null);
 
     const def = " rounded border";
     const cls = className ? className + def : def;
+
+    // https://stackoverflow.com/questions/38467848/react-bootstrap-how-to-manually-close-overlaytrigger
+    // https://stackoverflow.com/a/47636953
     return (
         <OverlayTrigger
-            trigger={["hover", "focus"]}
+            rootClose={true}
+
+            //componentRef={(ref: any) => this.overlay = ref}
+            //ref={ref}
+            //trigger={["hover", "focus"]}
+            trigger={preview ? ["click"] : ["hover", "focus"]}
+            placement="auto"
             overlay={
                 <Popover id={`popover${state}`}>
-                    <Popover.Title as="h3">Vote</Popover.Title>
+                    <Popover.Title as="h3">
+                        Opinion
+                    </Popover.Title>
                     <Popover.Content>
-                        %info%
+                        {table.map((v, i) => {
+                            const isThis = (v == valueState);
+                            let count = (votes && votes[v]) ?? 0;
+                            return (
+                                <button
+                                    key={v}
+                                    style={{ padding: size }}
+                                    type="button" className={
+                                        classNames("btn btn-sm",
+                                            { "btn-outline": !isThis },
+                                            { "btn-outline-primary": isThis },
+                                            { "selected": isThis })}
+                                    onClick={() => {
+                                        fire(v).then(t => document.body.click())
+                                        //.then(t => ref!.current!.hide())
+                                    }}>
+                                    {codeMap[v] ?? ""}
+                                    <span>{count}</span>
+                                </button>
+                            );
+                        })}
                     </Popover.Content>
+                    <Link className="px-2" to="/about"><small>Read more here</small></Link>
                 </Popover>
             }
         >
             <div className={cls}
-                onMouseLeave={(e) => {}}
-                onMouseEnter={(e) => {}} >
+                onMouseLeave={(e) => { }}
+                onMouseEnter={(e) => { }} >
                 {table.map((v, i) => {
+                    if (preview && i > 1) {
+                        return;
+                    }
                     const isThis = (v == valueState);
                     let count = (votes && votes[v]) ?? 0;
-
                     //if (!isThis && count > 0) {
                     //    count--;
                     //}
@@ -74,9 +110,9 @@ export const InlineVoter: React.FC<{
                                     { "btn-outline": !isThis },
                                     { "btn-outline-primary": isThis },
                                     { "selected": isThis })}
-                            onClick={() => fire(v)}>
+                            onClick={() => !preview && fire(v)}>
                             {codeMap[v] ?? ""}
-                            <span>{count}</span>
+                            {count}
                         </button>
                     )
                 })}

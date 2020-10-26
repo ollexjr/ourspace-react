@@ -27,13 +27,15 @@ import _ from 'lodash';
 import { CircleAvatar } from 'components/user/avatar';
 import { CommunityUserInline } from 'components/board/user';
 import { MediaSource } from 'components/media';
+import classNames from 'classnames';
 
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
 
 const CardButtons: React.FC<{
+    t: Thread,
     buttonClass: string,
     commentNum: number,
-}> = ({ buttonClass, commentNum }) => {
+}> = ({ buttonClass, t, commentNum }) => {
     const store = useBoardStore();
 
     let items: Array<ButtonDropdownItem> = [
@@ -57,7 +59,10 @@ const CardButtons: React.FC<{
             <IconButton variant="outline" icon={faShare}
                 className={buttonClass}>
             </IconButton>
-            <IconButton variant="outline" className={buttonClass} icon={faCommentAlt} >
+            <IconButton variant="outline"
+                onClick={() => store.setOverlay(t)}
+                className={buttonClass}
+                icon={faCommentAlt} >
                 {commentNum}
             </IconButton>
             <IconButton variant="outline" className={buttonClass} icon={faLink}>
@@ -68,107 +73,123 @@ const CardButtons: React.FC<{
 
 
 const ThreadCard: React.FC<{
+    type?: number,
     className?: string,
     data: Thread, showContext: boolean
-}> = ({ className, data, showContext }) => {
-    const store = useBoardStore();
-    const history = useHistory();
-    const cls = "_list-group-item _border-none p-0 p-sm-1 p-md-2 post-container " + className ?? className;
+}> = ({
+    type,
+    className,
+    data,
+    showContext }) => {
+        const store = useBoardStore();
+        const history = useHistory();
+        const cls = "_list-group-item _border-none p-0 p-sm-1 p-md-2 post-container " + className ?? className;
 
-    if (!data || !data.title || !data.createdAt || !data.user) {
-        return null;
-    }
-
-    const src = data.thumb;
-
-    const canShowImage = isImage.test(src ?? "");
-    const canShowMedia = data.link && ReactPlayer.canPlay(data.link);
-
-    let url: URL
-    try {
-        if (data.link)
-            // TODO: handle weird urls on the server
-            // amend self urls to point to the hostname
-            url = new URL(data.link)
-    } catch {
-        return null;
-    }
-
-    const onClick = (e: any) => { //React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (e.target.id == 'thread-card' || e.target.id == 'thread-card-inner' || e.target.id == 'thread-card-title') {
-            store.overlayThread = data;
-            //history.push(data.url!);
+        if (!data || !data.title || !data.createdAt || !data.user) {
+            return null;
         }
-    }
 
-    //<Link to={data.url!}>
-    // _className="d-flex flex-column justify-content-center align-items-center"
-    return (
-        <div className={cls}>
-            <div
-                onClick={onClick}
-                id="thread-card"
-                className="card border-none border-md-x border-md-y d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
-                <div className="d-flex mb-1">
-                    <div className="mr-1 mr-md-2">
-                        <InlineVoter
-                            simple
-                            size="sm"
-                            className="d-flex flex-column"
-                            table={data?.acceptedVotes ?? []}
-                            votes={data?.votes ?? undefined}
-                            onClick={(v) =>
-                                //store.voteThread(data?.uId ?? "undefined", v)
-                                //    .then(
-                                //        t => data!.me!.vote = t.typeCode)} 
-                                //value={data?.me?.vote ?? "unset"} 
-                                store.voteThread(data?.uId ?? "undefined", v)}
-                            value={data?.me?.vote ?? "unset"}
-                        />
-                        {false && <div className="_d-flex flex-row flex-md-column justify-content-center align-items-center d-none">
-                            <CardButtons
-                                commentNum={data.numComments ?? 0}
-                                buttonClass="d-none d-md-none" />
-                        </div>}
-                    </div>
-                    <div id="thread-card-inner" className="card-block text-left w-100">
-                        <div className="post-meta text-left d-flex flex-row flex-wrap justify-content-left">
-                            <CommunityLinkPopover boardId={data.boardId!}>
-                                <span className="mr-2">+{data.boardId}</span>
-                            </CommunityLinkPopover>
-                            <span className="mr-1">{moment.unix(data.createdAt).fromNow()} by </span>
-                            <CommunityUserInline className="mr-1" user={data.user} />
-                            {data.link && <a
-                                className="small"
-                                onClick={() => store.event("link/open")}
-                                target="_blank"
-                                href={data.link}>
-                                {url!.host}
-                                <FontAwesomeIcon className="ml-1" size="xs" icon={faExternalLinkAlt} />
-                            </a>}
+        const src = data.thumb;
+
+        const canShowImage = isImage.test(src ?? "");
+        const canShowMedia = data.link && ReactPlayer.canPlay(data.link);
+
+        let url: URL
+        try {
+            if (data.link)
+                // TODO: handle weird urls on the server
+                // amend self urls to point to the hostname
+                url = new URL(data.link)
+        } catch {
+            return null;
+        }
+
+        const onClick = (e: any) => { //React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            if (e.target.id == 'thread-card' || e.target.id == 'thread-card-inner' || e.target.id == 'thread-card-title') {
+                //store.overlayThread = data;
+            }
+            //history.push(data.url!);
+            store.overlayThread = undefined;
+        }
+
+        const width = type == 1 ? 100 : undefined;
+        const height = type == 1 ? 100 : undefined;
+
+        return (
+            <div className={cls}>
+                <div
+                    onClick={onClick}
+                    id="thread-card"
+                    className="card border-none border-md-x border-md-y d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
+                    <div className={
+                        classNames("d-flex justify-content-between ",
+                            { "flex-column": type == 0 },
+                            { "flex-row": type == 1 })} >
+                        <div className="d-flex mb-1">
+                            <div className="mr-1 mr-md-2">
+                                <InlineVoter
+                                    preview
+                                    size="sm"
+                                    className="d-flex flex-column"
+                                    table={data?.acceptedVotes ?? []}
+                                    votes={data?.votes ?? undefined}
+                                    onClick={(v) =>
+                                        //store.voteThread(data?.uId ?? "undefined", v)
+                                        //    .then(
+                                        //        t => data!.me!.vote = t.typeCode)} 
+                                        //value={data?.me?.vote ?? "unset"} 
+                                        store.voteThread(data?.uId ?? "undefined", v)}
+                                    value={data?.me?.vote ?? "unset"}
+                                />
+                                {false && <div className="_d-flex flex-row flex-md-column justify-content-center align-items-center d-none">
+                                    <CardButtons
+                                        t={data}
+                                        commentNum={data.numComments ?? 0}
+                                        buttonClass="d-none d-md-none" />
+                                </div>}
+                            </div>
+                            <div id="thread-card-inner" className="card-block text-left w-100">
+                                <div className="post-meta text-left d-flex flex-row flex-wrap justify-content-left">
+                                    <CommunityLinkPopover boardId={data.boardId!}>
+                                        <span className="mr-2">+{data.boardId}</span>
+                                    </CommunityLinkPopover>
+                                    <span className="mr-1">{moment.unix(data.createdAt).fromNow()} by </span>
+                                    <CommunityUserInline className="mr-1" user={data.user} />
+                                    {data.link && <a
+                                        className="small"
+                                        onClick={() => store.event("link/open")}
+                                        target="_blank"
+                                        href={data.link}>
+                                        {url!.host}
+                                        <FontAwesomeIcon className="ml-1" size="xs" icon={faExternalLinkAlt} />
+                                    </a>}
+                                </div>
+                                <Card.Title
+                                    id="thread-card-title"
+                                    className="post-title text-left w-lg-75 mb-0 mb-md-2">
+                                    {data.title}
+                                </Card.Title>
+                            </div>
                         </div>
-                        <Card.Title
-                            id="thread-card-title"
-                            className="post-title text-left w-lg-75 mb-0 mb-md-2">
-                            {data.title}
-                        </Card.Title>
+                        <MediaSource
+                            width={width}
+                            height={height}
+                            preview
+                            network="save"
+                            aspectRatio={data.thumbAspectRatio ?? undefined}
+                            thumb={data.thumb ?? undefined}
+                            src={data.link ?? undefined} />
                     </div>
-                </div>
-                <MediaSource
-                    preview
-                    network="save"
-                    aspectRatio={data.thumbAspectRatio ?? undefined}
-                    thumb={data.thumb ?? undefined}
-                    src={data.link ?? undefined} />
-                <div className="d-flex flex-row justify-content-left">
-                    <CardButtons
-                        commentNum={data.numComments ?? 0}
-                        buttonClass="d-block" />
+                    <div className="d-flex flex-row justify-content-left">
+                        <CardButtons
+                            t={data}
+                            commentNum={data.numComments ?? 0}
+                            buttonClass="d-block" />
+                    </div>
                 </div>
             </div>
-        </div>
-    )
-}
+        )
+    }
 
 const ThreadCardWrapper: React.FC = ({ children }) => {
     return (
@@ -205,13 +226,19 @@ export const ThreadsView: React.FC<{
                 >
                     {data.map((t) => t.uId &&
                         <ThreadCard
+                            type={layout}
                             className={getCardClass()}
                             showContext={false} key={t.uId} data={t} />)}
                 </Masonry>
             )
         }
 
-        return data.map((t) => t.uId && <ThreadCard showContext={false} key={t.uId} data={t} />)
+        return data.map(
+            (t) => t.uId && <ThreadCard
+                type={layout}
+                showContext={false}
+                key={t.uId}
+                data={t} />)
 
     }
 

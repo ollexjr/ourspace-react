@@ -3,6 +3,8 @@ import ReactPlayer from 'react-player';
 import LazyLoad from 'react-lazyload';
 
 export const MediaSource: React.FC<{
+    width?: number,
+    height?: number,
     preview: boolean
     size?: string
     network?: string,
@@ -11,13 +13,11 @@ export const MediaSource: React.FC<{
     src?: string,
     onOpen?: () => any,
     onEvent?: (ev: string) => any
-}> = ({ onOpen, aspectRatio, preview, src, thumb, onEvent }) => {
-
+}> = ({ onOpen, width, height, aspectRatio, preview, src, thumb, onEvent }) => {
     preview = false;
-
     const maxHeight = preview ? '350px' : undefined;
-    let height: number = 0;
-    if (thumb && aspectRatio) {
+
+    if (thumb && aspectRatio && !height) {
         height = (320 * aspectRatio);
         if (preview && height > 350) {
             height = 350;
@@ -121,6 +121,12 @@ export const MediaSource: React.FC<{
     return (
         loader(<img
             onClick={() => onOpen && onOpen()}
+            style={{
+                objectFit: 'cover',
+                width: width,
+                height: height,
+            }}
+           
             className="card-img rounded border"
             src={thumb} />)
     )

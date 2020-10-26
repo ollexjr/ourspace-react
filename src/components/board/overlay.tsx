@@ -10,7 +10,7 @@ import { Switch, Route } from 'react-router-dom';
 const BoardSingleThreadOverlayObserver = observer(() => {
     const store = useBoardStore();
 
-    return store.overlayThread ? (
+    return store.overlayThread != undefined ? (
         <Modal
             //className="primary"
             show={store.overlayThread != undefined}
