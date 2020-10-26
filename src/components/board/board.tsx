@@ -85,7 +85,20 @@ const ThreadCard: React.FC<{
     showContext }) => {
         const store = useBoardStore();
         const history = useHistory();
-        const cls = "_list-group-item _border-none p-0 p-sm-1 p-md-2 post-container " + className ?? className;
+        
+        let cls = " post-container " + className ?? className;
+        let innerClass = " d-flex flex-column rounded-iframe-container text-dark ";
+
+
+        switch (type) {
+            case 0:
+                cls = cls + " p-0 p-sm-1 p-md-2";
+                innerClass += " card border-y page-link border-md-x border-md-y shadow-sm";
+            break
+            case 1:
+                innerClass += " border-bottom p-1"
+                break
+        }
 
         if (!data || !data.title || !data.createdAt || !data.user) {
             return null;
@@ -123,7 +136,7 @@ const ThreadCard: React.FC<{
                 <div
                     onClick={onClick}
                     id="thread-card"
-                    className="card border-y border-md-x border-md-y d-flex flex-column rounded-iframe-container shadow-sm page-link text-dark">
+                    className={innerClass}>
                     <div className={
                         classNames("d-flex justify-content-between ",
                             { "flex-column": type == 0 },
@@ -131,6 +144,7 @@ const ThreadCard: React.FC<{
                         <div className="d-flex mb-1">
                             <div className="mr-1 mr-md-2">
                                 <InlineVoter
+                                    loggedIn={store.app.loggedIn}
                                     preview
                                     size="sm"
                                     className="d-flex flex-column"

@@ -20,6 +20,7 @@ const codeMap: { [k: string]: string } = {
 }
 
 export const InlineVoter: React.FC<{
+    loggedIn?: boolean,
     className?: string
     size?: string
     preview?: boolean
@@ -27,7 +28,7 @@ export const InlineVoter: React.FC<{
     table: Array<string>,
     votes?: { [k: string]: number },
     value: string
-}> = ({ onClick, preview, value, votes, table, className, size }) => {
+}> = ({ loggedIn, onClick, preview, value, votes, table, className, size }) => {
 
     const [state, setLoading] = React.useState(false);
     const [valueState, setValue] = React.useState<string>(value);
@@ -51,11 +52,11 @@ export const InlineVoter: React.FC<{
     return (
         <OverlayTrigger
             rootClose={true}
-
             //componentRef={(ref: any) => this.overlay = ref}
             //ref={ref}
             //trigger={["hover", "focus"]}
-            trigger={preview ? ["click"] : ["hover", "focus"]}
+            //: ["hover", "focus"]
+            trigger={preview ? ["click"]: undefined}
             placement="auto"
             overlay={
                 <Popover id={`popover${state}`}>
@@ -75,10 +76,7 @@ export const InlineVoter: React.FC<{
                                             { "btn-outline": !isThis },
                                             { "btn-outline-primary": isThis },
                                             { "selected": isThis })}
-                                    onClick={() => {
-                                        fire(v).then(t => document.body.click())
-                                        //.then(t => ref!.current!.hide())
-                                    }}>
+                                    onClick={() => fire(v).then(t => document.body.click())}>
                                     {codeMap[v] ?? ""}
                                     <span>{count}</span>
                                 </button>

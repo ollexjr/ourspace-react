@@ -35,6 +35,7 @@ import { ParallaxProvider } from 'react-scroll-parallax';
 import Sticky from 'react-stickynode';
 import { SidebarDefault } from 'components/app/sidebar';
 import { ModeratorActionsGlobal } from 'components/board/moderator/actions';
+import BoardSingleAuthenticationOverlayObserver from 'components/user/overlay';
 
 import ScreenDonateRouter from 'screens/about/donate';
 import ScreenStaticRouter from 'screens/static/scaffold';
@@ -98,6 +99,7 @@ export const BoardRouterWrapper: React.FC = () => {
         <Route path="/post/:threadId/:title" component={() => null} />
         <Route path="/@:userId" component={() => null} />
         <Route path="/u/:userId" component={() => null} />
+        <BoardSingleAuthenticationOverlayObserver/>
       </Switch>
       <ModeratorActionsGlobal/>
     </Scaffold>

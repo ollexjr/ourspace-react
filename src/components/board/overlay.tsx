@@ -25,7 +25,7 @@ const BoardSingleThreadOverlayObserver = observer(() => {
                 <Modal.Title>
                     {//store.overlayThread?.title
                     }
-                Discussion...
+                    Discussion...
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="p-0">

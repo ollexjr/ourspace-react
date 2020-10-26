@@ -57,9 +57,14 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
                 }
                 <div className="d-flex justify-content-between align-items-center mb-2">
                     <InlineVoter
+                        loggedIn={store.app.loggedIn}
                         table={store.thread?.acceptedCommentVotes ?? []}
                         votes={data?.votes ?? undefined}
-                        onClick={(v) => store.voteComment(data?.uId ?? "undefined", v)} value={data?.me?.vote ?? ""} />
+                        onClick={(v) => 
+                            store.assertInlineLogin()
+                                .then(t => 
+                                    store.voteComment(data?.uId ?? "undefined", v))} 
+                        value={data?.me?.vote ?? ""} />
                     <div className="rounded button-row">
                         {false || canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>
                             {!edit ? <FontAwesomeIcon icon={faEdit} /> : "Cancel Edit"}
@@ -192,6 +197,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         {store.thread?.link && <div className="container mb-2 px-0 _px-sm-2">
                             <MediaSource
                                 //onOpen={() => setModal(true)}
+                                width='auto'
                                 preview
                                 network="save"
                                 thumb={store.thread.thumb ?? undefined}
@@ -203,6 +209,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
 
                 <div className="px-2 px-md-4 mb-4 _border-bottom mb-1">
                     <InlineVoter
+                        loggedIn={store.app.loggedIn}
                         preview
                         size="sm"
                         className="d-flex flex-row mb-4"

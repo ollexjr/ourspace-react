@@ -38,6 +38,14 @@ export class AppStore {
     @observable UIshowEventDebug: boolean = false;
     @observable UIdarkTheme: boolean = false;
 
+    @action
+    assertInlineLogin(): Promise<any> {
+        if (!this.loggedIn) {
+            this.loginOverlay = true;
+            return Promise.reject();
+        }
+        return Promise.resolve();
+    }
 
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;

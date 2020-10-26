@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 import LazyLoad from 'react-lazyload';
 
 export const MediaSource: React.FC<{
-    width?: number,
+    width?: number | string,
     height?: number,
     preview: boolean
     size?: string
