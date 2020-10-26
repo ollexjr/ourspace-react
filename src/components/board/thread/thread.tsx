@@ -155,8 +155,11 @@ const ThreadNavbar: React.FC<{}> = ({ }) => {
                 <CommunityUserInline user={thread.thread?.user ?? undefined} />
             </div>
             <PromiseButton
+                variant="primary"
                 onClick={() => thread.load()}
-                icon={faSync}></PromiseButton>
+                icon={faSync}>
+                Join
+            </PromiseButton>
         </Navbar>
     )
 }
@@ -168,7 +171,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
     return (
         <NetworkGateway retry={() => store.load()} state={() => store}>
             <ThreadNavbar />
-            <Container className="p-0 pt-2 h-100">
+            <Container fluid className="p-0 pt-2 h-100">
                 <Modal size="xl" className="iframe-container" show={showModal} onHide={() => setModal(false)}>
                     <Modal.Header closeButton>
                         <div>
@@ -181,7 +184,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                 </Modal>
 
                 <div className="px-2 px-md-4 mb-2">
-                    <div className="user-info mb-2 d-flex flex-row text-muted d-none">
+                    <div className="user-info mb-2 d-none _d-flex flex-row text-muted">
                         <span className="mr-1">
                             +{store.thread?.boardId}
                         </span>
@@ -256,7 +259,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                             <LinkButton to="/signup">Signup</LinkButton>
                         </div>
                     }
-
+                    
                     {store.app.loggedIn && <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />}
                 </div>
 

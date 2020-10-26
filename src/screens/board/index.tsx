@@ -12,6 +12,7 @@ import _ from 'lodash';
 import { observer, useAsObservableSource } from "mobx-react";
 import {
     Button,
+    ButtonGroup,
     Col,
     Row,
     Form,
@@ -36,7 +37,7 @@ import { EnumToArray, DropdownEnum } from 'components/dropdown';
 import { CircleAvatar } from 'components/user/avatar';
 import { useWindowSize } from 'components/layout';
 
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUserPlus, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
@@ -136,7 +137,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     <Route exact path={`/+${boardId}`} component={BoardView} />
                 </Switch>
             </Container>
-            
+
             <Portal target="screen-right">
                 <Card className="mb-2">
                     <Card.Header>
@@ -151,12 +152,14 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                         <ListGroupItem>{store.info?.members ?? '?'} Members</ListGroupItem>
                         <ListGroupItem>{store.info?.posts ?? '?'} Posts</ListGroupItem>
                     </ListGroup>
-                    <Card.Body className="d-none d-md-block">
-                        <LinkButton to={`/+${store.boardId}/create`}>Post</LinkButton>
-                        {!store.info?.isMember &&
-                            <IconButton icon={faSearch} onClick={() => store.subscribe()}>Subscribe</IconButton>}
-                        {store.info?.isMember &&
-                            <IconButton icon={faSearch} onClick={() => store.unsubscribe()}>Unsubscribe</IconButton>}
+                    <Card.Body className="d-none _d-md-block d-flex flex-column">
+                        <ButtonGroup>
+                            <LinkButton to={`/+${store.boardId}/create`}>Post</LinkButton>
+                            {!store.info?.isMember &&
+                                <IconButton icon={faUserPlus} onClick={() => store.subscribe()}>Join Community</IconButton>}
+                            {store.info?.isMember &&
+                                <IconButton icon={faUserCheck} onClick={() => store.unsubscribe()}>Leave Community</IconButton>}
+                        </ButtonGroup>
                     </Card.Body>
                 </Card>
                 <Card className="mb-2">

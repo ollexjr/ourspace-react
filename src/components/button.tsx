@@ -10,9 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const _LinkButton: React.FC<{ icon?: any, to: string } & RouteComponentProps & ButtonProps> = (props) => {
     return <Button
-        {...props} onClick={() => props.location.pathname == props.to || props.history.push(props.to)}>
-            {props.icon && <FontAwesomeIcon icon={props.icon} />}
-            {props.children}
+        //{...props} 
+        onClick={() => props.location.pathname == props.to || props.history.push(props.to)}>
+        {props.icon && <FontAwesomeIcon icon={props.icon} />}
+        {props.children}
     </Button>
 }
 
@@ -37,11 +38,13 @@ export const NetworkedButton: React.FC<{ onClick: () => Promise<any>, message: s
 }
 
 export const PromiseButton: React.FC<{
+    //variant?:string,
+    className?:string,
     onClick: () => Promise<any>,
     icon?: any,
-} & ButtonProps> = ({ children, icon, onClick }, props) => {
+} & ButtonProps> = ({ children, className, icon, onClick }, props) => {
     const [loading, setState] = React.useState<boolean>(false);
-    return <Button {...props} variant={""} onClick={() => {
+    return <Button {...props} className={className} onClick={() => {
         if (loading)
             return;
         setState(true)
@@ -49,7 +52,7 @@ export const PromiseButton: React.FC<{
             setState(false);
         })
     }}>
-        {icon && <FontAwesomeIcon icon={icon} />}
+        {icon && <FontAwesomeIcon icon={icon} className="mr-1" />}
         {loading ? <Spinner animation="border" /> : children}
     </Button>
 }
@@ -60,7 +63,7 @@ export const IconButton: React.FC<{
 } & ButtonProps> = ({ onClick, icon, variant, children }, props) => {
     return (
         <Button //variant="outline-primary"
-            onClick={onClick}  
+            onClick={onClick}
             variant={variant}
             {...props}>
             <FontAwesomeIcon icon={icon} />

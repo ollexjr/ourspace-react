@@ -15,7 +15,7 @@ import { ScrollEventProvider } from 'components/scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faReply, faBookmark, faCommentAlt, faShare,
-    faSave, faLink, faPlus, faCompress,
+    faSave, faLink, faPlus, faCompress, faPenFancy,
     faSync, faExternalLinkAlt, faUsers, faUsersSlash,
     faSortAmountDown, faSortAmountUp, faWindowMaximize, faStream, faPortrait
 } from '@fortawesome/free-solid-svg-icons';
@@ -85,7 +85,7 @@ const ThreadCard: React.FC<{
     showContext }) => {
         const store = useBoardStore();
         const history = useHistory();
-        
+
         let cls = " post-container " + className ?? className;
         let innerClass = " d-flex flex-column rounded-iframe-container text-dark ";
 
@@ -94,7 +94,7 @@ const ThreadCard: React.FC<{
             case 0:
                 cls = cls + " p-0 p-sm-1 p-md-2";
                 innerClass += " card border-y page-link border-md-x border-md-y shadow-sm";
-            break
+                break
             case 1:
                 innerClass += " border-bottom p-1"
                 break
@@ -358,7 +358,7 @@ const BoardNavbar: React.FC = observer(() => {
                             search: store.getQueryParams(),
                         });
                     }} />
-                <DropdownEnum
+                {false && <DropdownEnum
                     title="Direction"
                     labels={[
                         { label: "Decending", icon: faSortAmountDown },
@@ -371,27 +371,16 @@ const BoardNavbar: React.FC = observer(() => {
                         history.push({
                             search: store.getQueryParams(),
                         });
-                    }} />
+                    }} />}
             </div>
             <BoardTextSearch boardId={store.boardId} />
-            <Button className="mr-2" variant="outline-primary" onClick={() => store.request()}>
-                <FontAwesomeIcon icon={faSync} />
-            </Button>
-            <LinkButton to={`+${store.boardId}/create`}>
-                <FontAwesomeIcon icon={faPlus} />
-            </LinkButton>
-            {
-
-                /*!store.info?.isMember && <NetworkedButton
-                    message="Join"
-                    successMessage="Unsubscribe"
-                    onClick={() => store.subscribe()} />
-                    */
-                //store.info?.isMember && <Button onClick={() => store.unsubscribe()}>Unsubscribe</Button>
-                store.info && <PromiseButton
+            {store.info &&
+                <PromiseButton
+                    className="d-flex"
                     icon={store.info.isMember ? faUsersSlash : faUsers}
                     variant={(store.info.isMember ? "primary" : "danger")}
                     onClick={() => store.info!.isMember ? store.unsubscribe() : store.subscribe()}>
+                    <span>Join</span>
                 </PromiseButton>
             }
         </Navbar>
