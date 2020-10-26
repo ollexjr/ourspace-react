@@ -9,7 +9,7 @@ import { Navbar, Nav, Container, Form, ButtonGroup, Button, Row, Col } from 'rea
 import { useAppStore, AppStoreProvider } from 'stores/app';
 import { observer } from 'mobx-react';
 import { InlineNavCard } from "components/user/card"
-import { faAt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faAt, faPlus, faProjectDiagram, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CommunityAvatar } from 'components/board/avatar';
 
@@ -87,8 +87,14 @@ export const SiteNavbar: React.FC = observer(() => {
                         <Form.Control type="text" placeholder="Search" className="mr-sm-2" />
                     </Form>}
                     <Brand className="d-block d-sm-none" />
-                    <Nav.Link href="/+all">Big Spaces</Nav.Link>
-                    <Nav.Link href="/+all">Little Spaces</Nav.Link>
+                    <Nav.Link href="/+all">
+                        <FontAwesomeIcon className="mr-1" icon={faProjectDiagram} />
+                        Big Spaces
+                    </Nav.Link>
+                    <Nav.Link href="/+all">
+                        <FontAwesomeIcon className="mr-1" icon={faAddressCard} />
+                        Little Spaces
+                    </Nav.Link>
                     <Nav.Link href="/about-and-faq">Help</Nav.Link>
                     <Nav.Link href="/+all">Support Us</Nav.Link>
                     <Nav.Item className="flex-grow-1 flex-row text-right py-2 p-md-0 d-flex d-md-flex _d-md-block justify-content-end">

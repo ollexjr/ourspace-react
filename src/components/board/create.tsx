@@ -1,13 +1,13 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { TextEditor } from 'components/editor/editor';
 import Editor from 'rich-markdown-editor';
 import { PromiseButton } from 'components/button';
 import { useAppStore } from 'stores/app';
 import { IBoardCreate } from 'model/compiled';
 
-const BoardCreateForm: React.FC<{ 
-    onSubmit: (v: IBoardCreate) => Promise<any> 
+const BoardCreateForm: React.FC<{
+    onSubmit: (v: IBoardCreate) => Promise<any>
 }> = ({ onSubmit }) => {
 
     const store = useAppStore();
@@ -39,9 +39,9 @@ const BoardCreateForm: React.FC<{
             </Form.Group>
 
             <Form.Group controlId="formThreadLink">
-                <Form.Label>Tag line</Form.Label>
+                <Form.Label>Tag line/Title</Form.Label>
                 <Form.Control type="text"
-                    placeholder="Link"
+                    placeholder="eg; A community for cats!"
                     onChange={(v) => set({ ...state, description: v.target.value })} />
                 <Form.Text className="text-muted">
                     A short description to go in the title and header.
@@ -49,14 +49,19 @@ const BoardCreateForm: React.FC<{
             </Form.Group>
             <p>You can change everything else later!</p>
 
-
+            <Alert variant="warning">
+                <Alert.Heading>
+                    You are restricted to moderating or owning 6 communities at the same time.
+                </Alert.Heading>
+                This is to stop community capture, when a small group of users hold control over large numbers of communities
+            </Alert>
             <div className="d-flex flex-row justify-content-center">
                 <PromiseButton onClick={preSubmit} variant="primary" type="submit">
                     Create
                 </PromiseButton>
             </div>
 
-            {state.name.length > 0 && 
+            {state.name.length > 0 &&
                 <p>
                     <h1 className="display-1">{state.name}</h1> <span>a community by @you</span>
                 </p>}

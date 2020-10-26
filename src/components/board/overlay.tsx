@@ -19,7 +19,8 @@ const BoardSingleThreadOverlayObserver = observer(() => {
             show={store.overlayThread != undefined}
             onHide={() => store.overlayThread = undefined}
             //backdrop="static"
-            size="xl">
+            size="lg"
+            >
             <Modal.Header closeButton>
                 <Modal.Title>{store.overlayThread?.title}</Modal.Title>
             </Modal.Header>
