@@ -46,7 +46,8 @@ export const MediaSource: React.FC<{
 
     if (isVideo) {
         // from inspecting the DOM, youtube placeholders render with a height of 358
-        height = 358;
+        height = 200;
+        //height = 358;
     }
 
 
@@ -75,6 +76,7 @@ export const MediaSource: React.FC<{
                         controls
                         className="border rounded"
                         width='100%'
+                        height={height}
                         onPlay={() => onEvent && onEvent("link/playing")}
                         onPause={() => onEvent && onEvent("link/pause")}
                         url={src} />

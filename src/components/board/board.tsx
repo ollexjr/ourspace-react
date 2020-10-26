@@ -92,7 +92,7 @@ const ThreadCard: React.FC<{
 
         switch (type) {
             case 0:
-                cls = cls + " p-0 p-sm-1 p-md-2";
+                cls = cls + " p-0 p-sm-1 p-md-1";
                 innerClass += " card border-y page-link border-md-x border-md-y shadow-sm";
                 break
             case 1:
