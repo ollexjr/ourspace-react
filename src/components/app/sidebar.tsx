@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UserNotifications } from 'components/user/card';
 import { LinkButton } from 'components/button';
 import { Link } from 'react-router-dom';
+import { ActivityRecentThreads } from 'components/user/recent';
 
 export const SidebarCard: React.FC = ({ children }) => {
     return (
@@ -87,6 +88,7 @@ export const SidebarDefault: React.FC = () => {
             <SidebarSettings />
             <TrendingCommunitiesList />
             <UserNotifications />
+            <ActivityRecentThreads/>
             <div>
                 <small className="p-2">Copyright ourspace {new Date().getFullYear()}</small>
             </div>

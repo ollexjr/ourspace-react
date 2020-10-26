@@ -54,6 +54,7 @@ export class AppStore {
     @observable displayableEvent: IObservableArray<IEvent> = observable.array([]);
     @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([]);
 
+    @observable recent: IObservableArray<IThread> = observable.array([]);
     @observable moderate?: IComment | IBoard | IThread | ICommunityUserRef;
     @observable loginOverlay: boolean = false;
 
@@ -226,6 +227,10 @@ export class AppStore {
             console.log("[app store] logged in");
             this.setupLogin(json.tokens!.accessToken!, json.tokens!.refreshToken!);
         })
+    }
+
+    addView(t: IThread) {
+        this.recent.push(t);
     }
 
     private tearDownLogin() {

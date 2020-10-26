@@ -117,6 +117,7 @@ export class ThreadStore extends ObservableRequestState {
     }
 
     load(): Promise<void> {
+
         const withContext: boolean = (this.thread == undefined);
         this.event("open");
         return this.wrap(() => this.app.api.endpointGet("board/thread", {
@@ -124,6 +125,8 @@ export class ThreadStore extends ObservableRequestState {
             'withContext': withContext,
         }, 200).then((t: IThreadWithBoardContext) => {
             this.thread = t.thread ?? undefined;
+            this.app.addView(this.thread!);
+
             //this.comments = t.comments ?? undefined;
             this.commentsGraph = t.commentsGraph ?? undefined;
             if (this.commentsGraph) {

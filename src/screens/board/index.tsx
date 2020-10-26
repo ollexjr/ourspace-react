@@ -142,13 +142,13 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                 <Card className="mb-2">
                     <Card.Header>
                         About this Space
+                        <small className="d-block">Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</small>
                     </Card.Header>
                     <Card.Body>
                         <Card.Title>{store.info?.title}</Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">{store.info?.description}</Card.Subtitle>
                     </Card.Body>
                     <ListGroup className="list-group-flush">
-                        <ListGroupItem>Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</ListGroupItem>
                         <ListGroupItem>{store.info?.members ?? '?'} Members</ListGroupItem>
                         <ListGroupItem>{store.info?.posts ?? '?'} Posts</ListGroupItem>
                     </ListGroup>
@@ -162,14 +162,14 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                         </ButtonGroup>
                     </Card.Body>
                 </Card>
-                <Card className="mb-2">
+                {false && <Card className="mb-2">
                     <Card.Header>
                         Moderators
                     </Card.Header>
                     <ListGroup className="list-group-flush">
                         {store.info?.preview?.map((e) => <ListGroupItem>@{e.username}</ListGroupItem>)}
                     </ListGroup>
-                </Card>
+                </Card>}
 
                 <Card className="mb-2">
                     <Card.Header>
