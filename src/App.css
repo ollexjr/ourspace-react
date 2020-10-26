@@ -322,3 +322,8 @@ div.list-group-item {
 .primary {
   border: 1px solid #8a4fe9;
 }
+
+.modal {
+  /*background-color: #1d1936d6 !important;*/
+  background-color: #1d1936ad !important;
+}
