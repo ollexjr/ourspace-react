@@ -22,7 +22,11 @@ const BoardSingleThreadOverlayObserver = observer(() => {
             size="lg"
             >
             <Modal.Header closeButton>
-                <Modal.Title>{store.overlayThread?.title}</Modal.Title>
+                <Modal.Title>
+                    {//store.overlayThread?.title
+                    }
+                Discussion...
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body className="p-0">
                 {false && <Switch>

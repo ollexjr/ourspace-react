@@ -5,19 +5,19 @@ import { useBoardStore, Thread, User } from "../../../stores/board";
 
 import { Navbar, Nav, Container, Button, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
 import { TextEditor } from 'components/editor/editor';
-import { IComment, ICommentNode } from 'model/compiled';
+import { IComment, IThread, ICommentNode } from 'model/compiled';
 import { InlineVoter, VerticalVoter } from '../vote';
 import moment from 'moment';
 
 import ReactMarkdown from 'react-markdown';
 import ReactPlayer from 'react-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpand, faExternalLinkAlt, faReply, faPen, faEdit, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
+import { faExpand, faExternalLinkAlt, faSync, faReply, faPen, faEdit, faRandom, faShare, faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 import { NetworkGateway } from 'components/network/gateway';
 import { CircleAvatar } from 'components/user/avatar';
 import { MediaSource } from 'components/media';
 import { CommunityUserInline } from 'components/board/user';
-import { IconButton } from 'components/button';
+import { PromiseButton, IconButton } from 'components/button';
 
 const CommentPadding: React.FC<{ depth: number }> = ({ depth }) => {
     let e = [];
@@ -113,8 +113,9 @@ export const ExternalFrame: React.FC<{ src: string }> = ({ src }) => {
     )
 }
 
-const ThreadNavbar = () => {
+const ThreadNavbar: React.FC<{}> = ({ }) => {
     const store = useBoardStore();
+    const thread = useThreadStore();
     return (
         <Navbar bg="white" variant="dark"
             className="shadow-sm justify-content-between border-y no-gutters mb-1 px-4 p-0"
@@ -130,6 +131,19 @@ const ThreadNavbar = () => {
                     <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
                 </div>
             </div>
+            <div className="flex-grow-1">
+                <h6 style={{
+                    overflowY: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis'
+                }}>
+                    {thread.thread?.title ?? "?"}
+                </h6>
+                <CommunityUserInline user={thread.thread?.user ?? undefined} />
+            </div>
+            <PromiseButton
+                onClick={() => thread.load()}
+                icon={faSync}></PromiseButton>
         </Navbar>
     )
 }
