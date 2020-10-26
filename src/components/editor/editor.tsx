@@ -54,7 +54,7 @@ export const TextEditor: React.FC<{
             </div>
             <div className="flex-grow-1 pl-3 mx-2">
                 <Editor
-                    //theme={dark}
+                    theme={dark}
                     defaultValue={source}
                     onChange={(v) => setState({ ...state, value: v() })}
                     //onSave={(v) => v()}

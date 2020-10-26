@@ -17,7 +17,8 @@ import { NetworkGateway } from 'components/network/gateway';
 import { CircleAvatar } from 'components/user/avatar';
 import { MediaSource } from 'components/media';
 import { CommunityUserInline } from 'components/board/user';
-import { PromiseButton, IconButton } from 'components/button';
+import { PromiseButton, LinkButton, IconButton } from 'components/button';
+
 
 const CommentPadding: React.FC<{ depth: number }> = ({ depth }) => {
     let e = [];
@@ -125,7 +126,7 @@ const ThreadNavbar: React.FC<{}> = ({ }) => {
                 top: 0,
             }}>
             <div className="d-flex flex-row align-items-center board-header mr-2">
-                <CircleAvatar size={48} />
+                <CircleAvatar size={48} src={store.info?.icon ?? undefined} />
                 <div className="d-flex flex-column p-2">
                     <span className="font-weight-bold">+{store.boardId}</span>
                     <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members} Members</span>
@@ -234,7 +235,15 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         <small>Comment as @{store.app.active!.username} </small>
                         : <small>You need to login to comment</small>
                     }
-                    <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />
+
+                    {!store.app.loggedIn &&
+                        <div className="outline rounded p-2 d-flex justify-content-left button-row">
+                            <LinkButton to="/login">Login</LinkButton>
+                            <LinkButton to="/signup">Signup</LinkButton>
+                        </div>
+                    }
+
+                    { store.app.loggedIn && <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} /> }
                 </div>
 
                 <ThreadCommentView />
