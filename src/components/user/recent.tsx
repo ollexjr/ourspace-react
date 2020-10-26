@@ -5,6 +5,9 @@ import { useAppStore } from 'stores/app';
 export const ActivityRecentThreads: React.FC<{}> =
     observer(() => {
         const app = useAppStore();
+        if (app.recent.length < 1) {
+            return null;
+        }
         return (
             <div className="card">
                 <div className="card-body">
