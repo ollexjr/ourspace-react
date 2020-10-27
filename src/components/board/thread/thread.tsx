@@ -200,7 +200,8 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         }
                     </div>
                     <br></br>
-                    <div className="mb-2" style={{ minHeight: '300px' }}>
+                    <div className="mb-2" //style={{ minHeight: '300px' }}
+                    >
                         <h4>{store.thread?.title ?? "%notset%"}</h4>
                         {store.thread?.content && <ReactMarkdown source={store.thread!.content!} />}
 

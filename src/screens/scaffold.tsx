@@ -67,9 +67,10 @@ const Scaffold: React.FC = observer(({ children }) => {
                 maxWidth: "80px",
                 minWidth: "64px"
               }}>
-            <div id="screen-left" className="sticky">
+            <Sticky>
               <SubscriptionListWithSearch />
-            </div>
+            </Sticky>
+            <div id="screen-left" className="sticky"></div>
           </Col>
           <Col className="_h-100 main-content p-0 _p-md-3">
             {children}
@@ -99,9 +100,9 @@ export const BoardRouterWrapper: React.FC = () => {
         <Route path="/post/:threadId/:title" component={() => null} />
         <Route path="/@:userId" component={() => null} />
         <Route path="/u/:userId" component={() => null} />
-        <BoardSingleAuthenticationOverlayObserver/>
+        <BoardSingleAuthenticationOverlayObserver />
       </Switch>
-      <ModeratorActionsGlobal/>
+      <ModeratorActionsGlobal />
     </Scaffold>
   )
 }
