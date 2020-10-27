@@ -205,7 +205,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         <h4>{store.thread?.title ?? "%notset%"}</h4>
                         {store.thread?.content && <ReactMarkdown source={store.thread!.content!} />}
 
-                        {store.thread?.link && <div className="container mb-2 px-0 _px-sm-2">
+                        {store.thread?.link && <div className="container d-flex justify-content-center mb-2 px-0 _px-sm-2">
                             <MediaSource
                                 //onOpen={() => setModal(true)}
                                 width='auto'

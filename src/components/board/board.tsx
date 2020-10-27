@@ -166,14 +166,14 @@ const ThreadCard: React.FC<{
                                 </div>}
                             </div>
                             <div id="thread-card-inner" className="card-block text-left w-100">
-                                <div className="text-left d-flex flex-row flex-wrap justify-content-left">
+                                <div className="text-left post-header d-flex flex-row flex-wrap justify-content-left">
                                     <CommunityLinkPopover boardId={data.boardId!}>
                                         <span className="mr-2">+{data.boardId}</span>
                                     </CommunityLinkPopover>
                                     <span className="mr-1">{moment.unix(data.createdAt).fromNow()} by </span>
                                     <CommunityUserInline className="mr-1" user={data.user} />
                                     {data.link && <a
-                                        className="small"
+                                        className="_small"
                                         onClick={() => store.event("link/open")}
                                         target="_blank"
                                         href={data.link}>
