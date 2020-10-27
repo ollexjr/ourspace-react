@@ -26,8 +26,9 @@ export const ImageHeader: React.FC<{ animated?: boolean, src: string }> = ({ ani
 export const ImageHeaderParallax: React.FC<{ src: string }> = ({ src, children }) => {
     return (
         <ParallaxBanner
-            className="jumbotron mb-0 px-1 py-4 py-md-5 px-md-4 _text-stroke-children"
+            className="jumbotron text-white mb-0 px-1 py-4 py-md-5 px-md-4 _text-stroke-children"
             style={{
+                backgroundColor: 'black',
                 height: "auto",
                 borderRadius: 0,
                 borderBottomRightRadius: '0.25rem',
@@ -40,6 +41,7 @@ export const ImageHeaderParallax: React.FC<{ src: string }> = ({ src, children }
                     amount: .8,
                     props: {
                         style: {
+                            opacity: .5,
                             zIndex: 0,
                         }
                     }
