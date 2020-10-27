@@ -26,8 +26,13 @@ export const ImageHeader: React.FC<{ animated?: boolean, src: string }> = ({ ani
 export const ImageHeaderParallax: React.FC<{ src: string }> = ({ src, children }) => {
     return (
         <ParallaxBanner
-            style={{ height: "auto" }}
-            className="jumbotron border-bottom mb-0 px-1 py-4 py-md-5 px-md-4 _text-stroke-children"
+            className="jumbotron mb-0 px-1 py-4 py-md-5 px-md-4 _text-stroke-children"
+            style={{
+                height: "auto",
+                borderRadius: 0,
+                borderBottomRightRadius: '0.25rem',
+                borderBottomLeftRadius: '0.25rem',
+            }}
             layers={[
                 {
                     //image: "https://source.unsplash.com/random",

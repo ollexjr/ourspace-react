@@ -22,22 +22,24 @@ const SubscriptionIcon: React.FC<{ data: IBoardSubscription, active: boolean }> 
     const o = active ? "border-primary community-icon-active" : "community-icon";
     return (
         <div className="item">
-            <Link to={`/+${data.boardId}`}>
-                <OverlayTrigger overlay={
+            <OverlayTrigger
+                trigger={['focus', 'hover']}
+                overlay={
                     <Tooltip id="tooltip-disabled">+{data.boardId}
                         <Badge variant="primary">
-                            100k
-                    </Badge>
+                            {data.members}
+                        </Badge>
                     </Tooltip>
                 }>
+                <Link to={`/+${data.boardId}`}>
                     <CommunityAvatar
                         className={o}
                         src={data.icon ?? undefined}
                         label={data.boardId ?? undefined}
                         size={48} />
-                </OverlayTrigger>
-            </Link>
-        </div>
+                </Link>
+            </OverlayTrigger>
+        </div >
     )
 }
 
