@@ -166,7 +166,7 @@ const ThreadCard: React.FC<{
                                 </div>}
                             </div>
                             <div id="thread-card-inner" className="card-block text-left w-100">
-                                <div className="post-meta text-left d-flex flex-row flex-wrap justify-content-left">
+                                <div className="text-left d-flex flex-row flex-wrap justify-content-left">
                                     <CommunityLinkPopover boardId={data.boardId!}>
                                         <span className="mr-2">+{data.boardId}</span>
                                     </CommunityLinkPopover>
@@ -183,7 +183,7 @@ const ThreadCard: React.FC<{
                                 </div>
                                 <Card.Title
                                     id="thread-card-title"
-                                    className="post-title text-left w-lg-75 mb-0 mb-md-2">
+                                    className="post-title mb-0 mb-md-2">
                                     {data.title}
                                 </Card.Title>
                             </div>
@@ -237,7 +237,7 @@ export const ThreadsView: React.FC<{
                 <Masonry
                     elementType="div"
                     className={
-                        "_h-100 _list-group _list-group-flush p-0 "
+                        "p-0 "
                         //    + store.isConstrained() && "container"
                     }
                 >
