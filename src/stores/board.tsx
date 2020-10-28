@@ -42,6 +42,8 @@ export class BoardStore extends ObservableRequestState {
     backgroundRepeat: string = "repeat";
     backgroundSize: string = 'unset'; //"cover";
 
+    @observable overlayThreadMedia?: IThread = undefined;
+
     @observable info?: IBoard
     @observable debug: boolean = false
     @observable filters: IThreadSelectFilters = {

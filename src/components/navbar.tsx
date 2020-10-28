@@ -12,6 +12,7 @@ import { InlineNavCard } from "components/user/card"
 import { faAt, faPlus, faProjectDiagram, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CommunityAvatar } from 'components/board/avatar';
+import { Brand } from 'components/brand';
 
 /**
  * favatar
@@ -21,25 +22,6 @@ import { CommunityAvatar } from 'components/board/avatar';
  * diskus.dev
  * 
  */
-
-const Brand: React.FC<{ className: string }> = ({ className }) => {
-    return (
-        <Link to="/">
-            <Navbar.Brand href="/" className={className} style={{
-                //fontWeight: 900,
-            }}>
-                <CommunityAvatar className="d-none _d-md-inline" size={36} />
-                <FontAwesomeIcon className="d-none rounded ml-1 mr-1" icon={faPlus} />
-                <span className="d-inline d-sm-inline ml-2">
-                    our/
-                </span>
-                <span className="text-primary">
-                    spaces
-                </span>
-            </Navbar.Brand>
-        </Link>
-    )
-}
 
 export const NavbarBase: React.FC = ({ children }) => {
     const store = useAppStore();
@@ -63,7 +45,8 @@ export const NavbarBase: React.FC = ({ children }) => {
             className="border-bottom sticky-header shadow-light"
             style={{
                 //backgroundImage: `url('${url}')`,
-                backgroundSize: "cover",
+                backgroundSize: "repeat",
+                //backgroundImage: `url(https://dev.ourspaces.app/img/static/tile1.png)`
             }}
         >
             <Container fluid={true}>
@@ -78,7 +61,9 @@ export const SiteNavbar: React.FC = observer(() => {
     const store = useAppStore();
     return (
         <NavbarBase>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" 
+
+            />
             <Navbar.Collapse id="basic-navbar-nav" style={{
                 //flexGrow: 2,
             }}>

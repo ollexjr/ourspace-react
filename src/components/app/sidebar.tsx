@@ -14,6 +14,7 @@ import { UserNotifications } from 'components/user/card';
 import { LinkButton } from 'components/button';
 import { Link } from 'react-router-dom';
 import { ActivityRecentThreads } from 'components/user/recent';
+import { Brand } from 'components/brand';
 
 export const SidebarCard: React.FC = ({ children }) => {
     return (
@@ -59,7 +60,9 @@ const SiteCard: React.FC<{}> =
         return (
             <div className="card mb-2">
                 <div className="card-body">
-                    <h5 className="card-title">Welcome to our/space</h5>
+                    <h5 className="card-title">Welcome to <i>our</i> spaces</h5>
+
+
                     <div className="btn-group d-flex justify-content-between">
                         <LinkButton to="/login">Login</LinkButton>
                         <LinkButton to="/signup">Signup</LinkButton>

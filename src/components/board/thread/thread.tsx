@@ -158,7 +158,6 @@ const ThreadNavbar: React.FC<{}> = ({ }) => {
                 variant="primary"
                 onClick={() => thread.load()}
                 icon={faSync}>
-                Join
             </PromiseButton>
         </Navbar>
     )
@@ -199,13 +198,13 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                             </a>
                         }
                     </div>
-                    <br></br>
-                    <div className="mb-2" //style={{ minHeight: '300px' }}
+                    <div className="mb-2" 
+                        //style={{ minHeight: '300px' }}
                     >
                         <h4>{store.thread?.title ?? "%notset%"}</h4>
                         {store.thread?.content && <ReactMarkdown source={store.thread!.content!} />}
 
-                        {store.thread?.link && <div className="container d-flex justify-content-center mb-2 px-0 _px-sm-2">
+                        {store.thread?.link && <div className="container _d-flex _justify-content-center mb-2 px-0 _px-sm-2">
                             <MediaSource
                                 //onOpen={() => setModal(true)}
                                 width='auto'
@@ -260,7 +259,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                             <LinkButton to="/signup">Signup</LinkButton>
                         </div>
                     }
-                    
+
                     {store.app.loggedIn && <TextEditor acceptText="Submit" cancelText="cancel" onAccept={(t) => store.addComment(t)} />}
                 </div>
 

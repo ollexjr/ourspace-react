@@ -22,9 +22,15 @@ const ScreenLogin: React.FC = observer(({ }) => {
                         <h4>Signed in as @{store.active?.username}</h4>
                         <Button onClick={() => store.logout()} >You need to sign out first.</Button>
                     </div>}
-                    {!store.loggedIn && <UserLoginForm
-                        onSubmit={(name, key) => 
-                            store.login(name, key).then(t => history.length > 2 ? history.goBack() : history.push("/"))} />}
+                    {!store.loggedIn &&
+                        <UserLoginForm
+                            onSubmit={(name, key) =>
+                                store.login(name, key)
+                                    .then(t => history.length > 2 ? history.goBack() : history.push("/"))} />}
+
+                    <div className="mt-4">
+                        <a className="small" href="/referral">Referral Program</a>
+                    </div>
                 </Container>
             </div>
         </Jumbosheet>

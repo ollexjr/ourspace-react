@@ -70,12 +70,15 @@ export const MediaSource: React.FC<{
     if (isVideo) {
         return (
             loader(
-                <div className="d-flex justify-content-center rounded-iframe-container mb-2">
+                <div className="rounded-iframe-container mb-2">
                     <ReactPlayer
                         light
                         controls
                         className="border rounded"
-                        width='100%'
+                        //width={width}
+                        width='auto'
+                        //width='100%'
+
                         height={height}
                         onPlay={() => onEvent && onEvent("link/playing")}
                         onPause={() => onEvent && onEvent("link/pause")}

@@ -380,7 +380,7 @@ const BoardNavbar: React.FC = observer(() => {
                     icon={store.info.isMember ? faUsersSlash : faUsers}
                     variant={(store.info.isMember ? "primary" : "danger")}
                     onClick={() => store.info!.isMember ? store.unsubscribe() : store.subscribe()}>
-                    <span>Join</span>
+                    <span>{store.info!.isMember ? "Leave" : "Join"}</span>
                 </PromiseButton>
             }
         </Navbar>
