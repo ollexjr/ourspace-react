@@ -1,5 +1,5 @@
 // Brand Colors
-$blue: #007bff;
+$blue: #7891fc;
 $indigo: #6610f2;
 $purple: #6f42c1;
 
@@ -12,5 +12,7 @@ $teal: #20c997;
 $cyan: #17a2b8;
 
 $theme-colors: (
-    primary: #e83e8c, 
+    primary: $blue,
+    secondary: $purple
+    //primary: #a9c9c4
 );

@@ -58,16 +58,16 @@ const CardButtons: React.FC<{
             <ButtonDropdown
                 items={items}
             />
-            <IconButton variant="outline" icon={faShare}
+            <IconButton variant="outline" size="sm" icon={faShare}
                 className={buttonClass}>
             </IconButton>
-            <IconButton variant="outline"
+            <IconButton variant="outline" size="sm"
                 onClick={() => store.setOverlay(t)}
                 className={buttonClass}
                 icon={faCommentAlt} >
                 {commentNum}
             </IconButton>
-            <IconButton variant="outline" className={buttonClass} icon={faLink}>
+            <IconButton variant="outline" size="sm" className={buttonClass} icon={faLink}>
             </IconButton>
         </>
     )
@@ -178,7 +178,7 @@ const ThreadCard: React.FC<{
                                     <span className="mr-1">{moment.unix(data.createdAt).fromNow()} by </span>
                                     <CommunityUserInline className="mr-1" user={data.user} />
                                     {data.link && <a
-                                        className="_small"
+                                        className="text-secondary"
                                         onClick={() => store.event("link/open")}
                                         target="_blank"
                                         href={data.link}>
