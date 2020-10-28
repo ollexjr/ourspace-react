@@ -45,7 +45,8 @@ export const ArrowVoter: React.FC<{
         const [voteChange, setVoteChange] = React.useState<string>();
 
         return (
-            <div className="d-flex flex-row justify-content-center">
+            <div className="d-flex flex-row align-items-center">
+                {(votes ? votes['up'] : 0) - (votes ? votes['down'] : 0)}
                 <div className="d-flex flex-column justify-content-between">
                     {v.map(v => {
                         let vt = 0;
@@ -66,7 +67,6 @@ export const ArrowVoter: React.FC<{
                             </Button>
                         )
                     })}
-                    {(votes ? votes['up'] : 0) - (votes ? votes['down'] : 0)}
                 </div>
             </div>
         )

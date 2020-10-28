@@ -90,10 +90,10 @@ export const SiteNavbar: React.FC = observer(() => {
                         {!store.loggedIn ?
                             ([
                                 <Link to="/login">
-                                    <Button variant="primary" className="mr-2 px-md-4" style={{ borderRadius: '1em' }}>Sign In</Button>
+                                    <Button variant="" className="mr-2 px-md-4">Sign In</Button>
                                 </Link>,
                                 <Link to="/signup">
-                                    <Button variant="outline-dark" className="px-md-4" style={{ borderRadius: '1em' }}>Sign Up</Button>
+                                    <Button variant="primary" className="px-md-4">Sign Up</Button>
                                 </Link>
                             ]) : null}
                         {/*store.loggedIn && <LinkButton to="/logout">Log out</LinkButton>*/}

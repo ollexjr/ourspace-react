@@ -154,11 +154,11 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     </ListGroup>
                     <Card.Body className="d-none _d-md-block d-flex flex-column">
                         <ButtonGroup>
-                            <LinkButton to={`/+${store.boardId}/create`}>Post</LinkButton>
+                            <LinkButton variant="outline-primary" to={`/+${store.boardId}/create`}>Post</LinkButton>
                             {!store.info?.isMember &&
                                 <IconButton icon={faUserPlus} onClick={() => store.subscribe()}>Join Community</IconButton>}
                             {store.info?.isMember &&
-                                <IconButton icon={faUserCheck} onClick={() => store.unsubscribe()}>Leave Community</IconButton>}
+                                <IconButton variant="outline-warning" icon={faUserCheck} onClick={() => store.unsubscribe()}>Leave Community</IconButton>}
                         </ButtonGroup>
                     </Card.Body>
                 </Card>
