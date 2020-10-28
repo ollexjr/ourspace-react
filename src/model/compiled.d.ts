@@ -2251,6 +2251,9 @@ export interface IComment {
 
     /** Comment depth */
     depth?: (number|null);
+
+    /** Comment children */
+    children?: (number|null);
 }
 
 /** Represents a Comment. */
@@ -2297,6 +2300,9 @@ export class Comment implements IComment {
 
     /** Comment depth. */
     public depth: number;
+
+    /** Comment children. */
+    public children: number;
 
     /**
      * Creates a new Comment instance using the specified properties.
@@ -6136,6 +6142,108 @@ export class UserMentionEvent implements IUserMentionEvent {
 
     /**
      * Converts this UserMentionEvent to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a CommunityEvent. */
+export interface ICommunityEvent {
+
+    /** CommunityEvent boardId */
+    boardId?: (string|null);
+
+    /** CommunityEvent userId */
+    userId?: (string|null);
+
+    /** CommunityEvent action */
+    action?: (string|null);
+}
+
+/** Represents a CommunityEvent. */
+export class CommunityEvent implements ICommunityEvent {
+
+    /**
+     * Constructs a new CommunityEvent.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: ICommunityEvent);
+
+    /** CommunityEvent boardId. */
+    public boardId: string;
+
+    /** CommunityEvent userId. */
+    public userId: string;
+
+    /** CommunityEvent action. */
+    public action: string;
+
+    /**
+     * Creates a new CommunityEvent instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns CommunityEvent instance
+     */
+    public static create(properties?: ICommunityEvent): CommunityEvent;
+
+    /**
+     * Encodes the specified CommunityEvent message. Does not implicitly {@link CommunityEvent.verify|verify} messages.
+     * @param message CommunityEvent message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: ICommunityEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified CommunityEvent message, length delimited. Does not implicitly {@link CommunityEvent.verify|verify} messages.
+     * @param message CommunityEvent message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: ICommunityEvent, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a CommunityEvent message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns CommunityEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): CommunityEvent;
+
+    /**
+     * Decodes a CommunityEvent message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns CommunityEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): CommunityEvent;
+
+    /**
+     * Verifies a CommunityEvent message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a CommunityEvent message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns CommunityEvent
+     */
+    public static fromObject(object: { [k: string]: any }): CommunityEvent;
+
+    /**
+     * Creates a plain object from a CommunityEvent message. Also converts values to other types if specified.
+     * @param message CommunityEvent
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: CommunityEvent, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this CommunityEvent to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };

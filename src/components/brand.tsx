@@ -18,7 +18,7 @@ export const Brand: React.FC<{ className: string }> = ({ className }) => {
                 <FontAwesomeIcon className="d-none rounded ml-1 mr-1" icon={faPlus} />
                 <span className="d-inline d-sm-inline ml-2 font-weight-bold">
                     our
-                </span>/
+                </span>+
                 <span className="text-primary">
                     spaces
                 </span>

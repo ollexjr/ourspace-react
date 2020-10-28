@@ -7,7 +7,7 @@ import '@fortawesome/react-fontawesome';
 import { useBoardStore, Thread, User } from "../../stores/board";
 import { Form, Container, Tooltip, OverlayTrigger, Navbar, Button, Card, DropdownButton, Dropdown } from 'react-bootstrap';
 import { trace } from "mobx";
-import { InlineVoter } from 'components/board/vote';
+import { InlineVoter, ArrowVoter } from 'components/board/vote';
 import { CommunityLinkPopover } from 'components/board/avatar';
 import { IUserRef, ThreadSelectFilters } from 'model/compiled';
 import { EnumToArray, DropdownEnum, ButtonDropdown, ButtonDropdownItem } from 'components/dropdown';
@@ -143,11 +143,16 @@ const ThreadCard: React.FC<{
                             { "flex-row": type == 1 })} >
                         <div className="d-flex mb-1">
                             <div className="mr-1 mr-md-2">
+                                <ArrowVoter 
+                                    onVote={(v) => store.voteThread(data!.uId!, v)}
+                                    vote={data?.me?.vote ?? undefined}
+                                    votes={data?.votes ?? undefined} 
+                                />
                                 <InlineVoter
                                     loggedIn={store.app.loggedIn}
                                     preview
                                     size="sm"
-                                    className="d-flex flex-column"
+                                    className="d-none _d-flex flex-column"
                                     table={data?.acceptedVotes ?? []}
                                     votes={data?.votes ?? undefined}
                                     onClick={(v) =>
@@ -203,6 +208,17 @@ const ThreadCard: React.FC<{
                             commentNum={data.numComments ?? 0}
                             buttonClass="d-block" />
                     </div>
+                    <InlineVoter
+                        loggedIn={store.app.loggedIn}
+                        //preview
+                        size="sm"
+                        className="d-none _d-flex flex-row"
+                        table={data?.acceptedVotes ?? []}
+                        votes={data?.votes ?? undefined}
+                        onClick={(v) =>
+                            store.voteThread(data?.uId ?? "undefined", v)}
+                        value={data?.me?.vote ?? "unset"}
+                    />
                 </div>
             </div>
         )

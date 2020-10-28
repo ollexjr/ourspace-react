@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import classNames from "classnames";
-import { Spinner, OverlayTrigger, Popover } from 'react-bootstrap';
+import { Spinner, OverlayTrigger, Popover, Button } from 'react-bootstrap';
 import { IVote } from 'model/compiled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -12,12 +12,65 @@ const codeMap: { [k: string]: string } = {
     'up': '👍',
     'down': '👎',
     'funny': '🤣',
+    'wow': '😯',
+    'haha': '😂',
     'crazy': '🤪',
     'thinking': '🤔',
     'love': '❤️',
     'angry': '😠',
     'vangry': '👿'
 }
+
+
+const arrowMap: { [k: string]: any } = {
+    'up': faArrowUp,
+    'down': faArrowDown,
+}
+
+const v: Array<string> = [
+    'up',
+    'down',
+];
+
+export const ArrowVoter: React.FC<{
+    onVote: (a: string) => Promise<any>,
+    votes?: { [k: string]: number }
+    vote?: string,
+}> = ({
+    onVote,
+    votes,
+    vote
+}) => {
+
+        const [voteChange, setVoteChange] = React.useState<string>();
+
+        return (
+            <div className="d-flex flex-row justify-content-center">
+                <div className="d-flex flex-column justify-content-between">
+                    {v.map(v => {
+                        let vt = 0;
+                        let isThis = false;
+                        if (votes && votes[v]) {
+                            vt = votes[v];
+                            isThis = (vote == v);
+                        }
+                        //const isThis = ((votes && votes[v]) ?? false);
+                        return (
+                            <Button
+                                onClick={() => onVote(v)}
+                                key={v}
+                                size="sm"
+                                variant="none"
+                                className={isThis ? "text-primary" : ""}>
+                                <FontAwesomeIcon icon={arrowMap[v]} />
+                            </Button>
+                        )
+                    })}
+                    {(votes ? votes['up'] : 0) - (votes ? votes['down'] : 0)}
+                </div>
+            </div>
+        )
+    }
 
 export const InlineVoter: React.FC<{
     loggedIn?: boolean,
@@ -44,7 +97,7 @@ export const InlineVoter: React.FC<{
     }
     let overlay = React.useRef(null);
 
-    const def = " rounded border";
+    const def = ""; //" rounded border";
     const cls = className ? className + def : def;
 
     // https://stackoverflow.com/questions/38467848/react-bootstrap-how-to-manually-close-overlaytrigger
@@ -56,7 +109,7 @@ export const InlineVoter: React.FC<{
             //ref={ref}
             //trigger={["hover", "focus"]}
             //: ["hover", "focus"]
-            trigger={preview ? ["click"]: undefined}
+            trigger={preview ? ["click"] : undefined}
             placement="auto"
             overlay={
                 <Popover id={`popover${state}`}>

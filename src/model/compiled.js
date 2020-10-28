@@ -5317,6 +5317,7 @@ $root.Comment = (function() {
      * @property {number|null} [unhandledReports] Comment unhandledReports
      * @property {number|null} [reports] Comment reports
      * @property {number|null} [depth] Comment depth
+     * @property {number|null} [children] Comment children
      */
 
     /**
@@ -5434,6 +5435,14 @@ $root.Comment = (function() {
     Comment.prototype.depth = 0;
 
     /**
+     * Comment children.
+     * @member {number} children
+     * @memberof Comment
+     * @instance
+     */
+    Comment.prototype.children = 0;
+
+    /**
      * Creates a new Comment instance using the specified properties.
      * @function create
      * @memberof Comment
@@ -5484,6 +5493,8 @@ $root.Comment = (function() {
             writer.uint32(/* id 11, wireType 0 =*/88).int32(message.reports);
         if (message.depth != null && Object.hasOwnProperty.call(message, "depth"))
             writer.uint32(/* id 12, wireType 0 =*/96).int32(message.depth);
+        if (message.children != null && Object.hasOwnProperty.call(message, "children"))
+            writer.uint32(/* id 13, wireType 0 =*/104).uint32(message.children);
         return writer;
     };
 
@@ -5577,6 +5588,9 @@ $root.Comment = (function() {
             case 12:
                 message.depth = reader.int32();
                 break;
+            case 13:
+                message.children = reader.uint32();
+                break;
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -5669,6 +5683,9 @@ $root.Comment = (function() {
         if (message.depth != null && message.hasOwnProperty("depth"))
             if (!$util.isInteger(message.depth))
                 return "depth: integer expected";
+        if (message.children != null && message.hasOwnProperty("children"))
+            if (!$util.isInteger(message.children))
+                return "children: integer expected";
         return null;
     };
 
@@ -5742,6 +5759,8 @@ $root.Comment = (function() {
             message.reports = object.reports | 0;
         if (object.depth != null)
             message.depth = object.depth | 0;
+        if (object.children != null)
+            message.children = object.children >>> 0;
         return message;
     };
 
@@ -5778,6 +5797,7 @@ $root.Comment = (function() {
             object.unhandledReports = 0;
             object.reports = 0;
             object.depth = 0;
+            object.children = 0;
         }
         if (message.uId != null && message.hasOwnProperty("uId"))
             object.uId = message.uId;
@@ -5816,6 +5836,8 @@ $root.Comment = (function() {
             object.reports = message.reports;
         if (message.depth != null && message.hasOwnProperty("depth"))
             object.depth = message.depth;
+        if (message.children != null && message.hasOwnProperty("children"))
+            object.children = message.children;
         return object;
     };
 
@@ -15574,6 +15596,238 @@ $root.UserMentionEvent = (function() {
     };
 
     return UserMentionEvent;
+})();
+
+$root.CommunityEvent = (function() {
+
+    /**
+     * Properties of a CommunityEvent.
+     * @exports ICommunityEvent
+     * @interface ICommunityEvent
+     * @property {string|null} [boardId] CommunityEvent boardId
+     * @property {string|null} [userId] CommunityEvent userId
+     * @property {string|null} [action] CommunityEvent action
+     */
+
+    /**
+     * Constructs a new CommunityEvent.
+     * @exports CommunityEvent
+     * @classdesc Represents a CommunityEvent.
+     * @implements ICommunityEvent
+     * @constructor
+     * @param {ICommunityEvent=} [properties] Properties to set
+     */
+    function CommunityEvent(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * CommunityEvent boardId.
+     * @member {string} boardId
+     * @memberof CommunityEvent
+     * @instance
+     */
+    CommunityEvent.prototype.boardId = "";
+
+    /**
+     * CommunityEvent userId.
+     * @member {string} userId
+     * @memberof CommunityEvent
+     * @instance
+     */
+    CommunityEvent.prototype.userId = "";
+
+    /**
+     * CommunityEvent action.
+     * @member {string} action
+     * @memberof CommunityEvent
+     * @instance
+     */
+    CommunityEvent.prototype.action = "";
+
+    /**
+     * Creates a new CommunityEvent instance using the specified properties.
+     * @function create
+     * @memberof CommunityEvent
+     * @static
+     * @param {ICommunityEvent=} [properties] Properties to set
+     * @returns {CommunityEvent} CommunityEvent instance
+     */
+    CommunityEvent.create = function create(properties) {
+        return new CommunityEvent(properties);
+    };
+
+    /**
+     * Encodes the specified CommunityEvent message. Does not implicitly {@link CommunityEvent.verify|verify} messages.
+     * @function encode
+     * @memberof CommunityEvent
+     * @static
+     * @param {ICommunityEvent} message CommunityEvent message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    CommunityEvent.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.boardId != null && Object.hasOwnProperty.call(message, "boardId"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.boardId);
+        if (message.userId != null && Object.hasOwnProperty.call(message, "userId"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.userId);
+        if (message.action != null && Object.hasOwnProperty.call(message, "action"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.action);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified CommunityEvent message, length delimited. Does not implicitly {@link CommunityEvent.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof CommunityEvent
+     * @static
+     * @param {ICommunityEvent} message CommunityEvent message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    CommunityEvent.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a CommunityEvent message from the specified reader or buffer.
+     * @function decode
+     * @memberof CommunityEvent
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {CommunityEvent} CommunityEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    CommunityEvent.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.CommunityEvent();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.boardId = reader.string();
+                break;
+            case 2:
+                message.userId = reader.string();
+                break;
+            case 3:
+                message.action = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a CommunityEvent message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof CommunityEvent
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {CommunityEvent} CommunityEvent
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    CommunityEvent.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a CommunityEvent message.
+     * @function verify
+     * @memberof CommunityEvent
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    CommunityEvent.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.boardId != null && message.hasOwnProperty("boardId"))
+            if (!$util.isString(message.boardId))
+                return "boardId: string expected";
+        if (message.userId != null && message.hasOwnProperty("userId"))
+            if (!$util.isString(message.userId))
+                return "userId: string expected";
+        if (message.action != null && message.hasOwnProperty("action"))
+            if (!$util.isString(message.action))
+                return "action: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a CommunityEvent message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof CommunityEvent
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {CommunityEvent} CommunityEvent
+     */
+    CommunityEvent.fromObject = function fromObject(object) {
+        if (object instanceof $root.CommunityEvent)
+            return object;
+        var message = new $root.CommunityEvent();
+        if (object.boardId != null)
+            message.boardId = String(object.boardId);
+        if (object.userId != null)
+            message.userId = String(object.userId);
+        if (object.action != null)
+            message.action = String(object.action);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a CommunityEvent message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof CommunityEvent
+     * @static
+     * @param {CommunityEvent} message CommunityEvent
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    CommunityEvent.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.boardId = "";
+            object.userId = "";
+            object.action = "";
+        }
+        if (message.boardId != null && message.hasOwnProperty("boardId"))
+            object.boardId = message.boardId;
+        if (message.userId != null && message.hasOwnProperty("userId"))
+            object.userId = message.userId;
+        if (message.action != null && message.hasOwnProperty("action"))
+            object.action = message.action;
+        return object;
+    };
+
+    /**
+     * Converts this CommunityEvent to JSON.
+     * @function toJSON
+     * @memberof CommunityEvent
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    CommunityEvent.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return CommunityEvent;
 })();
 
 $root.ThreadVoteEvent = (function() {
