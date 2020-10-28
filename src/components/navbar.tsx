@@ -34,7 +34,7 @@ const Brand: React.FC<{ className: string }> = ({ className }) => {
                     our/
                 </span>
                 <span className="text-primary">
-                    space
+                    spaces
                 </span>
             </Navbar.Brand>
         </Link>

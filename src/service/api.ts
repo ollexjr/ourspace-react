@@ -99,9 +99,9 @@ export interface Response {
 
 const debug = false;
 const subdomain = debug ? "dev." : "www.";
-export const HOST = `https://${subdomain}ourspace.dev/`;
-export const API = `https://${subdomain}ourspace.dev/api/v1/`;
-export const WEBSOCKET_HOST = `wss://event.ourspace.dev/api/v1/socket`;
+export const HOST = `https://${subdomain}ourspace.app/`;
+export const API = `https://${subdomain}ourspace.app/api/v1/`;
+export const WEBSOCKET_HOST = `wss://event.ourspace.app/api/v1/socket`;
 
 export class NetworkService {
     socket?: WebSocket
