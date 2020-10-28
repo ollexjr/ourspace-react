@@ -100,10 +100,10 @@ export interface Response {
 const debug = false;
 const subdomain = debug ? "dev." : "www.";
 
-export const HOST = `https://${document.domain}/`
-//export const HOST = `https://${subdomain}ourspaces.app/`;
-//export const API = `https://${subdomain}ourspaces.app/api/v1/`;
-//export const WEBSOCKET_HOST = `wss://event.ourspaces.app/api/v1/socket`;
+//export const HOST = `https://${document.domain}/`
+export const HOST = `https://${subdomain}ourspaces.app/`;
+export const API = `https://${subdomain}ourspaces.app/api/v1/`;
+export const WEBSOCKET_HOST = `wss://event.ourspaces.app/api/v1/socket`;
 
 export class NetworkService {
     socket?: WebSocket

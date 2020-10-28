@@ -156,10 +156,17 @@ export class BoardStore extends ObservableRequestState {
                 this.info = res.board;
                 res = res.threads;
             }
+
+            document.title = this.getPageTitle();
+
             this.token = res.token;
             this.data = observable.array<IThread>(res.data);
             return
         }))
+    }
+
+    getPageTitle() {
+        return `ourspaces | +${this.boardId}`
     }
 
     @action

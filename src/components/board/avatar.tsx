@@ -13,7 +13,7 @@ export const CommunityAvatar: React.FC<{
 }> = ({ wrapperClassName, className, onClick, src, size, label }) => {
     if (!src) {
         
-        src = "https://www.ourspace.dev/img/static/bg-128.png"; 
+        src = "https://www.ourspaces.app/img/static/bg-128.png"; 
         //"https://source.unsplash.com/pCcGpVsOHoo/64x64"
         //src = "https://source.unsplash.com/random/64x64"
     }
@@ -45,7 +45,7 @@ export const CommunityLinkPopover: React.FC<{ icon?: string, boardId: string }> 
             overlay={
                 <Popover id={`popopover-${boardId}`}>
                     <Popover.Content className="d-flex flex-row align-items-center">
-                        <CommunityAvatar size={48} src={`https://www.ourspace.dev/img/communityicon/${boardId}.apng`} />
+                        <CommunityAvatar size={48} src={`https://www.ourspaces.app/img/communityicon/${boardId}.apng`} />
                         <h6 className="ml-2">
                             +{boardId}
                         </h6>
