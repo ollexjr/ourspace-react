@@ -15,7 +15,7 @@ import { ScrollEventProvider } from 'components/scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faReply, faBookmark, faCommentAlt, faShare,
-    faSave, faLink, faPlus, faCompress, faPenFancy,
+    faSave, faLink, faPlus, faCompress, faPenFancy, faRetweet,
     faSync, faExternalLinkAlt, faUsers, faUsersSlash,
     faSortAmountDown, faSortAmountUp, faWindowMaximize, faStream, faPortrait
 } from '@fortawesome/free-solid-svg-icons';
@@ -30,8 +30,13 @@ import { MediaSource } from 'components/media';
 import classNames from 'classnames';
 import BoardSingleThreadOverlayObserver from 'components/board/overlay';
 
-
 var isImage = RegExp("(gif|jpe?g|tiff?|png|webp|bmp)$")
+
+function copyToClipboard(v: string) {
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(v);
+    }
+}
 
 const CardButtons: React.FC<{
     t: Thread,
@@ -45,14 +50,15 @@ const CardButtons: React.FC<{
         { label: "Bookmark", icon: "" },
         //{ label: "CrossPost", icon: "" },
         //{ label: "Share", icon: "" },
-        { label: "Copy to clipboard", icon: "" },
-        { label: "Open in new tab", icon: "" },
+        { label: "Copy to clipboard", icon: "", onClick: () => copyToClipboard(t.url!) },
+        { label: "Open in new tab", icon: "", onClick: () => window.open(t.url!, '_blank') },
     ];
 
     if (store.info?.isModerator) {
         items.push({ key: "m", label: "Moderate [M]", icon: "", onClick: () => store.moderateThread() });
     }
 
+    const numCrossposts = undefined;
     return (
         <>
             <ButtonDropdown
@@ -67,7 +73,16 @@ const CardButtons: React.FC<{
                 icon={faCommentAlt} >
                 {commentNum}
             </IconButton>
-            <IconButton variant="outline" size="sm" className={buttonClass} icon={faLink}>
+            <IconButton
+                variant="outline"
+                size="sm"
+                className={buttonClass} icon={faLink}>
+            </IconButton>
+            <IconButton
+                variant="outline"
+                size="sm"
+                className={buttonClass} icon={faRetweet}>
+                {numCrossposts}
             </IconButton>
         </>
     )
@@ -142,10 +157,10 @@ const ThreadCard: React.FC<{
                             { "flex-row-reverse": type == 1 })} >
                         <div className="d-flex flex-grow-1 mb-1">
                             <div className="mr-1 mr-md-2">
-                                <ArrowVoter 
+                                <ArrowVoter
                                     onVote={(v) => store.voteThread(data!.uId!, v)}
                                     vote={data?.me?.vote ?? undefined}
-                                    votes={data?.votes ?? undefined} 
+                                    votes={data?.votes ?? undefined}
                                 />
                                 {false && <InlineVoter
                                     loggedIn={store.app.loggedIn}
@@ -390,7 +405,7 @@ const BoardNavbar: React.FC = observer(() => {
             <BoardTextSearch boardId={store.boardId} />
             {store.info &&
                 <PromiseButton
-                    className="d-flex"
+                    className="d-flex d-lg-none"
                     icon={store.info.isMember ? faUsersSlash : faUsers}
                     variant={(store.info.isMember ? "primary" : "danger")}
                     onClick={() => store.info!.isMember ? store.unsubscribe() : store.subscribe()}>

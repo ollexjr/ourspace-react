@@ -62,7 +62,7 @@ const Scaffold: React.FC = observer(({ children }) => {
             //maxWidth: app.UIconstrainContainer ? 1400 : undefined
           }}>
           <Col id="wrapper-screen-left"
-            className={classNames("d-none d-md-block border-right bg-white",
+            className={classNames("d-none d-block border-right bg-white",
               app.UIconstrainContainer ? "col-md-4" : "col-12 col-md-2 col-xl-1")} style={{
                 maxWidth: "80px",
                 minWidth: "64px"

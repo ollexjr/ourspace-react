@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Container, Row, Col } from 'react-bootstrap';
 import { useAppStore } from 'stores/app';
 import { Board } from 'stores/board';
 
@@ -22,6 +22,15 @@ const CommunityList: React.FC<{ data: Array<Board> }> = ({ data }) => {
     )
 }
 
+const SpotlightArea: React.FC = (props) => {
+    return (
+        <div>
+            <h4>Spaces</h4>
+            {props.children}
+        </div>
+    )
+}
+
 const Spotlight: React.FC = observer(() => {
     const app = useAppStore();
     //const store = useBoardStore();
@@ -35,6 +44,7 @@ const Spotlight: React.FC = observer(() => {
         <div style={{ minHeight: "50vh" }}>
             <Form.Control
                 type="text"
+                className="mb-2"
                 placeholder="Search Communities, Memberships, Messages, Users"
                 required
                 onChange={(e) => {
@@ -42,10 +52,18 @@ const Spotlight: React.FC = observer(() => {
                     setSearch(e.target.value);
                     onChange(e);
                 }} />
-            <div>
-                <h4>Communities</h4>
-                <CommunityList data={app.communitySearch?.data ?? []} />
-            </div>
+            <Container>
+                <Row>
+                    <Col lg={6}>
+                        <h4>Spaces</h4>
+                        <CommunityList data={app.communitySearch?.data ?? []} />
+                    </Col>
+                    <Col lg={6}>
+                        <h4>Spaces</h4>
+                        <CommunityList data={app.communitySearch?.data ?? []} />
+                    </Col>
+                </Row>
+            </Container>
         </div>
     )
 })
@@ -61,7 +79,7 @@ export const SpotlightModal: React.FC<{}> =
                 size="lg"
                 keyboard={false}
             >
-                <Modal.Header className="border-none" closeButton>
+                <Modal.Header className="border-none d-none" closeButton>
                     <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

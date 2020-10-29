@@ -38,6 +38,8 @@ export class AppStore {
     @observable UIshowEventDebug: boolean = false;
     @observable UIdarkTheme: boolean = false;
 
+    storeStack: Array<any> = [];
+
     @action
     assertInlineLogin(): Promise<any> {
         if (!this.loggedIn) {

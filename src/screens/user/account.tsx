@@ -26,24 +26,22 @@ const UserScaffold: React.FC = observer(() => {
     return (
         <div>
             <ImageHeader src="">
-        
+
             </ImageHeader>
-            <Navbar className="sticky shadow-light border-bottom d-flex flex-row justify-content-between align-items-center">
-                <h5>@{store.userId}</h5>
-                <div className="button-row">
-                    <IconButton variant="light" className="rounded">Follow</IconButton>
-                    <IconButton variant="light" className="rounded">Blog</IconButton>
-                    <IconButton variant="light" className="rounded">Block</IconButton>
-                    <IconButton variant="light" className="rounded">Report</IconButton>
+
+            <Navbar className="sticky sticky-top bg-white shadow-light border-bottom">
+                <div className="container d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                        <h6 className="display-5 font-bold mb-0">@{store.userId}</h6>
+                        <span className="small text-muted">@{store.userId}</span>
+                    </div>
+                    <div className="button-row">
+                        {isSelf && <IconButton variant="light" className="rounded">Report</IconButton>}
+                    </div>
                 </div>
             </Navbar>
             <Container>
-                <Card>
-                    {store.userId} moderates 5 communites.
-                </Card>
-                <Card>
-                    Comments from communities with comments visible from the users profile:
-                </Card>
+                
             </Container>
         </div>
     )

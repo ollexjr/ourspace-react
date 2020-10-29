@@ -60,9 +60,7 @@ const SiteCard: React.FC<{}> =
         return (
             <div className="card mb-2">
                 <div className="card-body">
-                    <h5 className="card-title">Welcome to <i>our</i> spaces</h5>
-
-
+                    <h5 className="d-none card-title">Welcome to <i>our</i> spaces</h5>
                     <div className="btn-group d-flex justify-content-between">
                         <LinkButton to="/login">Login</LinkButton>
                         <LinkButton to="/signup">Signup</LinkButton>
@@ -91,10 +89,21 @@ export const SidebarDefault: React.FC = () => {
             <SidebarSettings />
             <TrendingCommunitiesList />
             <UserNotifications />
-            <ActivityRecentThreads/>
-            <div>
-                <small className="p-2">Copyright ourspace {new Date().getFullYear()}</small>
-            </div>
+            <ActivityRecentThreads />
+            <footer>
+                <Link to="/about">
+                    <small className="p-2 text-muted">© OurSpaces {new Date().getFullYear()}</small>
+                </Link>
+                <Link to="/terms">
+                    <small className="p-2 text-muted">Terms of Service</small>
+                </Link>
+                <Link to="/contact">
+                    <small className="p-2 text-muted">Contact</small>
+                </Link>
+                <Link to="/contact/report">
+                    <small className="p-2 text-muted">Report Abuse</small>
+                </Link>
+            </footer>
         </div>
     );
 }
