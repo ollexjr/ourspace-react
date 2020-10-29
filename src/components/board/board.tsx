@@ -354,7 +354,7 @@ const BoardNavbar: React.FC = observer(() => {
     //const params: { boardId: string } = useParams();
     return (
         <Navbar bg="white" variant="dark"
-            className="shadow-sm justify-content-between border-bottom no-gutters mb-1 px-1 px-md-4 p-0" style={{
+            className="shadow-sm justify-content-between border-bottom rounded-bottom no-gutters mb-1 px-1 px-md-4 p-0" style={{
                 zIndex: 4,
                 position: 'sticky',
                 top: 0,
