@@ -92,7 +92,7 @@ const ThreadCard: React.FC<{
 
         switch (type) {
             case 0:
-                cls = cls + " p-0 p-sm-1 p-md-1";
+                cls = cls + " p-0 p-sm-1 _p-md-1";
                 innerClass += " card border-y page-link border-md-x border-md-y shadow-sm";
                 break
             case 1:
@@ -105,7 +105,6 @@ const ThreadCard: React.FC<{
         }
 
         const src = data.thumb;
-
         const canShowImage = isImage.test(src ?? "");
         const canShowMedia = data.link && ReactPlayer.canPlay(data.link);
 
@@ -140,15 +139,15 @@ const ThreadCard: React.FC<{
                     <div className={
                         classNames("d-flex justify-content-between ",
                             { "flex-column": type == 0 },
-                            { "flex-row": type == 1 })} >
-                        <div className="d-flex mb-1">
+                            { "flex-row-reverse": type == 1 })} >
+                        <div className="d-flex flex-grow-1 mb-1">
                             <div className="mr-1 mr-md-2">
                                 <ArrowVoter 
                                     onVote={(v) => store.voteThread(data!.uId!, v)}
                                     vote={data?.me?.vote ?? undefined}
                                     votes={data?.votes ?? undefined} 
                                 />
-                                <InlineVoter
+                                {false && <InlineVoter
                                     loggedIn={store.app.loggedIn}
                                     preview
                                     size="sm"
@@ -162,7 +161,7 @@ const ThreadCard: React.FC<{
                                         //value={data?.me?.vote ?? "unset"} 
                                         store.voteThread(data?.uId ?? "undefined", v)}
                                     value={data?.me?.vote ?? "unset"}
-                                />
+                                />}
                                 {false && <div className="_d-flex flex-row flex-md-column justify-content-center align-items-center d-none">
                                     <CardButtons
                                         t={data}
@@ -178,7 +177,6 @@ const ThreadCard: React.FC<{
                                     <span className="mr-1">{moment.unix(data.createdAt).fromNow()} by </span>
                                     <CommunityUserInline className="mr-1" user={data.user} />
                                     {data.link && <a
-                                        className="text-secondary"
                                         onClick={() => store.event("link/open")}
                                         target="_blank"
                                         href={data.link}>
@@ -208,7 +206,7 @@ const ThreadCard: React.FC<{
                             commentNum={data.numComments ?? 0}
                             buttonClass="d-block" />
                     </div>
-                    <InlineVoter
+                    {false && <InlineVoter
                         loggedIn={store.app.loggedIn}
                         //preview
                         size="sm"
@@ -218,7 +216,7 @@ const ThreadCard: React.FC<{
                         onClick={(v) =>
                             store.voteThread(data?.uId ?? "undefined", v)}
                         value={data?.me?.vote ?? "unset"}
-                    />
+                    />}
                 </div>
             </div>
         )

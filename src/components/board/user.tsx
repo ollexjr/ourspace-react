@@ -42,10 +42,8 @@ export const CommunityUserInline: React.FC<{ className?: string, user?: ICommuni
             }
         >
             <span className={`${className} d-flex flex-row button-row`}>
-                <Link to={"/@" + user.username}>
-                    <span className="username font-weight-bold">
-                        @{user.username}
-                    </span>
+                <Link to={"/@" + user.username} className="username font-weight-bold text-secondary">
+                    @{user.username}
                 </Link>
                 {user.isAdmin && <UserBadge label="Admin" variant="danger" icon={faHammer} />}
                 {user.isMod && <UserBadge label="Moderator" icon={faUserShield} />}

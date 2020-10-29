@@ -5,6 +5,7 @@ import { ObservableRequestState, APIError, Response } from "service/api"
 import { useBoardStore, useBoardStoreUnsafe, BoardStore, Board, Thread } from "./board";
 import {
     IThread, IThreadWithBoardContext,
+    ICommunityUserRef,
     ICommentSelectGraphResponse, IComment, ICommentNode,
     ICommentCreateRequest, ICommentSelectResponse,
     IEntityVoteRequest, IVote, IThreadsSelectResponse
@@ -30,6 +31,8 @@ export class ThreadStore extends ObservableRequestState {
     //comments?: ICommentSelectResponse
     @observable
     commentsGraph?: ICommentSelectGraphResponse
+    
+    @observable
     flatComments: Array<IComment> = [];
 
     constructor(app: AppStore, threadId: string, board?: BoardStore, init?: IThreadWithBoardContext) {
@@ -47,6 +50,9 @@ export class ThreadStore extends ObservableRequestState {
 
     addComment(content: string, parentId?: string): Promise<void> {
         let comment: IComment = {
+            user: {
+                username: this.app.active!.username!
+            },
             content: content,
             parentId: parentId,
         }

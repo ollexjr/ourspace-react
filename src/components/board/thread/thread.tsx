@@ -38,51 +38,58 @@ const ThreadCommentCard: React.FC<{ data: IComment }> = ({ data }) => {
     const canEdit = canReply && (data.user!.username == store.app.active?.username);
     let depth = (data?.depth ?? 0);
     return (
-        <li id={data.uId!} className="thread-link-card list-group-item comment-container p-0 px-2 d-flex flex-row">
-            <CommentPadding depth={depth} />
-            <div className="flex-grow-1">
-                <div className="poster-info d-flex justify-content-between">
-                    <CommunityUserInline user={data?.user ?? undefined} />
-                    <span>{moment.unix(data?.createdAt ?? 0).fromNow()}</span>
-                </div>
-                {debug && <pre>
-                    {JSON.stringify(data)}
-                </pre>}
-                {edit ? <TextEditor
-                    acceptText="Submit" cancelText="cancel"
-                    source={data.content ?? "error, editing with no content"} onAccept={(t) => store.addComment(t, data?.uId ?? "")} /> :
-                    <ReactMarkdown
-                        className="wrap-all"
-                        source={data.content ?? "%undefined%"} />
-                }
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                    <InlineVoter
-                        loggedIn={store.app.loggedIn}
-                        table={store.thread?.acceptedCommentVotes ?? []}
-                        votes={data?.votes ?? undefined}
-                        onClick={(v) =>
-                            store.assertInlineLogin()
-                                .then(t =>
-                                    store.voteComment(data?.uId ?? "undefined", v))}
-                        value={data?.me?.vote ?? ""} />
-                    <div className="rounded button-row">
-                        {false || canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>
-                            {!edit ? <FontAwesomeIcon icon={faEdit} /> : "Cancel Edit"}
-                        </Button>}
-                        {canReply && !edit && <Button size="sm" variant="outline-dark" onClick={() => setReply(!reply)}>
-                            {!reply ? <FontAwesomeIcon icon={faReply} /> : "Cancel"}
-                        </Button>}
-                    </div>
-                </div>
-                {reply && <div className="comment-reply mb-2">
-                    <small>Replying... </small>
-                    <TextEditor
-                        acceptText="Submit" cancelText="cancel"
-                        onCancel={() => setReply(false)}
-                        onAccept={(t) => edit ?
-                            store.editComment(t, data?.uId ?? "").then(t => setEditing(false)) :
-                            store.addComment(t, data?.uId ?? "").then(t => setReply(false))} /></div>}
+
+        <div className="flex-grow-1">
+            <div className="poster-info d-flex justify-content-between">
+                <CommunityUserInline user={data?.user ?? undefined} />
+                <span>{moment.unix(data?.createdAt ?? 0).fromNow()}</span>
             </div>
+            {debug && <pre>
+                {JSON.stringify(data)}
+            </pre>}
+            {edit ? <TextEditor
+                acceptText="Submit" cancelText="cancel"
+                source={data.content ?? "error, editing with no content"} onAccept={(t) => store.addComment(t, data?.uId ?? "")} /> :
+                <ReactMarkdown
+                    className="wrap-all"
+                    source={data.content ?? "%undefined%"} />
+            }
+            <div className="d-flex justify-content-between align-items-center mb-2">
+                <InlineVoter
+                    loggedIn={store.app.loggedIn}
+                    table={store.thread?.acceptedCommentVotes ?? []}
+                    votes={data?.votes ?? undefined}
+                    onClick={(v) =>
+                        store.assertInlineLogin()
+                            .then(t =>
+                                store.voteComment(data?.uId ?? "undefined", v))}
+                    value={data?.me?.vote ?? ""} />
+                <div className="rounded button-row">
+                    {false || canEdit && !reply && <Button size="sm" variant="outline-dark" onClick={() => setEditing(!edit)}>
+                        {!edit ? <FontAwesomeIcon icon={faEdit} /> : "Cancel Edit"}
+                    </Button>}
+                    {canReply && !edit && <Button size="sm" variant="outline-dark" onClick={() => setReply(!reply)}>
+                        {!reply ? <FontAwesomeIcon icon={faReply} /> : "Cancel"}
+                    </Button>}
+                </div>
+            </div>
+            {reply && <div className="comment-reply mb-2">
+                <small>Replying... </small>
+                <TextEditor
+                    acceptText="Submit" cancelText="cancel"
+                    onCancel={() => setReply(false)}
+                    onAccept={(t) => edit ?
+                        store.editComment(t, data?.uId ?? "").then(t => setEditing(false)) :
+                        store.addComment(t, data?.uId ?? "").then(t => setReply(false))} /></div>}
+        </div>
+    )
+}
+
+const FlatCommentWrapper: React.FC<{ depth: number, uId: string }> = ({ children, depth, uId }) => {
+    return (
+        <li id={uId} className="thread-link-card list-group-item comment-container p-0 px-2 d-flex flex-row">
+            <CommentPadding depth={depth} />
+            {children}
         </li>
     )
 }
@@ -96,9 +103,14 @@ export const ThreadCommentView: React.FC = observer(() => {
             </div>
         )
     }
+
     return (
         <ul className="list-group list-group-flush">
-            {store.flatComments.map(comment => <ThreadCommentCard key={comment.uId ?? ""} data={comment} />)}
+            {store.flatComments.map(comment =>
+                <FlatCommentWrapper uId={comment.uId!} depth={comment.depth!} >
+                    <ThreadCommentCard key={comment.uId ?? ""} data={comment} />
+                </FlatCommentWrapper>
+            )}
         </ul>
     )
 })
@@ -198,8 +210,8 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                             </a>
                         }
                     </div>
-                    <div className="mb-2" 
-                        //style={{ minHeight: '300px' }}
+                    <div className="mb-2"
+                    //style={{ minHeight: '300px' }}
                     >
                         <h4>{store.thread?.title ?? "%notset%"}</h4>
                         {store.thread?.content && <ReactMarkdown source={store.thread!.content!} />}

@@ -1,0 +1,222 @@
+import React from 'react';
+
+import { Editor as DraftJSEditor, EditorState, convertFromHTML, convertToRaw } from 'draft-js';
+import { Navbar, Nav, Container, Button, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
+import Editor from 'rich-markdown-editor';
+
+import { dark } from './theme';
+
+import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
+export const TextEditor: React.FC<{
+    source?: string,
+    cancelText: string,
+    acceptText: string,
+    buttons?: any,
+    onAccept: (data: any) => Promise<any>,
+    onCancel?: () => any
+}> = ({ source, onAccept, onCancel, buttons }) => {
+
+    const [state, setState] = React.useState<{}>();
+
+    const [isWaiting, setWaiting] = React.useState<boolean>(false);
+    const target = React.useRef(null);
+    const ref = React.useRef<Editor>(null);
+    const onAcceptPre = () => {
+        if (isWaiting) {
+            return;
+        }
+
+        setWaiting(true);
+        onAccept("").finally(() => {
+            setWaiting(false);
+        }).catch(t => {
+            setWaiting(false);
+        })
+    }
+
+    return (
+        <div className="border rounded px-2 py-2 d-flex flex-row">
+            <div style={{
+                visibility: isWaiting ? "visible" : "hidden",
+                position: 'fixed',
+                top: 0, right: 0, left: 0, bottom: 0,
+                zIndex: 100,
+                pointerEvents: 'none',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255, 255, 255, .5)'
+
+            }}>
+                <Spinner animation="border" variant="primary" />
+            </div>
+            <div className="flex-grow-1 pl-3 mx-2">
+
+            </div>
+            <div className="d-flex flex-column justify-content-end button-column">
+                {onCancel && <Button variant="outline-dark" onClick={() => onCancel()} >
+                    <FontAwesomeIcon icon={faTimes} />
+                </Button>}
+                <Button className="" variant="primary" onClick={onAcceptPre} >
+                    <FontAwesomeIcon icon={faPaperPlane} />
+                </Button>
+                {buttons}
+            </div>
+        </div>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+export const RichEditor: React.FC = () => {
+    const [state, setState] = React.useState<EditorState>(() => EditorState.createEmpty())
+    return (
+        <DraftJSEditor editorState={state} onChange={(editorState) => setState(editorState)} />
+    )
+}
+
+export const TextEditorOld: React.FC<{
+    source?: string,
+    cancelText: string,
+    acceptText: string,
+    buttons?: any,
+    onAccept: (data: any) => Promise<any>,
+    onCancel?: () => any
+}> = ({ source, onAccept, onCancel, buttons }) => {
+    //const [state, setState] = React.useState<EditorState>(() => EditorState.createEmpty())
+
+    const [state, setState] = React.useState<{
+        resetValue: string,
+        value: string,
+        readOnly: boolean,
+        template: boolean
+    }>({
+        resetValue: "",
+        readOnly: false,
+        template: false,
+        //dark: localStorage.getItem("dark") === "enabled",
+        value: "",
+    });
+
+    const [isWaiting, setWaiting] = React.useState<boolean>(false);
+    const target = React.useRef(null);
+    const ref = React.useRef<Editor>(null);
+
+    const onAcceptPre = () => {
+        if (isWaiting) {
+            return;
+        }
+        setWaiting(true);
+        const v = state.value;
+        setState({
+            ...state,
+            readOnly: true,
+            resetValue: v,
+        });
+        onAccept(state.value).finally(() => {
+            setState({
+                ...state,
+                value: "",
+                readOnly: false,
+                resetValue: "",
+            });
+            //setTimeout((t) => {
+            //    setState({ ...state, defaultValue: "" });
+            // }, 10);
+            if (ref && ref.current) {
+                //ref.current.value()
+                //ref.current.props!.value = "";
+            }
+            setWaiting(false);
+        }).catch(t => {
+            console.log(t);
+        })
+    }
+    return (
+        <div className="border rounded px-2 py-2 d-flex flex-row" /*style={{ position: 'relative' }}*/ ref={target}>
+            <div style={{
+                visibility: isWaiting ? "visible" : "hidden",
+                position: 'fixed',
+                top: 0, right: 0, left: 0, bottom: 0,
+                zIndex: 100,
+                pointerEvents: 'none',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255, 255, 255, .5)'
+
+            }}>
+                <Spinner animation="border" variant="primary" />
+            </div>
+            <div className="flex-grow-1 pl-3 mx-2">
+                <EditorRME
+                    key="test"
+                    ref={ref}
+
+                    onSave={() => onAcceptPre()}
+                    onChange={(v) => setState({ ...state, value: v() })}
+
+                    value={state.resetValue}
+
+                    //defaultValue={source}
+
+                    //handleSaveAndExit={() => onAcceptPre()}
+                    //theme={dark}
+                    //template={true}
+                />
+            </div>
+            <div className="d-flex flex-column justify-content-end button-column">
+                {onCancel && <Button variant="outline-dark" onClick={() => onCancel()} >
+                    <FontAwesomeIcon icon={faTimes} />
+                </Button>}
+                <Button className="" variant="primary" onClick={onAcceptPre} >
+                    <FontAwesomeIcon icon={faPaperPlane} />
+                </Button>
+                {buttons}
+            </div>
+        </div>
+    )
+}
+
+const TextEditorDraftJs: React.FC<{ onAccept: (data: any) => Promise<any>, onCancel?: () => any }> = ({ onAccept }) => {
+    const [state, setState] = React.useState<EditorState>(() => EditorState.createEmpty())
+    const [isWaiting, setWaiting] = React.useState<boolean>(false);
+    const target = React.useRef(null);
+
+    return (
+        <div className="border rounded p-3" style={{ position: 'relative' }} ref={target}>
+            <div style={{
+                visibility: isWaiting ? "visible" : "hidden",
+                position: 'fixed',
+                top: 0, right: 0, left: 0, bottom: 0,
+                pointerEvents: 'none',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255, 255, 255, .5)'
+
+            }}>
+                <Spinner animation="border" variant="primary" />
+            </div>
+            <DraftJSEditor
+                placeholder={"Leave a comment"}
+                editorState={state} onChange={(editorState) => setState(editorState)} />
+            <Button onClick={() => {
+                setWaiting(true);
+                onAccept(convertToRaw(state.getCurrentContent())).finally(() => setWaiting(false))
+            }} >Accept</Button>
+        </div >
+    )
+}

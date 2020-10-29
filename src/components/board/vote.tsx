@@ -33,6 +33,7 @@ const v: Array<string> = [
 ];
 
 export const ArrowVoter: React.FC<{
+    className?: string,
     onVote: (a: string) => Promise<any>,
     votes?: { [k: string]: number }
     vote?: string,
@@ -41,24 +42,44 @@ export const ArrowVoter: React.FC<{
     votes,
     vote
 }) => {
+        const [mvt, setVoteChange] = React.useState<string | undefined>(vote);
+        let up = 0, down = 0;
+        if (votes && votes['up']) {
+            up = votes['up'];
+        }
+        if (votes && votes['down']) {
+            down = votes['down'];
+        }
+        const total = up - down;
 
-        const [voteChange, setVoteChange] = React.useState<string>();
+        const onVotePre = (v: string) => {
+            onVote(v).then(t => {
+                setVoteChange(v);
+            });
+        }
+
+        const getVote = (): number => {
+            if (vote != mvt && mvt == 'down') {
+                return -1;
+            }
+
+            if (vote != mvt && mvt == 'up') {
+                return 1;
+            }
+
+            return 0;
+            //((!vote && mvt == 'down') ? -1 : ((!vote && mvt == 'up') ? 1: 0))
+        }
 
         return (
-            <div className="d-flex flex-row align-items-center">
-                {(votes ? votes['up'] : 0) - (votes ? votes['down'] : 0)}
+            <div className="d-flex flex-column align-items-center">
+                <small>{total + getVote()}</small>
                 <div className="d-flex flex-column justify-content-between">
                     {v.map(v => {
-                        let vt = 0;
-                        let isThis = false;
-                        if (votes && votes[v]) {
-                            vt = votes[v];
-                            isThis = (vote == v);
-                        }
-                        //const isThis = ((votes && votes[v]) ?? false);
+                        const isThis = (mvt == v);
                         return (
                             <Button
-                                onClick={() => onVote(v)}
+                                onClick={() => onVotePre(v)}
                                 key={v}
                                 size="sm"
                                 variant="none"
