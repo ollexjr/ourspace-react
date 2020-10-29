@@ -236,6 +236,10 @@ export class BoardStore extends ObservableRequestState {
         this.app.moderate = c; 
     }
 
+    saveThread(t: string): Promise<any> {
+        return this.app.api.endpointPost(`thread/bookmark`, { threadId: t }, 200);
+    }
+
     @action setOverlay(t: IThread) {
         console.log("[store/setOverlay] => ", t)
         this.overlayThread = t;

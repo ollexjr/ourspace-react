@@ -5,6 +5,8 @@ import { AccountStore, UserRef } from './user';
 import { NetworkService, TokenPair, AccessJwt, Jwt } from '../service/api';
 import JwtDecode from 'jwt-decode';
 import { IEvent, join } from 'model/net';
+
+
 import {
     ILoginResponse,
     ILoginRequest,
@@ -24,20 +26,31 @@ const hydrateAppStore = (): AppStore => {
     // if we can find one, load it from local storage
     let o = window.localStorage.getItem("app")
     if (!o) {
-        return new AppStore(undefined, undefined);
+        return new AppStore(undefined);
     }
     let json = JSON.parse(o);
-    return new AppStore(json['access'], json['refresh']);
+    return AppStore.fromStorage(o);
+    //json['access'], json['refresh']
 }
 
-export class AppStore {
-    protected _api: NetworkService = new NetworkService();
+interface AppStorage {
+    accessToken?: string,
+    refreshToken?: string,
+}
 
+class O {
+    
+    toJsonM() {
+        return JSON.stringify(this);
+    }
+}
+
+export class AppStore extends O {
+    protected _api: NetworkService = new NetworkService();
     @observable UIanimatedHeader: boolean = false;
     @observable UIconstrainContainer: boolean = true;
     @observable UIshowEventDebug: boolean = false;
     @observable UIdarkTheme: boolean = false;
-
     storeStack: Array<any> = [];
 
     @action
@@ -49,9 +62,30 @@ export class AppStore {
         return Promise.resolve();
     }
 
+    constructor(o?: AppStorage) {
+        super();
+
+
+        var worker = new Worker('service/event-worker.js');
+
+        console.log("[app store] constructed with tokens =>", o?.accessToken, o?.refreshToken)
+        this.loadOther();
+        this.openSocket();
+
+
+        console.log( this.toJsonM());
+
+        if (o && o.accessToken && o.refreshToken)
+            this.setupLogin(o.accessToken, o.refreshToken);
+    }
+
+    static fromStorage(o: Object): AppStore {
+        return new AppStore(o);
+    }
+
     @observable protected _access?: AccessJwt;
     @observable protected _refresh?: Jwt;
-    
+
     @observable isBottomOfPage: boolean = false;
     @observable displayableEvent: IObservableArray<IEvent> = observable.array([]);
     @observable commentReplyEvent: IObservableArray<ICommentReplyEvent> = observable.array([]);
@@ -133,22 +167,6 @@ export class AppStore {
         }
     }
 
-    constructor(
-        accessToken: string | undefined,
-        refreshToken: string | undefined) {
-        console.log("[app store] constructed with tokens =>", accessToken, refreshToken)
-        //document.title = "ourspace";
-
-        this.loadOther();
-        this.openSocket();
-
-        if (accessToken == undefined || refreshToken == undefined) {
-            return
-        }
-
-        this.setupLogin(accessToken, refreshToken);
-    }
-
     loadOther() {
         this.api.endpointGet("communities/default", {}, 200)
             .then((t: ICommunitySelectResponse) => {
@@ -193,6 +211,12 @@ export class AppStore {
         window.localStorage.setItem("app", this.toJson())
     }
 
+    addView(t: IThread) {
+        this.recent.push(t);
+        window.localStorage.setItem("history", JSON.stringify(this.recent));
+    }
+
+
     @action
     logout(): Promise<void> {
         //delete refresh token
@@ -229,10 +253,6 @@ export class AppStore {
             console.log("[app store] logged in");
             this.setupLogin(json.tokens!.accessToken!, json.tokens!.refreshToken!);
         })
-    }
-
-    addView(t: IThread) {
-        this.recent.push(t);
     }
 
     private tearDownLogin() {
@@ -291,17 +311,14 @@ export class AppStore {
 
     @action
     spotlightQuery(s: string): Promise<any> {
-
         let o: ICommunitySelectRequest = {
             query: s,
             limit: 5,
         }
-
         this.api.endpointGet("communities/search", o, 200).then((t: ICommunitySelectResponse) => {
             this.communitySearch = t;
             //this.communitySearch = join(this.communitySearch ?? { data: [], token: "" }, t);
         });
-
         return Promise.resolve();
     }
 
@@ -317,6 +334,10 @@ export class AppStore {
 
     getCommunityLink(boardId: string) {
         return `/+${boardId}/`
+    }
+
+    getRandomCommunity() {
+        return this.api.endpointGet("communities/random", null, 200);
     }
 }
 

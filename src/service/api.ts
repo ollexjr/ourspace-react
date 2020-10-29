@@ -97,7 +97,7 @@ export interface Response {
     token: string
 }
 
-const debug = false;
+const debug = true;
 const subdomain = debug ? "dev." : "www.";
 
 //export const HOST = `https://${document.domain}/`

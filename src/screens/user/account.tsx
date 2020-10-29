@@ -32,8 +32,12 @@ const UserScaffold: React.FC = observer(() => {
             <Navbar className="sticky sticky-top bg-white shadow-light border-bottom">
                 <div className="container d-flex flex-row justify-content-between align-items-center">
                     <div>
-                        <h6 className="display-5 font-bold mb-0">@{store.userId}</h6>
-                        <span className="small text-muted">@{store.userId}</span>
+                        <div>
+                            <h6 className="display-5 font-bold mb-0">@{store.userId}</h6>
+                            <span className="small text-muted">@{store.userId}</span>
+                        </div>
+
+                        <small>Followers</small>
                     </div>
                     <div className="button-row">
                         {isSelf && <IconButton variant="light" className="rounded">Report</IconButton>}
@@ -41,7 +45,7 @@ const UserScaffold: React.FC = observer(() => {
                 </div>
             </Navbar>
             <Container>
-                
+
             </Container>
         </div>
     )

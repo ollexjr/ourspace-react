@@ -3261,6 +3261,9 @@ export interface IThread {
     /** Thread numComments */
     numComments?: (number|null);
 
+    /** Thread numCrossposts */
+    numCrossposts?: (number|null);
+
     /** Thread lastCommentAt */
     lastCommentAt?: (number|null);
 
@@ -3345,6 +3348,9 @@ export class Thread implements IThread {
 
     /** Thread numComments. */
     public numComments: number;
+
+    /** Thread numCrossposts. */
+    public numCrossposts: number;
 
     /** Thread lastCommentAt. */
     public lastCommentAt: number;

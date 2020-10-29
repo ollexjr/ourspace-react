@@ -3,17 +3,18 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Link,
+    useHistory,
 } from "react-router-dom";
 
 import { Navbar, Nav, Container, Form, ButtonGroup, Button, Row, Col } from 'react-bootstrap';
 import { useAppStore, AppStoreProvider } from 'stores/app';
 import { observer } from 'mobx-react';
 import { InlineNavCard } from "components/user/card"
-import { faAt, faPlus, faProjectDiagram, faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import { faAt, faPlus, faDice, faRandom, faProjectDiagram, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CommunityAvatar } from 'components/board/avatar';
 import { Brand } from 'components/brand';
-
+import { IconButton } from 'components/button';
 /**
  * favatar
  * forumly
@@ -59,9 +60,10 @@ export const NavbarBase: React.FC = ({ children }) => {
 
 export const SiteNavbar: React.FC = observer(() => {
     const store = useAppStore();
+    const history = useHistory();
     return (
         <NavbarBase>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" 
+            <Navbar.Toggle aria-controls="basic-navbar-nav"
 
             />
             <Navbar.Collapse id="basic-navbar-nav" style={{
@@ -86,6 +88,7 @@ export const SiteNavbar: React.FC = observer(() => {
                     <Nav.Link href="/about-and-faq">Help</Nav.Link>
                     <Nav.Link href="/+all">Support Us</Nav.Link>
                     <Nav.Item className="flex-grow-1 flex-row text-right py-2 p-md-0 d-flex d-md-flex _d-md-block justify-content-end">
+                        <IconButton variant="" icon={faDice} className="mr-2 px-md-4" onClick={() => store.getRandomCommunity().then(t => history.push(`/+${t}`))} />
                         {store.loggedIn && <InlineNavCard />}
                         {!store.loggedIn ?
                             ([
@@ -100,6 +103,6 @@ export const SiteNavbar: React.FC = observer(() => {
                     </Nav.Item>
                 </Nav>
             </Navbar.Collapse>
-        </NavbarBase>
+        </NavbarBase >
     )
 })

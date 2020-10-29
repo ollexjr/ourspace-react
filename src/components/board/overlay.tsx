@@ -21,13 +21,6 @@ const BoardSingleThreadOverlayObserver = observer(() => {
             //backdrop="static"
             size="lg"
             >
-            <Modal.Header closeButton>
-                <Modal.Title>
-                    {//store.overlayThread?.title
-                    }
-                    Discussion...
-                </Modal.Title>
-            </Modal.Header>
             <Modal.Body className="p-0">
                 {false && <Switch>
                     <Route path={`/+${store.boardId}/:threadId/`} component={undefined} />

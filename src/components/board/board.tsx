@@ -47,11 +47,12 @@ const CardButtons: React.FC<{
 
     let items: Array<ButtonDropdownItem> = [
         { label: "Hide", icon: "" },
-        { label: "Bookmark", icon: "" },
+        { label: "Bookmark", icon: "", onClick: () => store.saveThread(t.uId!) },
         //{ label: "CrossPost", icon: "" },
         //{ label: "Share", icon: "" },
         { label: "Copy to clipboard", icon: "", onClick: () => copyToClipboard(t.url!) },
         { label: "Open in new tab", icon: "", onClick: () => window.open(t.url!, '_blank') },
+        { label: 'Block ...', icon: "" }
     ];
 
     if (store.info?.isModerator) {

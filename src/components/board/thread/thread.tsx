@@ -141,6 +141,7 @@ const ThreadNavbar: React.FC<{}> = ({ }) => {
                 zIndex: 4,
                 position: 'sticky',
                 top: 0,
+                overflow: 'hidden',
             }}>
             <div className="d-flex flex-row align-items-center board-header mr-2">
                 <CircleAvatar size={48} src={store.info?.icon ?? undefined} />

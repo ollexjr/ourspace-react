@@ -8121,6 +8121,7 @@ $root.Thread = (function() {
      * @property {number|null} [thumbAspectRatio] Thread thumbAspectRatio
      * @property {string|null} [location] Thread location
      * @property {number|null} [numComments] Thread numComments
+     * @property {number|null} [numCrossposts] Thread numCrossposts
      * @property {number|null} [lastCommentAt] Thread lastCommentAt
      * @property {Object.<string,number>|null} [votes] Thread votes
      * @property {Array.<string>|null} [acceptedVotes] Thread acceptedVotes
@@ -8287,6 +8288,14 @@ $root.Thread = (function() {
     Thread.prototype.numComments = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
+     * Thread numCrossposts.
+     * @member {number} numCrossposts
+     * @memberof Thread
+     * @instance
+     */
+    Thread.prototype.numCrossposts = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+    /**
      * Thread lastCommentAt.
      * @member {number} lastCommentAt
      * @memberof Thread
@@ -8426,6 +8435,8 @@ $root.Thread = (function() {
             writer.uint32(/* id 24, wireType 0 =*/192).int32(message.unhandledReports);
         if (message.reports != null && Object.hasOwnProperty.call(message, "reports"))
             writer.uint32(/* id 25, wireType 0 =*/200).int32(message.reports);
+        if (message.numCrossposts != null && Object.hasOwnProperty.call(message, "numCrossposts"))
+            writer.uint32(/* id 28, wireType 0 =*/224).int64(message.numCrossposts);
         if (message.thumb != null && Object.hasOwnProperty.call(message, "thumb"))
             writer.uint32(/* id 30, wireType 2 =*/242).string(message.thumb);
         return writer;
@@ -8512,6 +8523,9 @@ $root.Thread = (function() {
                 break;
             case 16:
                 message.numComments = reader.int64();
+                break;
+            case 28:
+                message.numCrossposts = reader.int64();
                 break;
             case 17:
                 message.lastCommentAt = reader.int64();
@@ -8650,6 +8664,9 @@ $root.Thread = (function() {
         if (message.numComments != null && message.hasOwnProperty("numComments"))
             if (!$util.isInteger(message.numComments) && !(message.numComments && $util.isInteger(message.numComments.low) && $util.isInteger(message.numComments.high)))
                 return "numComments: integer|Long expected";
+        if (message.numCrossposts != null && message.hasOwnProperty("numCrossposts"))
+            if (!$util.isInteger(message.numCrossposts) && !(message.numCrossposts && $util.isInteger(message.numCrossposts.low) && $util.isInteger(message.numCrossposts.high)))
+                return "numCrossposts: integer|Long expected";
         if (message.lastCommentAt != null && message.hasOwnProperty("lastCommentAt"))
             if (!$util.isInteger(message.lastCommentAt) && !(message.lastCommentAt && $util.isInteger(message.lastCommentAt.low) && $util.isInteger(message.lastCommentAt.high)))
                 return "lastCommentAt: integer|Long expected";
@@ -8761,6 +8778,15 @@ $root.Thread = (function() {
                 message.numComments = object.numComments;
             else if (typeof object.numComments === "object")
                 message.numComments = new $util.LongBits(object.numComments.low >>> 0, object.numComments.high >>> 0).toNumber();
+        if (object.numCrossposts != null)
+            if ($util.Long)
+                (message.numCrossposts = $util.Long.fromValue(object.numCrossposts)).unsigned = false;
+            else if (typeof object.numCrossposts === "string")
+                message.numCrossposts = parseInt(object.numCrossposts, 10);
+            else if (typeof object.numCrossposts === "number")
+                message.numCrossposts = object.numCrossposts;
+            else if (typeof object.numCrossposts === "object")
+                message.numCrossposts = new $util.LongBits(object.numCrossposts.low >>> 0, object.numCrossposts.high >>> 0).toNumber();
         if (object.lastCommentAt != null)
             if ($util.Long)
                 (message.lastCommentAt = $util.Long.fromValue(object.lastCommentAt)).unsigned = false;
@@ -8866,6 +8892,11 @@ $root.Thread = (function() {
             object.me = null;
             object.unhandledReports = 0;
             object.reports = 0;
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.numCrossposts = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.numCrossposts = options.longs === String ? "0" : 0;
             object.thumb = "";
         }
         if (message.uId != null && message.hasOwnProperty("uId"))
@@ -8938,6 +8969,11 @@ $root.Thread = (function() {
             object.unhandledReports = message.unhandledReports;
         if (message.reports != null && message.hasOwnProperty("reports"))
             object.reports = message.reports;
+        if (message.numCrossposts != null && message.hasOwnProperty("numCrossposts"))
+            if (typeof message.numCrossposts === "number")
+                object.numCrossposts = options.longs === String ? String(message.numCrossposts) : message.numCrossposts;
+            else
+                object.numCrossposts = options.longs === String ? $util.Long.prototype.toString.call(message.numCrossposts) : options.longs === Number ? new $util.LongBits(message.numCrossposts.low >>> 0, message.numCrossposts.high >>> 0).toNumber() : message.numCrossposts;
         if (message.thumb != null && message.hasOwnProperty("thumb"))
             object.thumb = message.thumb;
         return object;
