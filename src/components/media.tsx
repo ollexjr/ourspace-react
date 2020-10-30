@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import LazyLoad from 'react-lazyload';
+import { Modal } from 'react-bootstrap';
 
 export const MediaSource: React.FC<{
     width?: number | string,
@@ -17,6 +18,8 @@ export const MediaSource: React.FC<{
 }> = ({ onOpen, width, height, aspectRatio, preview, src, thumb, onEvent }) => {
     preview = false;
     const maxHeight = preview ? '350px' : undefined;
+
+    const [modal, setModal] = React.useState<boolean>(false);
 
     if (thumb && aspectRatio && !height) {
         height = (320 * aspectRatio);
@@ -56,16 +59,28 @@ export const MediaSource: React.FC<{
         return null;
     }
 
-    const loader = (child: any) => {
+    const wrapModal = (child: any): any => {
         return (
-            <LazyLoad
-                debounce
-                once
-                height={height}
-                offset={window.innerHeight * 2}>
-                {overflowWrapper(child)}
-            </LazyLoad>
+            <>
+                {modal && < Modal className="transparent" show={modal} onHide={() => setModal(false)} >
+                    {child}
+                    <div>
+                        <small>View Thread</small>
+                    </div>
+                </Modal>}
+                <LazyLoad
+                    debounce
+                    once
+                    height={height}
+                    offset={window.innerHeight * 2}>
+                    {overflowWrapper(child)}
+                </LazyLoad>
+            </>
         )
+    }
+
+    const loader = (child: any) => {
+        return wrapModal(child)
     }
 
     if (isVideo) {
@@ -126,13 +141,14 @@ export const MediaSource: React.FC<{
 
     return (
         loader(<img
-            onClick={() => onOpen && onOpen()}
+            onClick={() => setModal(true)}
+            //onClick={() => onOpen && onOpen()}
             style={{
                 objectFit: 'cover',
                 width: width,
                 height: height,
             }}
-            
+
             className="card-img rounded border"
             src={thumb} />)
     )

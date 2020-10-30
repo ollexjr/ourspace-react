@@ -77,11 +77,6 @@ const CardButtons: React.FC<{
             <IconButton
                 variant="outline"
                 size="sm"
-                className={buttonClass} icon={faLink}>
-            </IconButton>
-            <IconButton
-                variant="outline"
-                size="sm"
                 className={buttonClass} icon={faRetweet}>
                 {numCrossposts}
             </IconButton>
