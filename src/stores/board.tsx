@@ -239,6 +239,22 @@ export class BoardStore extends ObservableRequestState {
     saveThread(t: string): Promise<any> {
         return this.app.api.endpointPost(`thread/bookmark`, { threadId: t }, 200);
     }
+    
+    isCollection(): boolean {
+        return this.boardId == "all";
+    }
+
+    getDisplayName() {
+        return BoardStore.displayName(this.boardId);
+    }
+
+    static displayName(s: string): string {
+        switch (s) {
+            case "all":
+                return "Explore";
+        }
+        return s;
+    }
 
     @action setOverlay(t: IThread) {
         console.log("[store/setOverlay] => ", t)

@@ -19,7 +19,7 @@ export const Brand1: React.FC<{ className: string }> = ({ className }) => {
                 <span className="d-inline d-sm-inline ml-2 _font-weight-bold">
                     our
                 </span>
-                <sup>+</sup>
+                <sup>#</sup>
                 <span className="_text-primary">
                     spaces
                 </span>
@@ -60,7 +60,7 @@ export const Brand: React.FC<{ className: string }> = ({ className }) => {
                 <CommunityAvatar className="d-none _d-md-inline" size={36} />
                 <FontAwesomeIcon className="d-none rounded ml-1 mr-1" icon={faPlus} />
                 <span className="d-block">
-                    <span className="text-primary">+</span>spaces
+                    <span className="text-primary">#</span>spaces
                 </span>
             </Navbar.Brand>
         </Link>

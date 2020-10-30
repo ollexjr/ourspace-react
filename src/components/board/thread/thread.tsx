@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { useThreadStore, ThreadStoreProvider } from '../../../stores/thread';
 import { useBoardStore, Thread, User } from "../../../stores/board";
 
-import { Navbar, Nav, Container, Button, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button, ButtonGroup, Row, Col, Modal, Overlay, Spinner } from 'react-bootstrap';
 import { TextEditor } from 'components/editor/editor';
 import { IComment, IThread, ICommentNode } from 'model/compiled';
 import { InlineVoter, VerticalVoter } from '../vote';
@@ -217,7 +217,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         <h4>{store.thread?.title ?? "%notset%"}</h4>
                         {store.thread?.content && <ReactMarkdown source={store.thread!.content!} />}
 
-                        {store.thread?.link && <div className="container _d-flex _justify-content-center mb-2 px-0 _px-sm-2">
+                        {store.thread?.link && <div className="container d-flex justify-content-center mb-2 px-0 _px-sm-2">
                             <MediaSource
                                 //onOpen={() => setModal(true)}
                                 width='auto'
@@ -230,7 +230,7 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                 </div>
 
 
-                <div className="px-2 px-md-4 mb-4 _border-bottom mb-1">
+                <div className="px-2 px-md-4 mb-1 pb-2 border-bottom">
                     <InlineVoter
                         loggedIn={store.app.loggedIn}
                         preview
@@ -245,31 +245,27 @@ export const ThreadView: React.FC<{ threadId: string }> = observer(({ threadId }
                         //            t => store.thread!.me!.vote = t)} 
                         value={store.thread?.me?.vote ?? "unset"} />
                     <div className="d-flex flex-row button-row">
-                        <IconButton variant="outline-primary" size="sm" onClick={() => setModal(true)} icon={faRandom}>
+                        <IconButton variant="" size="sm" onClick={() => setModal(true)} icon={faRandom}>
                             Crosspost
                         </IconButton>
-                        <IconButton variant="outline-primary" size="sm" onClick={() => setModal(true)} icon={faExpand} >
+                        <IconButton variant="" size="sm" onClick={() => setModal(true)} icon={faExpand} >
                             Open Link
                         </IconButton>
-                        <IconButton size="sm" onClick={() => setModal(true)} icon={faShare}>
-                            Share
-                        </IconButton>
-                        <IconButton size="sm" onClick={() => setModal(true)} icon={faShare}>
+                        <IconButton variant="" size="sm" onClick={() => store.save()} icon={faShare}>
                             Save
                         </IconButton>
                     </div>
                 </div>
 
-                <div id="reply" className="px-2 px-md-4 pb-4 border-bottom">
-                    {store.app.loggedIn ?
-                        <small>Comment as @{store.app.active!.username} </small>
-                        : <small>You need to login to comment</small>
-                    }
-
+                <div id="reply" className="px-2 px-md-4 p-4 border-bottom">
+                    {store.app.loggedIn && <small>Comment as @{store.app.active!.username} </small>}
                     {!store.app.loggedIn &&
-                        <div className="outline rounded p-2 d-flex justify-content-left button-row">
-                            <LinkButton to="/login">Login</LinkButton>
-                            <LinkButton to="/signup">Signup</LinkButton>
+                        <div className="d-flex flex-row justify-content-between align-items-center">
+                            <small>You need to login to comment</small>
+                            <div className="outline rounded d-flex justify-content-left button-row">
+                                <LinkButton variant="outline-primary" to="/login">Login</LinkButton>
+                                <LinkButton to="/signup">Signup</LinkButton>
+                            </div>
                         </div>
                     }
 

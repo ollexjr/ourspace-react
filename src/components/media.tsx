@@ -10,6 +10,7 @@ export const MediaSource: React.FC<{
     network?: string,
     aspectRatio?: number,
     thumb?: string,
+    className?: string,
     src?: string,
     onOpen?: () => any,
     onEvent?: (ev: string) => any
@@ -131,7 +132,7 @@ export const MediaSource: React.FC<{
                 width: width,
                 height: height,
             }}
-           
+            
             className="card-img rounded border"
             src={thumb} />)
     )

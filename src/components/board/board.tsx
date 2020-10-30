@@ -109,7 +109,7 @@ const ThreadCard: React.FC<{
         switch (type) {
             case 0:
                 cls = cls + " p-0 p-sm-1 _p-md-1";
-                innerClass += " card border-y page-link border-md-x border-md-y shadow-sm";
+                innerClass += " card p-0 border-y page-link border-md-x border-md-y shadow-sm";
                 break
             case 1:
                 innerClass += " border-bottom p-1"
@@ -153,7 +153,7 @@ const ThreadCard: React.FC<{
                     id="thread-card"
                     className={innerClass}>
                     <div className={
-                        classNames("d-flex justify-content-between ",
+                        classNames("d-flex justify-content-between p-1",
                             { "flex-column": type == 0 },
                             { "flex-row-reverse": type == 1 })} >
                         <div className="d-flex flex-grow-1 mb-1">
@@ -216,7 +216,7 @@ const ThreadCard: React.FC<{
                             thumb={data.thumb ?? undefined}
                             src={data.link ?? undefined} />
                     </div>
-                    <div className="d-flex flex-row justify-content-left">
+                    <div className="d-flex flex-row justify-content-left px-1">
                         <CardButtons
                             t={data}
                             commentNum={data.numComments ?? 0}
@@ -362,7 +362,7 @@ const BoardNavbar: React.FC = observer(() => {
             <div className="d-flex flex-row align-items-center board-header mr-2">
                 <CircleAvatar className="d-block d-md-block" src={store.info?.icon ?? undefined} size={48} />
                 <div className="d-flex flex-column p-2">
-                    <span className="font-weight-bold">+{store.boardId}</span>
+                    <span className="font-weight-bold">{store.getDisplayName()}</span>
                     <span style={{ fontSize: ".78em", whiteSpace: "nowrap" }}>{store.info?.members ?? "?"} Members</span>
                 </div>
             </div>
@@ -410,7 +410,7 @@ const BoardNavbar: React.FC = observer(() => {
                     icon={store.info.isMember ? faUsersSlash : faUsers}
                     variant={(store.info.isMember ? "primary" : "danger")}
                     onClick={() => store.info!.isMember ? store.unsubscribe() : store.subscribe()}>
-                    <span>{store.info!.isMember ? "Leave" : "Join"}</span>
+                    <span className="d-none d-md-block">{store.info!.isMember ? "Leave" : "Join"}</span>
                 </PromiseButton>
             }
         </Navbar>

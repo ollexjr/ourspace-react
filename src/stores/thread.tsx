@@ -141,6 +141,10 @@ export class ThreadStore extends ObservableRequestState {
         }))
     }
 
+    save() {
+        
+    }
+
     assertInlineLogin():Promise<any> {
        return this.app.assertInlineLogin();
     }

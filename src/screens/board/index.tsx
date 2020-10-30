@@ -36,16 +36,8 @@ import { Portal } from 'components/app/sidebar';
 import { EnumToArray, DropdownEnum } from 'components/dropdown';
 import { CircleAvatar } from 'components/user/avatar';
 import { useWindowSize } from 'components/layout';
-
-import { faSearch, faUserPlus, faUserCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { IUserRef, ThreadSelectFilters } from 'model/compiled';
-import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import { ImageHeader } from 'components/header';
-import { ModerateForm } from 'components/board/moderator/actions';
-
-import BoardSingleThreadOverlayObserver from 'components/board/overlay';
+import { CardAbout } from 'components/board/info';
 
 const ScreenBoard: React.FC = () => {
     return (
@@ -100,7 +92,7 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
     React.useEffect(() => {
         console.log("scaffold arguments changed");
     }, [store]);
-
+    const isCollection = store.isCollection();
     return (
         <Container
             fluid
@@ -119,16 +111,17 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
                     minHeight: 'calc(100vh - 20px);'
                 }}
             >
+                {!isCollection &&
                 <ImageHeader animated src={store.info?.banner ?? ""}>
                     <div className="d-flex flex-row align-items-center">
-                        <CircleAvatar size={84} src={store.info?.icon ?? undefined} className="border" />
-                        <div className="ml-4">
-                            <h2 className="_display-5">{store.info?.title ?? boardId}</h2>
+                        <CircleAvatar size={64} src={store.info?.icon ?? undefined} className="d-none d-md-block border" />
+                        <div className="ml-1 ml-md-4">
+                            <h3 className="_display-5">{store.info?.title ?? boardId}</h3>
                             <h4 className="lead">{store.info?.description ?? ""}</h4>
                             <h6>+{boardId}</h6>
                         </div>
                     </div>
-                </ImageHeader>
+                </ImageHeader>}
                 <Switch>
                     <Route exact path={`/+${boardId}/create`} component={ScreenCreate} />
                     <Route exact path={`/+${boardId}/settings`} component={ScreenEdit} />
@@ -139,45 +132,10 @@ const BoardScaffold: React.FC<{ boardId: string }> = observer(({ boardId }) => {
             </Container>
 
             <Portal target="screen-right">
-                <Card className="mb-2">
-                    <Card.Header>
-                        About this Space
-                        <small className="d-block">Created {moment.unix(store.info?.createdAt ?? 0).fromNow()}</small>
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Title>{store.info?.title}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">{store.info?.description}</Card.Subtitle>
-                    </Card.Body>
-                    <ListGroup className="list-group-flush">
-                        <ListGroupItem>{store.info?.members ?? '?'} Members</ListGroupItem>
-                        <ListGroupItem>{store.info?.posts ?? '?'} Posts</ListGroupItem>
-                    </ListGroup>
-                    <Card.Body className="d-none _d-md-block d-flex flex-column">
-                        <ButtonGroup>
-                            <LinkButton variant="outline-primary" to={`/+${store.boardId}/create`}>Post</LinkButton>
-                            {!store.info?.isMember &&
-                                <IconButton icon={faUserPlus} onClick={() => store.subscribe()}>Join Community</IconButton>}
-                            {store.info?.isMember &&
-                                <IconButton variant="outline-warning" icon={faUserCheck} onClick={() => store.unsubscribe()}>Leave Community</IconButton>}
-                        </ButtonGroup>
-                    </Card.Body>
-                </Card>
-                {false && <Card className="mb-2">
-                    <Card.Header>
-                        Moderators
-                    </Card.Header>
-                    <ListGroup className="list-group-flush">
-                        {store.info?.preview?.map((e) => <ListGroupItem>@{e.username}</ListGroupItem>)}
-                    </ListGroup>
-                </Card>}
-
-                <Card className="mb-2">
-                    <Card.Header>
-                        Community Rules
-                    </Card.Header>
-                </Card>
+               <CardAbout/>
+                
             </Portal>
-        </Container>
+        </Container >
     )
 })
 

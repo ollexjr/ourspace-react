@@ -7,7 +7,7 @@ import { LinkButton } from 'components/button';
 import { OverlayTrigger, Tooltip, Form, Button, Badge, Modal } from 'react-bootstrap';
 import { CircleAvatar } from "components/user/avatar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faSearch, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faHashtag, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { IBoardSubscription } from 'model/compiled';
 import { CommunityAvatar } from 'components/board/avatar';
 
@@ -51,7 +51,7 @@ const SubscriptionList: React.FC<{ data: Array<any> }> = observer(({ data }) => 
     const params: Params = useParams();
     console.log("router params => ", params)
     return (
-        <div className="subscription-items">
+        <div className="subscription-items d-flex flex-column align-items-center">
             {data.map(t =>
                 <SubscriptionIcon
                     active={params.pathId == t.boardId}
@@ -61,17 +61,19 @@ const SubscriptionList: React.FC<{ data: Array<any> }> = observer(({ data }) => 
     );
 });
 
+
 export const SubscriptionListWithSearch: React.FC = observer(() => {
-    const store = useAppStore();
     const [state, setFilter] = React.useState("");
     const [showOverlay, setOverlay] = React.useState<boolean>(false);
+    
     const history = useHistory();
+    const store = useAppStore();
     const subscriptions = store.active?.subscriptions ?? store.defaults;
+    
     return (
         <div className="subscription-list pt-2">
-            <Modal
+            {showOverlay && <Modal
                 onHide={() => setOverlay(false)}
-                //size="lg"
                 show={showOverlay}>
                 <Modal.Header className="border-none" closeButton>
                     <Modal.Title>
@@ -101,11 +103,14 @@ export const SubscriptionListWithSearch: React.FC = observer(() => {
                         </div>
                     ))}
                 </Modal.Body>
-            </Modal>
+            </Modal>}
 
             <div className="d-flex flex-column align-items-center mb-2 button-column">
                 <Button onClick={() => store.showSpotlight()} >
                     <FontAwesomeIcon icon={faSearch} />
+                </Button>
+                <Button onClick={() => history.push("/+all")} >
+                    <FontAwesomeIcon icon={faHashtag} />
                 </Button>
                 <Button onClick={() => history.push("/create")} >
                     <FontAwesomeIcon icon={faPlus} />

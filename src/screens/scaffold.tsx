@@ -62,9 +62,10 @@ const Scaffold: React.FC = observer(({ children }) => {
             //maxWidth: app.UIconstrainContainer ? 1400 : undefined
           }}>
           <Col id="wrapper-screen-left"
-            className={classNames("d-none d-block border-right bg-white",
+            className={classNames("d-none d-block border-right _bg-white p-0 p-md-1",
               app.UIconstrainContainer ? "col-md-4" : "col-12 col-md-2 col-xl-1")} style={{
-                maxWidth: "80px",
+                //maxWidth: "80px",
+                maxWidth: "64px",
                 minWidth: "64px"
               }}>
             <Sticky>
@@ -76,7 +77,7 @@ const Scaffold: React.FC = observer(({ children }) => {
             {children}
           </Col>
           <Col id="wrapper-screen-right"
-            className={classNames("d-none d-lg-block border-left _p-0 bg-white",
+            className={classNames("d-none d-lg-block border-left _p-0 _bg-white",
               app.UIconstrainContainer ? "col-md-3" : "col-12 col-md-2 col-xl-2")}>
             <div className="_sticky mt-2">
               <Sticky>
